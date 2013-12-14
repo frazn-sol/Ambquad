@@ -1,0 +1,139 @@
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script>
+// This example displays an address form, using the autocomplete feature
+// of the Google Places API to help users fill in the information.
+
+var placeSearch, autocomplete;
+var componentForm = {
+  locality: 'long_name',
+  administrative_area_level_1: 'short_name',
+  country: 'long_name'
+};
+
+function initialize() {
+  // Create the autocomplete object, restricting the search
+  // to geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+      { types: ['geocode'] });
+  // When the user selects an address from the dropdown,
+  // populate the address fields in the form.
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    fillInAddress();
+  });
+}
+
+// The START and END in square brackets define a snippet for our documentation:
+// [START region_fillform]
+function fillInAddress() {
+  // Get the place details from the autocomplete object.
+  var place = autocomplete.getPlace();
+
+  for (var component in componentForm) {
+    document.getElementById(component).value = '';
+    document.getElementById(component).disabled = false;
+  }
+
+  // Get each component of the address from the place details
+  // and fill the corresponding field on the form.
+  for (var i = 0; i < place.address_components.length; i++) {
+    var addressType = place.address_components[i].types[0];
+    if (componentForm[addressType]) {
+      var val = place.address_components[i][componentForm[addressType]];
+      document.getElementById(addressType).value = val;
+    }
+  }
+}
+// [END region_fillform]
+
+  window.onload = initialize;
+    </script>
+<%= form_for @client, :url => update_client_admin_path, :html => {:class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :company_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :company_name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :contact_person, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :contact_person, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, :class => 'text_field' %>
+    </div>
+  </div>
+
+   <div id="address">
+  <div class="control-group">
+    <label class="control-label">Address Autocomplete</label> 
+    <div class="controls">
+       <input class="text_field" id="autocomplete" placeholder="Enter your address"
+             onFocus="geolocate()" type="text"></input>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">City</label> 
+    <div class="controls">
+      <input class="text_field" id="locality"
+              disabled="true"></input>
+    </div>
+  </div>
+
+   <div class="control-group">
+    <label class="control-label">State</label> 
+    <div class="controls">
+      <input class="text_field"
+              id="administrative_area_level_1" disabled="true"></input>
+    </div>
+  </div>
+
+   <div class="control-group">
+    <label class="control-label">Country</label> 
+    <div class="controls">
+      <input class="text_field"
+              id="country" disabled="true"></input>
+    </div>
+  </div>
+</div>
+  <div class="control-group">
+    <%= f.label :website, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :website, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :title, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :title, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :slogan, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :slogan, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :phone_number, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :phone_number, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  </div>
+<% end %>

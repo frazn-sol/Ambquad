@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambquad</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "style.css" %>
+  <%= stylesheet_link_tag    "formalize.css" %>
+  <%= stylesheet_link_tag    "bootstrap.css" %>
+  <%= stylesheet_link_tag    "bootstrap-theme.css" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "jquery.formalize.js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="header_container">
+    <div id="header">
+        Header Content
+    </div>
+</div> 
+<% if notice %>
+<%= render partial: "admins/flash_messages", flash: flash %> 
+<% end %>
+<% if alert %>
+  <%= render partial: "admins/flash_messages", flash: flash %> 
+<% end %>
+<div id="container">
+		<%= yield %>
+</div>			
+<div id="footer_container">
+    <div id="footer">
+        Footer Content
+    </div>
+</div>
+
+</body>
+</html>

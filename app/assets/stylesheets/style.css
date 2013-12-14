@@ -1,0 +1,149 @@
+/* Reset body padding and margins */
+body { 
+	margin:0; 
+	padding:0; 
+}
+ 
+/* Make Header Sticky */
+#header_container {
+	background:#333333; 
+	border:1px solid #666;
+	height:6em; 
+	left:0; 
+	position:absolute; 
+	width:100%; 
+	top:0; 
+}
+#header{ 
+	line-height:60px; 
+	margin:0 auto; 
+	width:940px; 
+	text-align:center;
+	color: white;
+}
+ 
+/* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
+#container {  
+	overflow:auto; 
+	padding:80px 0; 
+	width:100%; 
+	height: 100%;
+}
+#content{
+	float: left;
+	width:490px;
+}
+ 
+/* Make Footer Sticky */
+#footer_container { 
+	background:#333333; 
+	border:1px solid #666; 
+	bottom:0; 
+	height:4em; 
+	left:0; 
+	position:relative; 
+	width:100%; 
+}
+#footer { 
+	line-height:60px; 
+	margin:0 auto; 
+	width:100%; 
+	text-align:center; 
+	color: white;
+}
+
+.client{
+	float: left;
+	width:65%;
+	margin-top: 10px;
+	height: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.form{
+	border: 2px solid;
+	float:right;
+	width: 34.5%;
+	margin-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px; 
+	background-color: #f5f5f5;
+	margin-right: 5px;
+	height:100%;
+}
+
+#button{
+	width:50%;
+	padding-left: 250px;
+	margin-bottom: 10px;	
+}
+
+
+#scroll{
+	height: 240px;
+	overflow: auto;
+	border: 1px solid black;
+	margin-left: 1px;
+}
+
+.page-header{
+	margin-top: 10px!important;
+	margin-bottom: -1px!important;
+	margin-left: 1px!important;
+	border-bottom: none!important;
+}
+
+#dashboard{
+	width:50%;
+	margin-left: 1px;
+}
+
+#dashboard table td {
+	border-left: 2px solid #000;
+}
+
+#dashboard table {
+	margin-bottom: 0px;
+}
+
+
+#borders{
+	border: 2px solid black;
+}
+
+#scroll table td  {
+	border-left: 1px solid #000;
+}
+#scroll table th  {
+	border-left: 1px solid #000;
+}
+#scroll table {
+	margin-bottom: 0px;
+}
+
+form textarea{
+	height:100px;
+	width:207px;
+}
+.alert{
+	margin-top: 83px;
+	width: 100%;
+	text-align: center;
+	height: 50px;
+}
+
+.alert-info{
+	background-color: green!important;
+}
+
+.alert .close {
+position: relative;
+top: -2px;
+right: -11px;
+line-height: 20px;
+}
+#address{
+	background-color: white;
+}
