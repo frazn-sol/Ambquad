@@ -10,11 +10,17 @@ Ambquad::Application.routes.draw do
   resources :admins do
     member do
       put :update_client
+      get :edit_project
+      put :update_project
+      delete :delete_project
+      get :view_project
     end
 
     collection do 
       get :welcome
       post :create_client
+      get :new_project
+      post :create_project
     end
   end
 

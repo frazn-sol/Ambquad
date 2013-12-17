@@ -41,47 +41,63 @@ function fillInAddress() {
     var addressType = place.address_components[i].types[0];
     if (componentForm[addressType]) {
       var val = place.address_components[i][componentForm[addressType]];
-       if (addressType == 'locality')
-        $('#client_city').val(val);
+      console.log(addressType);
+      if (addressType == 'locality')
+        $('#project_city').val(val);
       if (addressType == 'administrative_area_level_1')
-        $('#client_state').val(val);
+        $('#project_state').val(val);
       if (addressType == 'country')
-         $('#client_country').val(val);
+         $('#project_country').val(val);
     }
   }
 }
+
+    
 // [END region_fillform]
 
   window.onload = initialize;
     </script>
-<%= form_for @client, :url => update_client_admin_path, :html => {:class => 'form-horizontal' } do |f| %>
+<%= nested_form_for @project, :url => create_project_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
   <div class="control-group">
-    <%= f.label :company_name, :class => 'control-label' %>
+    <%= f.label :project_name, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :company_name, :class => 'text_field' %>
+      <%= f.text_field :project_name, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :contact_person, :class => 'control-label' %>
+    <%= f.label :project_status, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :contact_person, :class => 'text_field' %>
+      <%= f.text_field :project_status, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
+    <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :email, :class => 'text_field' %>
+      <%= f.date_select :start_date, :class => 'text_field' %>
     </div>
   </div>
 
-   <div id="address">
   <div class="control-group">
+    <%= f.label :completion, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.date_select :completion_date, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :project_value, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :project_value, :class => 'text_field' %>
+    </div>
+  </div>
+
+    <div class="control-group">
     <label class="control-label">Address Autocomplete</label> 
     <div class="controls">
        <input class="text_field" id="autocomplete" placeholder="Enter your address" type="text"></input>
     </div>
   </div>
-    <div class="control-group">
+
+  <div class="control-group">
     <%= f.label :city, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :city, :class => 'text_field' %>
@@ -102,31 +118,13 @@ function fillInAddress() {
     </div>
   </div>
 
-</div>
   <div class="control-group">
-    <%= f.label :website, :class => 'control-label' %>
+    <%= f.label :client, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :website, :class => 'text_field' %>
+      <%= f.text_field :client, :class => 'text_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :slogan, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :slogan, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :phone_number, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :phone_number, :class => 'text_field' %>
-    </div>
-  </div>
+    
   <div class="control-group">
     <%= f.label :description, :class => 'control-label' %>
     <div class="controls">
@@ -134,12 +132,21 @@ function fillInAddress() {
     </div>
   </div>
 
+  <%= f.fields_for :images do |image_form|  %>
+    <p>
+    <%= image_form.label :upload_images %><br />
+    <%= image_form.file_field :image %>
+    </p>
+    <%= image_form.link_to_remove "Remove this image" %>
+  <% end %>
+  <%= f.link_to_add "Add image", :images %> 
+  <%= f.hidden_field :client_id, :value => 96, :class => 'text_field' %>
+
   <input type="hidden" class="text_field" id="locality" disabled="true"></input>
     <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
     <input type="hidden" class="text_field" id="country" disabled="true"></input>
-  
-
+    
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-  </div>
+    </div>
 <% end %>

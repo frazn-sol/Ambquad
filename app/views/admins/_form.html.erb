@@ -41,10 +41,18 @@ function fillInAddress() {
     var addressType = place.address_components[i].types[0];
     if (componentForm[addressType]) {
       var val = place.address_components[i][componentForm[addressType]];
-      document.getElementById(addressType).value = val;
+      console.log(addressType);
+      if (addressType == 'locality')
+        $('#client_city').val(val);
+      if (addressType == 'administrative_area_level_1')
+        $('#client_state').val(val);
+      if (addressType == 'country')
+         $('#client_country').val(val);
     }
   }
 }
+
+    
 // [END region_fillform]
 
   window.onload = initialize;
@@ -73,32 +81,28 @@ function fillInAddress() {
   <div class="control-group">
     <label class="control-label">Address Autocomplete</label> 
     <div class="controls">
-       <input class="text_field" id="autocomplete" placeholder="Enter your address"
-             onFocus="geolocate()" type="text"></input>
+       <input class="text_field" id="autocomplete" placeholder="Enter your address" type="text"></input>
     </div>
   </div>
 
   <div class="control-group">
-    <label class="control-label">City</label> 
+    <%= f.label :city, :class => 'control-label' %>
     <div class="controls">
-      <input class="text_field" id="locality"
-              disabled="true"></input>
+      <%= f.text_field :city, :class => 'text_field' %>
     </div>
   </div>
 
-   <div class="control-group">
-    <label class="control-label">State</label> 
+  <div class="control-group">
+    <%= f.label :state, :class => 'control-label' %>
     <div class="controls">
-      <input class="text_field"
-              id="administrative_area_level_1" disabled="true"></input>
+      <%= f.text_field :state, :class => 'text_field' %>
     </div>
   </div>
 
-   <div class="control-group">
-    <label class="control-label">Country</label> 
+  <div class="control-group">
+    <%= f.label :country, :class => 'control-label' %>
     <div class="controls">
-      <input class="text_field"
-              id="country" disabled="true"></input>
+      <%= f.text_field :country, :class => 'text_field' %>
     </div>
   </div>
 </div>
@@ -133,6 +137,10 @@ function fillInAddress() {
     </div>
   </div>
 
+  <input type="hidden" class="text_field" id="locality" disabled="true"></input>
+    <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
+    <input type="hidden" class="text_field" id="country" disabled="true"></input>
+    
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>

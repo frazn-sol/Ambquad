@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131209154225) do
+ActiveRecord::Schema.define(:version => 20131216165159) do
 
   create_table "admins", :force => true do |t|
     t.string   "first_name"
@@ -44,6 +44,36 @@ ActiveRecord::Schema.define(:version => 20131209154225) do
     t.string   "description"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+  end
+
+  create_table "images", :force => true do |t|
+    t.string   "image"
+    t.integer  "imageable_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "imageable_type"
+  end
+
+  add_index "images", ["imageable_id"], :name => "index_images_on_imageable_id"
+
+  create_table "projects", :force => true do |t|
+    t.string   "project_name"
+    t.string   "project_status"
+    t.date     "start_date"
+    t.date     "completion_date"
+    t.string   "project_value"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "client"
+    t.string   "description"
+    t.integer  "client_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "image"
   end
 
 end

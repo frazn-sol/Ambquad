@@ -79,4 +79,67 @@ class AdminsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def new_project
+    @project = Project.new
+    @project.images.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @project }
+    end
+  end
+
+  def create_project
+    @project = Project.new(params[:project])
+
+    respond_to do |format|
+      if @project.save
+        flash[:notice] = "Project has been successfully added!"
+        format.html { redirect_to admins_path }
+        format.json { render json: @project, status: :created, location: @project }
+      else
+        format.html { render action: "new_project" }
+        format.json { render json: @client.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def edit_project
+    @project = Project.find(params[:id])
+        @project.images.build
+  end
+
+  def update_project
+    @project = Project.find(params[:id])
+
+    respond_to do |format|
+      if @project.update_attributes(params[:project])
+        format.html { redirect_to admins_path, notice: 'Project was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit_project" }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def view_project
+    @project = Project.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @project }
+    end
+  end
+
+  def delete_project
+    @project = Project.find(params[:id])
+    @project.destroy
+
+    respond_to do |format|
+      format.html { redirect_to admins_url }
+      format.json { head :no_content }
+    end
+  end
 end
