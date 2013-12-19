@@ -56,14 +56,35 @@ function fillInAddress() {
          $('#client_country').val(val);
     }
   }
+  var latitude = place.geometry.location.getlat();
+  var longitude =  place.geometry.location.getlong();
+   $('#client_latitude').val(latitude);
+  $('#client_longitude').val(longitude);
+}
+$( document ).ready(function() {
+  function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        $('#blah').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
 }
 
-    
+$("#client_logo").change(function(){
+    readURL(this);
+});
+});
+
 // [END region_fillform]
 
   window.onload = initialize;
     </script>
-<%= form_for @client, :url => create_client_admins_path, :html => {:class => 'form-horizontal' } do |f| %>
+<%= nested_form_for @client, :url => create_client_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
   <div class="control-group">
     <%= f.label :company_name, :class => 'control-label' %>
     <div class="controls">
@@ -157,12 +178,21 @@ function fillInAddress() {
     </div>
   </div>
 
-  <input type="hidden" class="text_field" id="locality" disabled="true"></input>
+  <div class="control-group">
+    <%= f.label :corporate_logo, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :logo, :class => 'text_field' %>
+      <img id="blah" src="#" alt="your image" class="thumb"/>  
+    </div>
+  </div>
+    <%= f.hidden_field :latitude, :class => 'text_field' %>
+    <%= f.hidden_field :longitude, :class => 'text_field' %> 
+   <input type="hidden" class="text_field" id="locality" disabled="true"></input>
     <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
     <input type="hidden" class="text_field" id="country" disabled="true"></input>
     <input type="hidden" class="text_field" id="route" disabled="true"></input>
     <input type="hidden" class="text_field" id="street_number" disabled="true"></input>    
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    </div>
+  </div>
 <% end %>

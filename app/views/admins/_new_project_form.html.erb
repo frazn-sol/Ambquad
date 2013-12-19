@@ -56,6 +56,10 @@ function fillInAddress() {
         $('#project_country').val(val);
     }
   }
+  var latitude = place.geometry.location.lat();
+  var longitude =  place.geometry.location.lng();
+   $('#project_latitude').val(latitude);
+  $('#project_longitude').val(longitude);
 }
 
 $(document).ready(function() {  
@@ -92,6 +96,7 @@ var image_element = "";
   function upFile(){
     $("#project_images_attributes_0_image").click();
   }
+
 
 
     
@@ -209,6 +214,8 @@ var image_element = "";
     <% end %> 
     <%= f.link_to_add "Upload New image", :images, :class => "btn-uploadnew typo-whitemed", :style => "font-size: 16px;" %>
   <div class="clear"></div> 
+  <%= f.hidden_field :latitude, :class => 'text_field' %>
+    <%= f.hidden_field :longitude, :class => 'text_field' %>
     <input type="hidden" class="text_field" id="locality" disabled="true"></input>
     <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
     <input type="hidden" class="text_field" id="country" disabled="true"></input>
