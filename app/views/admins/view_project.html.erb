@@ -18,9 +18,10 @@
   <dd><%= @project.client %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @project.description %></dd>
-  <%= @project.images.each do |project| %>
-    <%= image_tag project.image_url %>
-   <% end %>
+
+  <%= @project.images.count.times do |i| %>
+    <%= image_tag @project.images[i].image_url.to_s, :class => "thumb" %>
+  <% end %>
 </dl>
 
 <div class="form-actions">

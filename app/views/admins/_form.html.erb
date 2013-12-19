@@ -6,6 +6,8 @@
 
 var placeSearch, autocomplete;
 var componentForm = {
+  street_number: 'short_name',
+  route: 'long_name',
   locality: 'long_name',
   administrative_area_level_1: 'short_name',
   country: 'long_name'
@@ -44,6 +46,10 @@ function fillInAddress() {
       console.log(addressType);
       if (addressType == 'locality')
         $('#client_city').val(val);
+      if (addressType == 'street_number')
+        $('#client_street_number').val(val);
+      if (addressType == 'route')
+        $('#client_address').val(val);
       if (addressType == 'administrative_area_level_1')
         $('#client_state').val(val);
       if (addressType == 'country')
@@ -82,6 +88,20 @@ function fillInAddress() {
     <label class="control-label">Address Autocomplete</label> 
     <div class="controls">
        <input class="text_field" id="autocomplete" placeholder="Enter your address" type="text"></input>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :address1, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :street_number, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :address2, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :address, :class => 'text_field' %>
     </div>
   </div>
 
@@ -140,7 +160,8 @@ function fillInAddress() {
   <input type="hidden" class="text_field" id="locality" disabled="true"></input>
     <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
     <input type="hidden" class="text_field" id="country" disabled="true"></input>
-    
+    <input type="hidden" class="text_field" id="route" disabled="true"></input>
+    <input type="hidden" class="text_field" id="street_number" disabled="true"></input>    
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>

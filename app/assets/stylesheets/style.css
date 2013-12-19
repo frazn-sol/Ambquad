@@ -147,3 +147,11 @@ line-height: 20px;
 #address{
 	background-color: white;
 }
+
+.thumb{
+  width:150px;
+  height: 100px;
+}
+.clear{
+  clear:both;
+}

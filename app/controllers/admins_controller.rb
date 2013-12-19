@@ -82,7 +82,6 @@ class AdminsController < ApplicationController
 
   def new_project
     @project = Project.new
-    @project.images.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -107,7 +106,6 @@ class AdminsController < ApplicationController
 
   def edit_project
     @project = Project.find(params[:id])
-        @project.images.build
   end
 
   def update_project
