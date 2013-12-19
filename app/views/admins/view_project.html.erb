@@ -19,7 +19,7 @@
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @project.description %></dd>
 
-  <%= @project.images.count.times do |i| %>
+  <% for i in 0..@project.images.count-1 %>
     <%= image_tag @project.images[i].image_url.to_s, :class => "thumb" %>
   <% end %>
 </dl>
