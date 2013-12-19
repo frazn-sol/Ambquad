@@ -2,35 +2,37 @@
 <html>
 <head>
   <title>Ambquad</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= stylesheet_link_tag    "style.css" %>
-  <%= stylesheet_link_tag    "formalize.css" %>
-  <%= stylesheet_link_tag    "bootstrap.css" %>
-  <%= stylesheet_link_tag    "bootstrap-theme.css" %>
+  <%= stylesheet_link_tag    "application" %>  
+
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "jquery.formalize.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id="header_container">
-    <div id="header">
-        Header Content
-    </div>
-</div> 
-<% if notice %>
-<%= render partial: "admins/flash_messages", flash: flash %> 
-<% end %>
-<% if alert %>
-  <%= render partial: "admins/flash_messages", flash: flash %> 
-<% end %>
-<div id="container">
-		<%= yield %>
-</div>			
-<div id="footer_container">
-    <div id="footer">
-        Footer Content
-    </div>
-</div>
-
+  <div id="header_container">
+      <div id="header">
+        <div class="logo aleft">
+          <%= image_tag("ambquad.png", :alt => "Amquad Solutions", :width => 180) %>
+        </div>
+        <div class="slog-tag aright">
+          <p class="slogan">Innovative Solutions</p>
+          <p class="tagline">for the construction industry</p>
+        </div>
+        <div class="clear"></div>
+      </div>
+  </div> 
+  <% if notice || alert %>
+    <%= render partial: "admins/flash_messages", flash: flash %> 
+  <% end %>
+  <div id="container">
+    <div id="content">
+  		<%= yield %>
+    </div>      
+  </div>			
+  <div id="footer_container">
+      <div id="footer">
+          All coyrights reserved for 2014. 
+      </div>
+  </div>
 </body>
 </html>

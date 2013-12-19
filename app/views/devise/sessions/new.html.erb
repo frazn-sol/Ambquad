@@ -1,38 +1,22 @@
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+<div class="container">
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-signin"}) do |f| %>
+	<h2 class="form-signin-heading">Admin Login</h2>
+	<%= f.email_field :email, :class => "form-control space", :placeholder => "Email address", :required => "", :autofocus =>""%>
+	<%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => "", :autofocus =>""%>
 
-    <title>Signin Template for Bootstrap</title>
+	<% if devise_mapping.rememberable? -%>
+	<label class="checkbox">
+      <%= f.check_box :remember_me %> Remember me
+      <div class = "link">
+      	<%= render :partial => "devise/shared/links"%>	
+      </div>
+    </label>
+	<% end -%>
 
-      <%= stylesheet_link_tag    "signin.css" %>
+	<%= f.submit "Sign in", :class => "btn btn-lg btn-primary btn-block login" %></div>
+	<% end %>
 
-  </head>
-
-  <body>
-
-  	<div class="container">
-  		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-signin"}) do |f| %>
-  		<h2 class="form-signin-heading">Please sign in</h2>
-  		<%= f.email_field :email, :class => "form-control space", :placeholder => "Email address", :required => "", :autofocus =>""%>
-  		<%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => "", :autofocus =>""%>
-
-  		<% if devise_mapping.rememberable? -%>
-  		<label class="checkbox">
-          <%= f.check_box :remember_me %> Remember me
-          <div class = "link">
-          	<%= render :partial => "devise/shared/links"%>	
-          </div>
-        </label>
-  		<% end -%>
-
-  		<div><%= f.submit "Sign in", :class => "btn btn-lg btn-primary btn-block" %></div>
-  		<% end %>
-
-    </div> 
+</div> 
 
 <style>
 a:hover, a:focus {
@@ -51,4 +35,23 @@ a{
 	margin-top: -20px;
 	right: -154px;
 }
+.login{
+  height: 45px;
+  background-image: none !important;
+  background-color: #428bca !important;
+  border-color: #357ebd;
+  color: #ffffff !important;
+  font-size: 18px !important;
+  text-shadow: none !important;
+  font-weight: normal !important;
+}
+.login:hover{
+  background-position: 0 45px; 
+  border: none;
+}
+#footer_container{
+    position:fixed;
+    bottom: 0; 
+}
+
 </style>
