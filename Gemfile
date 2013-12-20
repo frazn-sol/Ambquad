@@ -27,6 +27,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'friendly_id'
 
 group :development do
 	gem 'better_errors'

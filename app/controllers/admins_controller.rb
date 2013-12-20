@@ -31,7 +31,6 @@ class AdminsController < ApplicationController
   end
 
   def edit
-    @clients = Client.all
     @client = Client.find(params[:id])
   end
 

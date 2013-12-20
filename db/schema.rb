@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20131219165817) do
+=======
+ActiveRecord::Schema.define(:version => 20131220142610) do
+>>>>>>> 7793472d9d62ba80bff4b8e3702e2343a2fe9fd6
 
   create_table "admins", :force => true do |t|
     t.string   "first_name"
@@ -52,7 +56,24 @@ ActiveRecord::Schema.define(:version => 20131219165817) do
     t.string   "logo"
     t.float    "latitude"
     t.float    "longitude"
+<<<<<<< HEAD
+=======
+    t.string   "slug"
+>>>>>>> 7793472d9d62ba80bff4b8e3702e2343a2fe9fd6
   end
+
+  add_index "clients", ["slug"], :name => "index_clients_on_slug"
+
+  create_table "friendly_id_slugs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.integer  "sluggable_id",                 :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
+  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "images", :force => true do |t|
     t.string   "image"
@@ -83,11 +104,14 @@ ActiveRecord::Schema.define(:version => 20131219165817) do
     t.string   "address"
     t.float    "latitude"
     t.float    "longitude"
+<<<<<<< HEAD
   end
 
   create_table "shortened_links", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+=======
+>>>>>>> 7793472d9d62ba80bff4b8e3702e2343a2fe9fd6
   end
 
 end

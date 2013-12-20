@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @clients.each do |client| %>
+        <% Client.all.each do |client| %>
           <tr>
             <td><%= client.company_name %></td>
             <td><%= client.description %></td>
@@ -36,7 +36,6 @@
       </tbody>
     </table>
   </div>
-
   <div id="system-info">
     <div class="page-header tagbar">
       <h3>Dashboard</h3>

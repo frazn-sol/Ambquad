@@ -105,27 +105,30 @@ var image_element = "";
   window.onload = initialize;
     </script>
 <%= nested_form_for @project, :url => create_project_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+  <% @project.errors.full_messages.each do |msg| %>
+    <p><%= msg %></p>
+  <% end %>
   <div class="control-group">
-    <%= f.label :project_name, :class => 'control-label' %>
+    <%= f.label :project_name, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :project_name, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :project_status, :class => 'control-label' %>
+    <%= f.label :project_status, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :project_status, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :start_date, :class => 'control-label' %>
+    <%= f.label :start_date, :class => 'control-label required' %>
     <div class="controls">
       <%= f.date_select :start_date, :class => 'text_field' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :completion, :class => 'control-label' %>
+    <%= f.label :completion, :class => 'control-label required' %>
     <div class="controls">
       <%= f.date_select :completion_date, :class => 'text_field' %>
     </div>
@@ -180,7 +183,7 @@ var image_element = "";
   </div>
 
   <div class="control-group">
-    <%= f.label :client, :class => 'control-label' %>
+    <%= f.label :client, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :client, :class => 'text_field' %>
     </div>
