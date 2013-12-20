@@ -55,7 +55,30 @@ function fillInAddress() {
          $('#client_country').val(val);
     }
   }
+  var latitude = place.geometry.location.lat();
+  var longitude =  place.geometry.location.lng();
+  $('#client_latitude').val(latitude);
+  $('#client_longitude').val(longitude);
 }
+
+$( document ).ready(function() {
+  function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        $('#blah').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#client_logo").change(function(){
+    readURL(this);
+});
+});
 // [END region_fillform]
 
   window.onload = initialize;
@@ -156,6 +179,21 @@ function fillInAddress() {
     </div>
   </div>
 
+
+  <div class="control-group">
+    <%= f.label :corporate_logo, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :logo, :class => 'text_field' %>
+    <% if @client.logo_url.present? %>
+      <%= image_tag @client.logo_url.to_s, :class => "thumb", :id => "blah" %>
+    <% else %> 
+    <img id="blah" src="#" alt="your image" class="thumb"/>
+    <% end %> 
+    </div>
+  </div>
+
+    <%= f.hidden_field :latitude, :class => 'text_field' %>
+    <%= f.hidden_field :longitude, :class => 'text_field' %>
    <input type="hidden" class="text_field" id="locality" disabled="true"></input>
     <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
     <input type="hidden" class="text_field" id="country" disabled="true"></input>

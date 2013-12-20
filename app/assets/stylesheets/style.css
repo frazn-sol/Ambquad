@@ -44,6 +44,7 @@ body {
 	padding:20px 20px; 
 	width:100%; 
 	height: 100%;
+	background-color: #FCFCFC;
 }
 
 #content{
@@ -55,9 +56,25 @@ body {
 
 .rightpanel{
 	width:40%;
-	border: 2px solid #333333;
 }
 
+h3{
+	margin: 0;
+}
+
+.tagbar{
+	padding: 8px 15px;
+	background-color: #333333;
+	border-radius: 4px;
+	color: #ffffff;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+#clients-list{
+	height: 240px;
+	overflow: auto;
+	border: 1px solid black;
 }
 /* Make Footer Sticky */
 #footer_container { 
@@ -65,6 +82,7 @@ body {
 	border:1px solid #666; 
 	width:100%; 
 }
+
 #footer { 
 	margin:0 auto; 
 	width:1080px; 
@@ -87,30 +105,34 @@ body {
 	height:100%;
 }
 
-#button{
-	width:50%;
-	padding-left: 250px;
-	margin-bottom: 10px;	
-}
-
-
-#scroll{
-	height: 240px;
-	overflow: auto;
-	border: 1px solid black;
-	margin-left: 1px;
-}
-
 .page-header{
-	margin-top: 10px!important;
 	margin-bottom: -1px!important;
-	margin-left: 1px!important;
 	border-bottom: none!important;
 }
 
-#dashboard{
-	width:50%;
-	margin-left: 1px;
+#system-info{
+}
+
+#system-info .infobox
+{
+	border: 1px solid black;	
+}
+#system-info .infobox .divider
+{
+	border: 2px solid #333;
+}
+#system-info .infobox .table
+{
+	margin: 0;
+}
+#system-info .infobox .table th,
+#system-info .infobox .table tr
+{
+	width: 50%;
+}
+#system-info .infobox .table th
+{
+	border-right: 1px solid #333;
 }
 
 #dashboard table td {
@@ -126,15 +148,6 @@ body {
 	border: 2px solid black;
 }
 
-#scroll table td  {
-	border-left: 1px solid #000;
-}
-#scroll table th  {
-	border-left: 1px solid #000;
-}
-#scroll table {
-	margin-bottom: 0px;
-}
 
 form textarea{
 	height:100px;
