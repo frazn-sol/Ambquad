@@ -34,4 +34,7 @@ Ambquad::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+    #Host Url
+    ENV['HOST_URL'] = "http://localhost:3000/clients/"
 end

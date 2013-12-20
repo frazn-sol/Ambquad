@@ -56,8 +56,8 @@ function fillInAddress() {
          $('#client_country').val(val);
     }
   }
-  var latitude = place.geometry.location.getlat();
-  var longitude =  place.geometry.location.getlong();
+  var latitude = place.geometry.location.lat();
+  var longitude =  place.geometry.location.lng();
    $('#client_latitude').val(latitude);
   $('#client_longitude').val(longitude);
 }
@@ -85,20 +85,24 @@ $("#client_logo").change(function(){
   window.onload = initialize;
     </script>
 <%= nested_form_for @client, :url => create_client_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+  <% @client.errors.full_messages.each do |msg| %>
+    <p><%= msg %></p>
+  <% end %>
+
   <div class="control-group">
-    <%= f.label :company_name, :class => 'control-label' %>
+    <%= f.label :company_name, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :company_name, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :contact_person, :class => 'control-label' %>
+    <%= f.label :contact_person, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :contact_person, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :email, :class => 'control-label' %>
+    <%= f.label :email, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :email, :class => 'text_field' %>
     </div>
@@ -154,7 +158,7 @@ $("#client_logo").change(function(){
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
+    <%= f.label :title, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'text_field' %>
     </div>
@@ -166,9 +170,9 @@ $("#client_logo").change(function(){
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :phone_number, :class => 'control-label' %>
+    <%= f.label :phone_number, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :phone_number, :class => 'text_field' %>
+      <%= f.text_field :phone_number, :class => 'text_field ' %>
     </div>
   </div>
   <div class="control-group">
