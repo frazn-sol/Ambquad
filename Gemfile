@@ -11,6 +11,7 @@ gem 'devise'
 gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem 'carrierwave', '>= 0.5.3'
+gem 'fog', '~> 1.0.0' # Need to specify version, as carrierwave references older (0.9.0) which doesn't allow configuration of Rackspace UK Auth URL
 gem "rmagick" 
 gem 'nested_form'
 

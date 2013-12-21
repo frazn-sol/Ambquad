@@ -61,8 +61,9 @@ Ambquad::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  # config.active_record.auto_explain_threshold_in_seconds = 0.5
-  # ENV['HOST_URL'] = "http://localhost:3000"
+  #ENV
+  ENV['S3_KEY']         = "AKIAIXIGS55ABNP5CLHQ"
+  ENV['S3_SECRET']      = "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"
+  ENV['S3_REGION']      = "us-east-1"
+  ENV['S3_BUCKET_NAME'] = "ambquad_maps"
 end

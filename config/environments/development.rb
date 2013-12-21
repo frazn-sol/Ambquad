@@ -35,6 +35,9 @@ Ambquad::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-    #Host Url
-    ENV['HOST_URL'] = "http://localhost:3000/clients/"
+  #Host Url
+  ENV['S3_KEY']         = "AKIAIXIGS55ABNP5CLHQ"
+  ENV['S3_SECRET']      = "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"
+  ENV['S3_REGION']      = "us-east-1"
+  ENV['S3_BUCKET_NAME'] = "ambquad_maps"
 end
