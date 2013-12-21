@@ -227,3 +227,30 @@ var image_element = "";
     <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
 <% end %>
+
+<script>
+  var validator = new FormValidator('edit_project_<%= "#{@project.id.to_s}"%>', [{
+    name: 'project[project_name]',    
+    rules: 'required'
+  }, {
+    name: 'project[project_status]',
+    rules: 'required'
+  }, {
+    name: 'project[start_date]',
+    rules: 'required'
+  }, {
+    name: 'project[completion_date]',
+    rules: 'required'
+  }, {
+    name: 'project[client]',
+    rules: 'required'
+  }], function(errors, event) {
+    if (errors.length > 0) {
+    var temp;
+    for (var i=0; i<errors.length; i++){
+      temp = errors[i].id;
+      $("#" + temp).css("border","2px solid red");
+    }
+    }  
+  });
+</script>

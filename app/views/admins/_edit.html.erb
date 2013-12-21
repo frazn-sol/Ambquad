@@ -1,88 +1,3 @@
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <script>
-// This example displays an address form, using the autocomplete feature
-// of the Google Places API to help users fill in the information.
-
-var placeSearch, autocomplete;
-var componentForm = {
-  street_number: 'short_name',
-  route: 'long_name', 
-  locality: 'long_name',
-  administrative_area_level_1: 'short_name',
-  country: 'long_name'
-};
-
-function initialize() {
-  // Create the autocomplete object, restricting the search
-  // to geographical location types.
-  autocomplete = new google.maps.places.Autocomplete(
-      /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
-      { types: ['geocode'] });
-  // When the user selects an address from the dropdown,
-  // populate the address fields in the form.
-  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    fillInAddress();
-  });
-}
-
-// The START and END in square brackets define a snippet for our documentation:
-// [START region_fillform]
-function fillInAddress() {
-  // Get the place details from the autocomplete object.
-  var place = autocomplete.getPlace();
-
-  for (var component in componentForm) {
-    document.getElementById(component).value = '';
-    document.getElementById(component).disabled = false;
-  }
-
-  // Get each component of the address from the place details
-  // and fill the corresponding field on the form.
-  for (var i = 0; i < place.address_components.length; i++) {
-    var addressType = place.address_components[i].types[0];
-    if (componentForm[addressType]) {
-      var val = place.address_components[i][componentForm[addressType]];
-      if (addressType == 'locality')
-        $('#client_city').val(val);
-      if (addressType == 'street_number')
-        $('#client_street_number').val(val);
-      if (addressType == 'route')
-        $('#client_address').val(val);
-      if (addressType == 'administrative_area_level_1')
-        $('#client_state').val(val);
-      if (addressType == 'country')
-         $('#client_country').val(val);
-    }
-  }
-  var latitude = place.geometry.location.lat();
-  var longitude =  place.geometry.location.lng();
-  $('#client_latitude').val(latitude);
-  $('#client_longitude').val(longitude);
-}
-
-$( document ).ready(function() {
-  function readURL(input) {
-
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        $('#blah').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-
-$("#client_logo").change(function(){
-    readURL(this);
-});
-});
-// [END region_fillform]
-
-  window.onload = initialize;
-    </script>
 <%= form_for @client, :url => update_client_admin_path, :html => {:class => 'form-horizontal' } do |f| %>
   <% @client.errors.full_messages.each do |msg| %>
     <p><%= msg %></p>
@@ -102,7 +17,7 @@ $("#client_logo").change(function(){
   <div class="control-group">
     <%= f.label :email, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :email, :class => 'text_field' %>
+      <%= f.email_field :email, :class => 'text_field' %>
     </div>
   </div>
 
@@ -187,12 +102,13 @@ $("#client_logo").change(function(){
   <div class="control-group">
     <%= f.label :corporate_logo, :class => 'control-label' %>
     <div class="controls">
-      <%= f.file_field :logo, :class => 'text_field' %>
     <% if @client.logo_url.present? %>
-      <%= image_tag @client.logo_url.to_s, :class => "thumb", :id => "blah" %>
+      <%= image_tag @client.logo_url.to_s, :class => "thumb", :id => "upload" %>
     <% else %> 
-    <img id="blah" src="#" alt="your image" class="thumb"/>
+      <img id="upload" src="#" alt="your image" class="thumb"/>
     <% end %> 
+      <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
+
     </div>
   </div>
 
@@ -212,7 +128,111 @@ $("#client_logo").change(function(){
     <input type="hidden" class="text_field" id="street_number" disabled="true"></input>
   
 
-  <div class="form-actions">
+  <div style="text-align:center;">
     <%= f.submit nil, :class => 'btn btn-primary' %>
   </div>
 <% end %>
+<script>
+  var placeSearch, autocomplete;
+  var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name'
+  };
+
+  function initialize() {
+    // Create the autocomplete object, restricting the search
+    // to geographical location types.
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+        { types: ['geocode'] });
+    // When the client selects an address from the dropdown,
+    // populate the address fields in the form.
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      fillInAddress();
+    });
+  }
+
+  // The START and END in square brackets define a snippet for our documentation:
+  // [START region_fillform]
+  function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
+
+    for (var component in componentForm) {
+      document.getElementById(component).value = '';
+      document.getElementById(component).disabled = false;
+    }
+
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
+      if (componentForm[addressType]) {
+        var val = place.address_components[i][componentForm[addressType]];
+        console.log(addressType);
+        if (addressType == 'locality')
+          $('#client_city').val(val);
+        if (addressType == 'street_number')
+          $('#client_street_number').val(val);
+        if (addressType == 'route')
+          $('#client_address').val(val);
+        if (addressType == 'administrative_area_level_1')
+          $('#client_state').val(val);
+        if (addressType == 'country')
+           $('#client_country').val(val);
+      }
+    }
+    var latitude = place.geometry.location.lat();
+    var longitude =  place.geometry.location.lng();
+    $('#client_latitude').val(latitude);
+    $('#client_longitude').val(longitude);
+  }
+  $( document ).ready(function() {
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('#upload').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#client_logo").change(function(){
+      readURL(this);
+  });
+  });
+  // [END region_fillform]
+  window.onload = initialize;
+</script>
+<script>
+  var validator = new FormValidator('new_client', [{
+    name: 'client[company_name]',    
+    rules: 'required'
+  }, {
+    name: 'client[contact_person]',
+    rules: 'required'
+  }, {
+    name: 'client[title]',
+    rules: 'required'
+  }, {
+    name: 'client[phone_number]',
+    rules: 'required'
+  }, {
+    name: 'client[email]',
+    rules: 'required'
+  }], function(errors, event) {
+    if (errors.length > 0) {
+    var temp;
+    for (var i=0; i<errors.length; i++){
+      temp = errors[i].id;
+      $("#" + temp).css("border","2px solid red");
+    }
+    }  
+  });
+</script>
