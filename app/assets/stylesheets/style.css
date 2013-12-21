@@ -228,6 +228,10 @@ span.upload
 	padding-left: 10px;
 	color: red;
 }
+.field_with_errors
+{
+	display: block;
+}
 .alert{
 	text-align: center;
 	height: 50px;

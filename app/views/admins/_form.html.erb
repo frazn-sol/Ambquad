@@ -230,11 +230,12 @@
     rules: 'required'
   }], function(errors, event) {
     if (errors.length > 0) {
-    var temp;
-    for (var i=0; i<errors.length; i++){
-      temp = errors[i].id;
-      $("#" + temp).css("border","2px solid red");
-    }
+      var obj;
+      for (var i=0; i<errors.length; i++){
+        obj = errors[i].id;
+        $("#"+obj).css("border","2px solid red");
+      }
+      $("#"+errors[0].id).focus();
     }  
   });
 </script>

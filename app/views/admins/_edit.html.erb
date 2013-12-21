@@ -1,6 +1,11 @@
 <%= form_for @client, :url => update_client_admin_path, :html => {:class => 'form-horizontal' } do |f| %>
-  <% @client.errors.full_messages.each do |msg| %>
-    <p><%= msg %></p>
+  <% if @client.errors.present? %>
+    <div id="form-errors">
+      <p class="error-tagline">Following are missing fields in the form:</p>
+      <% @client.errors.full_messages.each do |msg| %>
+        <p class="error">- <%= msg %></p>
+      <% end %>
+    </div>
   <% end %>
   <div class="control-group">
     <%= f.label :company_name, :class => 'control-label required' %>
@@ -212,7 +217,7 @@
   window.onload = initialize;
 </script>
 <script>
-  var validator = new FormValidator('new_client', [{
+  var validator = new FormValidator('edit_client_<%=@client.id%>', [{
     name: 'client[company_name]',    
     rules: 'required'
   }, {
@@ -244,11 +249,12 @@
     rules: 'required'
   }], function(errors, event) {
     if (errors.length > 0) {
-    var temp;
-    for (var i=0; i<errors.length; i++){
-      temp = errors[i].id;
-      $("#" + temp).css("border","2px solid red");
-    }
+      var obj;
+      for (var i=0; i<errors.length; i++){
+        obj = errors[i].id;
+        $("#"+obj).css("border","2px solid red");
+      }
+      $("#"+errors[0].id).focus();
     }  
   });
 </script>
