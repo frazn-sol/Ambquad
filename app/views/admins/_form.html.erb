@@ -1,6 +1,11 @@
 <%= nested_form_for @client, :url => create_client_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
-  <% @client.errors.full_messages.each do |msg| %>
-    <p><%= msg %></p>
+  <% if @client.errors.present? %>
+    <div id="form-errors">
+      <p class="error-tagline">Following are missing fields in the form:</p>
+      <% @client.errors.full_messages.each do |msg| %>
+        <p class="error">- <%= msg %></p>
+      <% end %>
+    </div>
   <% end %>
   <div class="control-group">
     <%= f.label :company_name, :class => 'control-label required' %>

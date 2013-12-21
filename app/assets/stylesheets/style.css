@@ -24,7 +24,7 @@ body {
 }
 
 #header .slog-tag{
-	margin-top: 25px;
+	margin-top: 10px;
 }
 #header .slogan{
 	font-size: 24px;
@@ -74,7 +74,8 @@ h3{
 }
 
 #clients-list{
-	height: 240px;
+	min-height: 300px;
+	max-height: 500px;
 	overflow: auto;
 	border: 1px solid black;
 }
@@ -206,7 +207,6 @@ form .controls input[type=file]
 	height: 37px;
 	opacity: 0;
 }
-
 .thumb{
   width:150px;
   height: 100px;
@@ -218,6 +218,15 @@ span.upload
 {
 	position: relative;
 	font-size: 12px;
+}
+#form-errors .error-tagline
+{
+	font-weight: bold;
+}
+#form-errors .error
+{
+	padding-left: 10px;
+	color: red;
 }
 .alert{
 	text-align: center;

@@ -49,11 +49,11 @@
           </tr> 
           <tr> 
             <th><%= model_class.human_attribute_name(:Projects_eneterd) %></th>
-            <td><%= Client.all.count.to_s %></td>  
+            <td><%= Project.all.count.to_s %></td>  
           </tr>
           <tr>  
             <th><%= model_class.human_attribute_name(:total_pictures) %></th>
-            <td><%= Client.all.count.to_s %></td> 
+            <td><%= (Client.where("logo != ''").count + Image.all.count).to_s %></td> 
           </tr>  
         </tbody>
       </table>
@@ -62,19 +62,19 @@
         <tbody>
           <tr>
             <th><%= model_class.human_attribute_name(:Ambquad_hosting_size) %></th>
-            <td style"border:2px solid black;"><%= Client.all.count.to_s+" MB" %></td>
+            <td style"border:2px solid black;"><%= "TBA" %></td>
           </tr> 
           <tr> 
             <th><%= model_class.human_attribute_name(:avg_hosting_size_per_client) %></th>
-            <td><%= Client.all.count.to_s+" MB" %></td>  
+            <td><%= "TBA" %></td>  
           </tr>
           <tr>  
             <th><%= model_class.human_attribute_name(:total_hosting_size) %></th>
-            <td><%= Client.all.count.to_s+" MB" %></td> 
+            <td><%= "TBA" %></td> 
           </tr>  
           <tr>  
             <th><%= model_class.human_attribute_name(:hosting_size_remaining) %></th>
-            <td><%= Client.all.count.to_s+" GB" %></td> 
+            <td><%= "TBA" %></td> 
           </tr>  
         </tbody>
       </table>

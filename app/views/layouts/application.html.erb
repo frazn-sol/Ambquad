@@ -18,6 +18,11 @@
         <div class="slog-tag aright">
           <p class="slogan">Innovative Solutions</p>
           <p class="tagline">for the construction industry</p>
+          <% if current_admin.present? %>
+          <div id="button" style="text-align:right;">
+            <%= link_to t('.new', :default => t("helpers.links.Logout")), '/sign_out', :class => 'btn btn-danger' %>
+          </div>
+          <% end %>
         </div>
         <div class="clear"></div>
       </div>
