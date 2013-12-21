@@ -2,7 +2,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
 // This example displays an address form, using the autocomplete feature
-// of the Google Places API to help users fill in the information.
+// of the Google Places API to help clients fill in the information.
 
 var placeSearch, autocomplete;
 var componentForm = {
@@ -19,7 +19,7 @@ function initialize() {
   autocomplete = new google.maps.places.Autocomplete(
       /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
       { types: ['geocode'] });
-  // When the user selects an address from the dropdown,
+  // When the client selects an address from the dropdown,
   // populate the address fields in the form.
   google.maps.event.addListener(autocomplete, 'place_changed', function() {
     fillInAddress();
@@ -104,7 +104,7 @@ $("#client_logo").change(function(){
   <div class="control-group">
     <%= f.label :email, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :email, :class => 'text_field' %>
+      <%= f.email_field :email, :class => 'text_field' %>
     </div>
   </div>
 
@@ -172,7 +172,7 @@ $("#client_logo").change(function(){
   <div class="control-group">
     <%= f.label :phone_number, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.text_field :phone_number, :class => 'text_field ' %>
+      <%= f.text_field :phone_number, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
@@ -200,3 +200,29 @@ $("#client_logo").change(function(){
     <%= f.submit nil, :class => 'btn btn-primary' %>
   </div>
 <% end %>
+<script>
+  var validator = new FormValidator('new_client', [{
+    name: 'client[company_name]',    
+    rules: 'required'
+  }, {
+    name: 'client[contact_person]',
+    rules: 'required'
+  }, {
+    name: 'client[title]',
+    rules: 'required'
+  }, {
+    name: 'client[phone_number]',
+    rules: 'required'
+  }, {
+    name: 'client[email]',
+    rules: 'required'
+  }], function(errors, event) {
+    if (errors.length > 0) {
+    var temp;
+    for (var i=0; i<errors.length; i++){
+      temp = errors[i].id;
+      $("#" + temp).css("border","2px solid red");
+    }
+    }  
+  });
+</script>
