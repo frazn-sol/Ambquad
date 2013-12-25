@@ -35,8 +35,17 @@ ActiveRecord::Schema.define(:version => 20131221112522) do
 
   create_table "clients", :force => true do |t|
     t.string   "company_name"
+    t.string   "slug"
     t.string   "contact_person"
     t.string   "email"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "logo"
     t.string   "website"
     t.string   "title"
     t.string   "slogan"
@@ -44,15 +53,6 @@ ActiveRecord::Schema.define(:version => 20131221112522) do
     t.string   "description"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.string   "city"
-    t.string   "state"
-    t.string   "country"
-    t.string   "address1"
-    t.string   "address2"
-    t.string   "logo"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "slug"
   end
 
   add_index "clients", ["slug"], :name => "index_clients_on_slug"
@@ -84,24 +84,18 @@ ActiveRecord::Schema.define(:version => 20131221112522) do
     t.date     "start_date"
     t.date     "completion_date"
     t.string   "project_value"
+    t.string   "address1"
+    t.string   "address2"
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.string   "client"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "client_name"
     t.string   "description"
     t.integer  "client_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "image"
-    t.string   "address1"
-    t.string   "address2"
-    t.float    "latitude"
-    t.float    "longitude"
-  end
-
-  create_table "shortened_links", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
 end

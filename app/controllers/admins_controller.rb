@@ -4,16 +4,14 @@ class AdminsController < ApplicationController
 	def index
 		@clients = Client.all
     @client = Client.new
-
 		respond_to do |format|
-      		format.html # index.html.erb
-      		format.json { render json: @clients }
-      	end
-    end
+  		format.html # index.html.erb
+  		format.json { render json: @clients }
+  	end
+  end
 
-   def show
+  def show
     @client = Client.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @client }
@@ -23,7 +21,6 @@ class AdminsController < ApplicationController
   def new
     @clients = Client.all
     @client = Client.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @client }
@@ -38,7 +35,6 @@ class AdminsController < ApplicationController
   # POST /clients.json
   def create_client
     @client = Client.new(params[:client])
-
     respond_to do |format|
       if @client.save
         flash[:notice] = "Client has been successfully added!"
@@ -55,7 +51,6 @@ class AdminsController < ApplicationController
   # PUT /clients/1.json
   def update_client
     @client = Client.find(params[:id])
-
     respond_to do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to admins_path, notice: 'Client was successfully updated.' }
@@ -72,7 +67,6 @@ class AdminsController < ApplicationController
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
-
     respond_to do |format|
       format.html { redirect_to admins_url }
       format.json { head :no_content }
@@ -81,7 +75,6 @@ class AdminsController < ApplicationController
 
   def new_project
     @project = Project.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @project }
@@ -89,8 +82,8 @@ class AdminsController < ApplicationController
   end
 
   def create_project
+    binding.pry
     @project = Project.new(params[:project])
-
     respond_to do |format|
       if @project.save
         flash[:notice] = "Project has been successfully added!"
@@ -109,7 +102,6 @@ class AdminsController < ApplicationController
 
   def update_project
     @project = Project.find(params[:id])
-
     respond_to do |format|
       if @project.update_attributes(params[:project])
         format.html { redirect_to admins_path, notice: 'Project was successfully updated.' }
@@ -123,7 +115,6 @@ class AdminsController < ApplicationController
 
   def view_project
     @project = Project.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -133,10 +124,10 @@ class AdminsController < ApplicationController
   def delete_project
     @project = Project.find(params[:id])
     @project.destroy
-
     respond_to do |format|
       format.html { redirect_to admins_url }
       format.json { head :no_content }
     end
   end
+
 end

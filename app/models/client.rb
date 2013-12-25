@@ -2,6 +2,8 @@ class Client < ActiveRecord::Base
   attr_accessible :company_name, :contact_person, :description, :email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude
   mount_uploader :logo, LogoUploader
 
+  has_many :projects, :foreign_key => 'client_id', :dependent => :destroy
+
   extend FriendlyId
   friendly_id :company_name, use: [:slugged, :history]
   validates_presence_of :company_name, :message => "Company Name can't be blank"

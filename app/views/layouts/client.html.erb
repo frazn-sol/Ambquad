@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambquad</title>
+  <%= stylesheet_link_tag    "application" %>  
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+</head>
+<body>
+  <div id="header_container">
+      <div id="header">
+        <div class="logo aleft">
+          <%= image_tag @client.logo_url.to_s, :class => "thumb", :id => "upload" %>
+        </div>
+        <div class="slog-tag aright">
+          <p class="slogan"><%= @client.title %></p>
+          <p class="tagline"><%= @client.slogan %></p>
+          <% if current_admin.present? %>
+          <div id="button" style="text-align:right;">
+            <%= link_to t('.new', :default => t("helpers.links.Logout")), '/sign_out', :class => 'btn btn-danger' %>
+          </div>
+          <% end %>
+        </div>
+        <div class="clear"></div>
+      </div>
+  </div> 
+  <% if notice || alert %>
+    <%= render partial: "admins/flash_messages", flash: flash %> 
+  <% end %>
+  <div id="container">
+    <div id="content">
+  		<%= yield %>
+    </div>      
+  </div>			
+  <div id="footer_container">
+      <div id="footer">
+        <div class="aleft">
+          <% if current_admin.nil? %>
+            <a href="http://<%= @client.website %>" class ='btn btn-primary'>Back to <%= @client.website %> </a>
+          <% end %>
+        </div>
+        <div class="aright" style="margin-bottom:10px;">
+          <% if current_admin.present? %>
+            <div id="button" style="text-align:right;">
+              <a href="#projectsList" role="button" class="btn btn-primary" data-toggle="modal">View projects list</a>
+              <a href="#newProject" role="button" class="btn btn-primary" data-toggle="modal">Enter a new project</a>
+              <%= link_to t('.new', :default => t("helpers.links.Admin Panel")), '/admins', :class => 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+        <div class="clear"></div>
+        Powered by &copy; 2014 Ambquad Solutions.
+      </div>
+  </div>
+</body>
+</html>
