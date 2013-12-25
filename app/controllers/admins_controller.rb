@@ -82,7 +82,6 @@ class AdminsController < ApplicationController
   end
 
   def create_project
-    binding.pry
     @project = Project.new(params[:project])
     respond_to do |format|
       if @project.save

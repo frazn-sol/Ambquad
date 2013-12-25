@@ -14,7 +14,7 @@ gem 'carrierwave', '>= 0.5.3'
 gem 'fog', '~> 1.0.0' # Need to specify version, as carrierwave references older (0.9.0) which doesn't allow configuration of Rackspace UK Auth URL
 gem "rmagick" 
 gem 'nested_form'
-
+gem 'gmaps4rails'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

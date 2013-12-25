@@ -7,7 +7,7 @@ class Project < ActiveRecord::Base
   belongs_to :client
   validates  :client, :presence => true  
 
-  validates_presence_of :client, :message => "Client can't be blank"
+  validates_presence_of :client_name, :message => "Client can't be blank"
   validates_presence_of :project_name, :message => "Project Name can't be blank"
   validates_presence_of :project_status, :message => "Project Status can't be blank"
   validates_presence_of :start_date, :message => "Start Date can't be blank"

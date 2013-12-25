@@ -6,6 +6,26 @@
 <div id="projectsList" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= render :partial => 'projects_list' %>
 </div>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 1270px; height: 500px;'></div>
+</div>
+
+<script>
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat":<%="#{@client.latitude}" %>,
+      "lng": <%="#{@client.longitude}" %>,
+      "infowindow":"hello"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  handler.getMap().setZoom(14);
+});
+</script>
 <style>
 #footer_container{
     position:fixed;
