@@ -17,9 +17,13 @@ class ClientsController < ApplicationController
     @project = Project.new
     @project.client_id = @client.id
     @projects = @client.projects.all
+    @hash = Gmaps4rails.build_markers(@projects) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+    end
     respond_to do |format|
       format.html {render :layout => "client"}# show.html.erb
-      format.json { render json: @client }
+      format.json { render json: @hash }
     end
   end
 
