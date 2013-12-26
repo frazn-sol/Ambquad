@@ -11,15 +11,34 @@
   <div id="map" style='width: 1270px; height: 500px;'></div>
 </div>
 
+<% if @hash.empty?%>
 <script>
 handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers(<%=raw @hash.to_json %>);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-  handler.getMap().setZoom(12);
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){  
+markers = handler.addMarkers([
+  {
+    "lat":<%="#{@client.latitude}" %>,
+    "lng": <%="#{@client.longitude}" %>,
+    "infowindow":"hello"
+  }
+]);
+handler.bounds.extendWith(markers);
+handler.fitMapToBounds();
+handler.getMap().setZoom(14);
 });
 </script>
+ 
+<% else %>
+<script>
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){  
+markers = handler.addMarkers(<%=raw @hash.to_json %>);
+handler.bounds.extendWith(markers);
+handler.fitMapToBounds();
+handler.getMap().setZoom(14);
+});
+</script>
+<% end %>
 <style>
 #footer_container{
     position:fixed;
