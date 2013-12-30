@@ -8,5 +8,9 @@
 <div id="infotext">
 <b><%= project.project_name %></b></br>
 <%= project.city %>, <%= project.country %></br>
-View Details <a href="#">Click here </a>
+View Details <a href="#details" role="button" data-toggle="modal">Click here </a>
+</div>
+
+<div id="details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<%= render :partial => 'details' %>
 </div>
