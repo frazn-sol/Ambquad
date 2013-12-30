@@ -15,6 +15,7 @@ gem 'fog', '~> 1.0.0' # Need to specify version, as carrierwave references older
 gem "rmagick" 
 gem 'nested_form'
 gem 'gmaps4rails'
+gem "geocoder"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

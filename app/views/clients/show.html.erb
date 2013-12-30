@@ -11,6 +11,10 @@
   <div id="map" style='width: 1270px; height: 450px;'></div>
 </div>
 
+<div id="details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= render :partial => 'details' %>
+</div>
+
 <% if @hash.empty?%>
 <script>
 handler = Gmaps.build('Google');
@@ -30,13 +34,14 @@ handler.getMap().setZoom(8);
  
 <% else %>
 <script>
-handler = Gmaps.build('Google');
+handler = Gmaps.build ('Google', { builders: { Marker: InfoBoxBuilder} });
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){  
 markers = handler.addMarkers(<%=raw @hash.to_json %>);
 handler.bounds.extendWith(markers);
 handler.fitMapToBounds();
 handler.getMap().setZoom(3);
 });
+
 </script>
 <% end %>
 <style>
@@ -44,4 +49,14 @@ handler.getMap().setZoom(3);
     position:fixed;
     bottom: 0; 
 }
+
+.yellow{
+}
+
+#map img { 
+  max-width: none;
+}
+#map label { 
+  width: auto; display:inline; 
+} 
 </style>

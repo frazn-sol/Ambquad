@@ -1,3 +1,4 @@
+
 <div id="infoimage">
 	<%if project.images.first.present? %>
 		<%= image_tag project.images.first.image, :height =>"100px", :width =>"100px"%>
@@ -8,9 +9,5 @@
 <div id="infotext">
 <b><%= project.project_name %></b></br>
 <%= project.city %>, <%= project.country %></br>
-View Details <a href="#details" role="button" data-toggle="modal">Click here </a>
-</div>
-
-<div id="details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<%= render :partial => 'details' %>
+View details <%= link_to "Click Here", "#details", :project=> "#{project.id}", "role" =>"button", "data-toggle" =>"modal"%>
 </div>
