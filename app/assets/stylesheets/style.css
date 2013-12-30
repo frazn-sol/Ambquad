@@ -195,7 +195,7 @@ form .controls textarea
 	height: 100px!important;
 }
 
-form .controls input[type=file]
+form input[type=file]
 {
 	border: none!important;
 	background: none;
@@ -235,6 +235,7 @@ span.upload
 .alert{
 	text-align: center;
 	height: 50px;
+	margin-bottom: 0 !important;
 }
 
 .alert-info{
@@ -294,4 +295,60 @@ label.required:after {
 }
 .pac-container{
 	z-index: 99999 !important;
+}
+
+img 
+{
+    max-width: none;
+}
+.popup
+{
+	position: absolute;
+	right: 10%;
+	top: 20%;
+	width: 45%;
+	z-index: 99;
+	padding: 10px;
+	border-radius: 25px;
+	background-color: rgba(175,166,154,0.9);
+	min-height: 250px;
+	max-height: 450px;
+	overflow: auto;
+}
+.popup form
+{
+	padding: 0;
+}
+.popup_close
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+.popup_close:hover
+{
+	cursor: pointer;
+}
+.popup_title
+{
+	text-align: center;
+	color: #E5E5E5;
+	margin-top: 10px;
+}
+.del,.remove_nested_fields
+{
+	font-size: 14px;
+}
+.del:hover,.remove_nested_fields:hover
+{
+	background: none;
+}
+.remove
+{
+	margin-left: 140px;
+}
+.upload-thumbs
+{
+	margin-top: 20px;
+	margin-right: 10px;
 }

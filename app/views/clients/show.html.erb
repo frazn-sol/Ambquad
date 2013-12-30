@@ -1,14 +1,19 @@
 <!-- Modal -->
-<div id="newProject" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <%= render :partial => 'admins/new_project_form' %>
-</div>
-<!-- Modal -->
-<div id="projectsList" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="projectsList" class="popup" style="display:none;">
+  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
   <%= render :partial => 'projects_list' %>
 </div>
+<!-- Modal -->
+<div id="newProject" class="popup" style="display:none;">
+  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+  <div class="page-header">
+    <h3 class="popup_title"><%= "#{@client.company_name} - New Project"%></h3>
+  </div>
+  <%= render :partial => 'admins/new_project_form' %>
+</div>
 
-<div style='width: 800px;'>
-  <div id="map" style='width: 1270px; height: 450px;'></div>
+<div>
+  <div id="map" style='width: 100%; height: 550px;'></div>
 </div>
 
 <div id="details" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -22,8 +27,7 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
 markers = handler.addMarkers([
   {
     "lat":<%="#{@client.latitude}" %>,
-    "lng": <%="#{@client.longitude}" %>,
-    "infowindow":"hello"
+    "lng": <%="#{@client.longitude}" %>
   }
 ]);
 handler.bounds.extendWith(markers);
@@ -44,6 +48,45 @@ handler.getMap().setZoom(3);
 
 </script>
 <% end %>
+
+<script>
+  // Gmaps.map.infobox = function(boxText) {
+  //   return {
+  //     content: boxText
+  //     ,disableAutoPan: false
+  //     ,maxWidth: 0
+  //     ,pixelOffset: new google.maps.Size(-140, 0)
+  //     ,zIndex: null
+  //     ,boxStyle: {
+  //       background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.5/examples/tipbox.gif') no-repeat"
+  //       ,opacity: 0.75
+  //       ,width: "280px"
+  //       }
+  //     ,closeBoxMargin: "10px 2px 2px 2px"
+  //     ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+  //     ,infoBoxClearance: new google.maps.Size(1, 1)
+  //     ,isHidden: false
+  //     ,pane: "floatPane"
+  //     ,enableEventPropagation: false
+  // }};
+  $(document).ready(function(){
+    $("#projectsListBtn").click(function(){
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#projectsList").fadeIn("fast");
+    });
+    $("#newProjectBtn").click(function(){
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#newProject").fadeIn("fast");
+    });
+    $(".popup_close").click(function(){
+      $(".popup").fadeOut("fast");
+    });
+  });
+</script>
 <style>
 #footer_container{
     position:fixed;

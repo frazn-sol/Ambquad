@@ -83,14 +83,15 @@ class AdminsController < ApplicationController
 
   def create_project
     @project = Project.new(params[:project])
+    client   = @project.client
     respond_to do |format|
       if @project.save
         flash[:notice] = "Project has been successfully added!"
-        format.html { redirect_to admins_path }
-        format.json { render json: @project, status: :created, location: @project }
+        format.html { redirect_to client_path(client) }
+        format.json { render json: @project, status: :created, location: client_path(client) }
       else
-        format.html { render action: "new_project" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.html { redirect_to client_path(client) }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -122,9 +123,10 @@ class AdminsController < ApplicationController
 
   def delete_project
     @project = Project.find(params[:id])
+    client = @project.client
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to admins_url }
+      format.html { redirect_to client_path(client) }
       format.json { head :no_content }
     end
   end

@@ -101,7 +101,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :corporate_logo, :class => 'control-label' %>
+    <%= f.label :corporate_logo, :class => 'control-label required' %>
     <div class="controls">
       <img id="upload" src="/assets/placeholder.jpeg" alt="corportae logo" class="thumb"/>  
       <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
@@ -230,7 +230,13 @@
   }, {
     name: 'client[state]',
     rules: 'required'
+  }, {
+    name: 'client[logo]',
+    rules: 'required'
   }], function(errors, event) {
+    $("input").each(function(){
+        $(this).css("border","none");      
+    })
     if (errors.length > 0) {
       var obj;
       for (var i=0; i<errors.length; i++){

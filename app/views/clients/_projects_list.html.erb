@@ -1,8 +1,8 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h3 class="popup_title"><%= "#{@client.company_name} - Project List"%></h3>
 </div>
-<table class="table table-striped">
+<table class="table">
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:project_name) %></th>
@@ -14,9 +14,13 @@
     <% @projects.each do |project| %>
       <tr>
         <td><%= project.project_name %></td>
-        <td><%= "#{project.address1} , #{project.city}, #{project.state}" %></td>
-        <td>
-
+        <td><%= "#{project.address1} , #{project.city}, #{project.state}, #{project.country}" %></td>
+        <td style="text-align:center;">
+          <%= link_to "x",
+                      delete_project_admin_path(project),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'del' %>
         </td>
       </tr>
     <% end %>
