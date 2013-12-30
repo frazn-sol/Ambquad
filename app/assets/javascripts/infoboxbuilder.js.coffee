@@ -8,16 +8,15 @@ class @InfoBoxBuilder extends Gmaps.Google.Builders.Marker # inherit from base b
     boxText.innerHTML = @args.infowindow
     @infowindow = new InfoBox(@infobox(boxText))
 
-
   infobox: (boxText)->
     content: boxText
-    pixelOffset: new google.maps.Size(-140, 0)
+    pixelOffset: new google.maps.Size(-90, -180)
+    contextMenu: true
     boxStyle:
-      marginTop: "-180px"
-      marginLeft: "50px"
       width: "180px"
-      background: "white"
+      background: "#32B2FD"
       borderRadius: "15px"
       shadowStyle: "1px"
       padding: "10px" 
+      
 
