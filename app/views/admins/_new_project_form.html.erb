@@ -18,14 +18,14 @@
   <div class="control-group">
     <%= f.label :start_date, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.date_select :start_date, :class => 'text_field' %>
+      <%= f.text_field :start_date, :class => 'datepicker text_field' %>
     </div>
   </div>
 
   <div class="control-group">
     <%= f.label :completion, :class => 'control-label required' %>
     <div class="controls">
-      <%= f.date_select :completion_date, :class => 'text_field' %>
+      <%= f.text_field :completion_date, :class => 'datepicker text_field' %>
     </div>
   </div>
   <div class="control-group">
@@ -91,26 +91,22 @@
     </div>
   </div>
   <%= f.fields_for :images, @project.images do |image|%>
-    <div class="upload-thumbs">
+    <div class="upload-thumbs aleft">
       <div class="remove">
         <%= image.link_to_remove "x" %>
       </div>  
-      <div class="image">
+      <div class="image aleft">
         <% if image.object.image.url.nil? %>
           <%= image_tag "/assets/placeholder.jpeg", :class => "thumb" %>
         <% else %>
            <%= image_tag image.object.image.url, :class => "thumb" %>
         <% end %> 
+        <span class="btn btn-info upload">Choose File<%= image.file_field :image, :class => 'project_image', :title => '' %></span>
       </div>    
-      <div class="info">
-        <div class="aright">
-          <%= image.file_field :image, :class => "project_image" %>
-        </div>  
-        <div class="clear"></div>
-      </div>
     </div>  
-    <% end %> 
-    <%= f.link_to_add "Upload New image", :images, :class => "btn-uploadnew typo-whitemed", :style => "font-size: 16px;" %>
+  <% end %>     
+  <div class="clear"></div> 
+  <%= f.link_to_add "Upload Project image", :images, :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
   <div class="clear"></div> 
   <%= f.hidden_field :latitude, :class => 'text_field' %>
     <%= f.hidden_field :longitude, :class => 'text_field' %>
@@ -120,8 +116,8 @@
     <input type="hidden" class="text_field" id="route" disabled="true"></input>
     <input type="hidden" class="text_field" id="street_number" disabled="true"></input>
     
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <div style="text-align:center;margin-top:40px;">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
 <% end %>
 
@@ -186,23 +182,16 @@
     $('#project_longitude').val(longitude);
   }
 
-  $(document).ready(function() {  
-    $('#thumbs').on('click', '.change_img', function(e){
-         $(this).prev().click();
-    });
-  });
-
   var image_element = "";
-    oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+  var oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
 
   oFReader.onload = function (oFREvent) {
         console.log(image_element);
         console.log($(image_element).parent().parent());
-       $(image_element).parent().parent().prev().find('.thumb').attr("src",  oFREvent.target.result);
+       $(image_element).parent().parent().find('.thumb').attr("src",  oFREvent.target.result);
   };
 
   $(document).on('change','.project_image',(function(){
-      console.log($(this));
       if (document.getElementById($(this).attr("id")).files.length === 0) { return; }
       var oFile = document.getElementById($(this).attr("id")).files[0];
       if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
@@ -216,12 +205,7 @@
     if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
     oFReader.readAsDataURL(oFile);
   }
-
-  function upFile(){
-    $("#project_images_attributes_0_image").click();
-  }
-  // [END region_fillform]
-    window.onload = initialize;
+  window.onload = initialize;
 </script>
 <script>
   var validator = new FormValidator('new_project', [{
@@ -255,13 +239,51 @@
     name: 'project[client_name]',
     rules: 'required'
   }], function(errors, event) {
+    $("input").each(function(){
+        $(this).css("border","none");      
+        $(this).removeClass("field_error");
+    })
     if (errors.length > 0) {
       var obj;
       for (var i=0; i<errors.length; i++){
         obj = errors[i].id;
+        $("#"+obj).addClass("field_error");
         $("#"+obj).css("border","1px solid red");
       }
       $("#"+errors[0].id).focus();
     }  
   });
+  $(function() {
+    $(".datepicker").datepicker({
+      dateFormat: 'mm/dd/yy'
+    });
+  });
+  var html = "";
+  $('form').submit(function() {  
+    if($(".field_error").length == 0){
+      var valuesToSubmit = $(this).serialize();
+      $.ajax({
+          type:"POST",
+          url: $(this).attr('action'), //sumbits it to the given url of the form
+          data: valuesToSubmit,
+          dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+        }).success(function(json){
+          location.href = window.location;
+          //act on result.
+        }).error(function(json){
+          html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
+          $.each(json.responseJSON, function(key, value) { 
+            html += '<p class="error">- '+value+'</p>'; 
+          });
+          html += "</div>"
+          $("#form-errors").remove();
+          $("form").prepend(html);
+          $("#form-errors").attr("tabindex",-1).focus();
+          //act on result.
+        });
+      return false; // prevents normal behaviour      
+    }
+    return false; // prevents normal behaviour      
+  });
+
 </script>
