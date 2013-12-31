@@ -102,7 +102,9 @@
         <% else %>
            <%= image_tag image.object.image.url, :class => "thumb" %>
         <% end %> 
-        <span class="btn btn-info upload">Choose File<%= image.file_field :image, :class => 'project_image', :title => '' %></span>
+        <span class="btn btn-info upload">Choose File
+          <%= image.file_field :image, :class => "project_image" %>
+        </span>
       </div>    
     </div>  
   <% end %>     
@@ -187,8 +189,6 @@
   var oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
 
   oFReader.onload = function (oFREvent) {
-        console.log(image_element);
-        console.log($(image_element).parent().parent());
        $(image_element).parent().parent().find('.thumb').attr("src",  oFREvent.target.result);
   };
 
@@ -258,32 +258,32 @@
       dateFormat: 'mm/dd/yy'
     });
   });
-  var html = "";
-  $('form').submit(function() {  
-    if($(".field_error").length == 0){
-      var valuesToSubmit = $(this).serialize();
-      $.ajax({
-          type:"POST",
-          url: $(this).attr('action'), //sumbits it to the given url of the form
-          data: valuesToSubmit,
-          dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-        }).success(function(json){
-          location.href = window.location;
-          //act on result.
-        }).error(function(json){
-          html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
-          $.each(json.responseJSON, function(key, value) { 
-            html += '<p class="error">- '+value+'</p>'; 
-          });
-          html += "</div>"
-          $("#form-errors").remove();
-          $("form").prepend(html);
-          $("#form-errors").attr("tabindex",-1).focus();
-          //act on result.
-        });
-      return false; // prevents normal behaviour      
-    }
-    return false; // prevents normal behaviour      
-  });
+  // var html = "";
+  // $('form').submit(function() {  
+  //   if($(".field_error").length == 0){
+  //     var valuesToSubmit = $(this).serialize();
+  //     $.ajax({
+  //         type:"POST",
+  //         url: $(this).attr('action'), //sumbits it to the given url of the form
+  //         data: valuesToSubmit,
+  //         dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+  //       }).success(function(json){
+  //         location.href = window.location;
+  //         //act on result.
+  //       }).error(function(json){
+  //         html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
+  //         $.each(json.responseJSON, function(key, value) { 
+  //           html += '<p class="error">- '+value+'</p>'; 
+  //         });
+  //         html += "</div>"
+  //         $("#form-errors").remove();
+  //         $("form").prepend(html);
+  //         $("#form-errors").attr("tabindex",-1).focus();
+  //         //act on result.
+  //       });
+  //     return false; // prevents normal behaviour      
+  //   }
+  //   return false; // prevents normal behaviour      
+  // });
 
 </script>

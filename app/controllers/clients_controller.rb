@@ -12,7 +12,7 @@ class ClientsController < ApplicationController
 
   # GET /clients/1
   # GET /clients/1.json
-  def show    
+  def show        
     @client = Client.find(params[:id])
     @project = Project.new
     @project.client_id = @client.id
