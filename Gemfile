@@ -16,6 +16,7 @@ gem "rmagick"
 gem 'nested_form'
 gem 'gmaps4rails'
 gem "geocoder"
+gem "american_date"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -52,4 +53,4 @@ end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-ruby '1.9.3'
+# ruby '1.9.3'

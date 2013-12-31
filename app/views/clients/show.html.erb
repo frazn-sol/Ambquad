@@ -24,6 +24,9 @@
 var json = "<%= @projects.to_json %>";
 json = JSON.parse(json.replace(/&quot;/g,'"'));
 
+var image = "<%= @images.to_json %>";
+image = JSON.parse(image.replace(/&quot;/g,'"'));
+
 var demoCenter = new google.maps.LatLng(41,-87);
 var boxList =[];
 var markers = [];
@@ -76,11 +79,12 @@ function addMarkers(){
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 5px;border-radius:10px;height:100px;";
-        boxText.innerHTML = "<button id='mybtn' onclick='open_window(2)'>Button</button>InfoBox for " + json[i]['project_name'];
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px;height:100px;";
+        boxText.innerHTML = "<img src="+image[i]+"></img> <b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window(2)'>Click Here</a>";
+        console.log(image[i]);
 
         var myOptions = {
-            content: box
+            content: boxText
             ,disableAutoPan: false
             ,maxWidth: 0
             ,pixelOffset: new google.maps.Size(-40, 0)

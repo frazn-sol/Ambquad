@@ -17,6 +17,10 @@ class ClientsController < ApplicationController
     @project = Project.new
     @project.client_id = @client.id
     @projects = @client.projects.all
+    @images = {}
+    @projects.each do |project|
+      @images[project.id] = project.images.first.image.url if project.images.present? 
+    end
     respond_to do |format|
       format.html {render :layout => "client"}# show.html.erb
       format.json { render json: @hash }

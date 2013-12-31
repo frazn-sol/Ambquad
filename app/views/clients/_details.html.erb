@@ -1,3 +1,4 @@
+<%if  @client.projects.present? %>
 <div id="project_details">
 	<% project = @client.projects.last %>
 	<h3> <%= project.project_name %> </h3></br>
@@ -18,7 +19,7 @@
 	<b>Client: </b> <%= project.client_name %> </br>
 	<b>Project Description: </b> <%= project.description %>
 </div>
-
+<% end %>
 
 <style>
 	#project_details{
