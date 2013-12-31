@@ -15,34 +15,102 @@
 <div>
   <div id="map" style='width: 100%; height: 550px;'></div>
 </div>
+<script type="text/javascript">
+var json = "<%= @projects.to_json %>";
+json = JSON.parse(json.replace(/&quot;/g,'"'));
 
-<% if @hash.empty?%>
-<script>
-handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){  
-markers = handler.addMarkers([
-  {
-    "lat":<%="#{@client.latitude}" %>,
-    "lng": <%="#{@client.longitude}" %>
+var demoCenter = new google.maps.LatLng(41,-87);
+var boxList =[];
+var markers = [];
+var bounds = new google.maps.LatLngBounds();
+function initialize() {
+  if(json.length > 0){
+    map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+    });
+    addMarkers();
+    // This is needed to set the zoom after fitbounds, 
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        zoomChangeBoundsListener = 
+            google.maps.event.addListener(map, 'bounds_changed', function(event) {
+                if (this.getZoom() > 12 && this.initialZoom == true) {
+                    // Change max/min zoom here
+                    this.setZoom(12);
+                    this.initialZoom = false;
+                }
+            google.maps.event.removeListener(zoomChangeBoundsListener);
+        });
+    });
+    map.initialZoom = true;
+    map.fitBounds(bounds);
+
+    var markerCluster = new MarkerClusterer(map, markers);
   }
-]);
-handler.bounds.extendWith(markers);
-handler.fitMapToBounds();
-handler.getMap().setZoom(8);
-});
+  else{
+    var latlng = new google.maps.LatLng(<%= @client.latitude%>, <%= @client.longitude%>);
+    var myOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+  }
+  initializeAutoComplete();
+}
+
+function addMarkers(){
+    for (var i = 0; i < json.length; i++)
+    {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(json[i]['latitude'], json[i]['longitude']),
+            map: map,
+            id: i,
+            title: json[i]['project_name']
+        });           
+        markers.push(marker);
+        var boxText = document.createElement("div");
+        boxText.id = i;
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 5px;border-radius:10px;height:100px;";
+        boxText.innerHTML = "<button id='mybtn' onclick='open_window(2)'>Button</button>InfoBox for " + json[i]['project_name'];
+
+        var myOptions = {
+            content: box
+            ,disableAutoPan: false
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-40, 0)
+            ,zIndex: null
+            ,boxStyle: {
+                width: "280px"
+                ,height: "100px"
+            }
+            ,closeBoxMargin: "15px 10px 10px 10px"
+            ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+            ,infoBoxClearance: new google.maps.Size(1, 1)
+            ,isHidden: false
+            ,pane: "floatPane"
+            ,enableEventPropagation: false
+        };
+
+        var ib = new InfoBox(myOptions);
+        boxList.push(ib);
+
+        google.maps.event.addListener(marker,'click',(function(marker, i) {
+            return function() {
+                for ( h = 0; h < boxList.length; h++ ) {
+                    boxList[h].close();
+                }
+                boxList[i].open(map, this);
+            }
+        })(marker, i));
+        bounds.extend(marker.position);  
+    } //endfor  
+} //end function
+window.onload = initialize;
+
+function open_window (val) {
+  alert(val);
+}
 </script>
- 
-<% else %>
-<script>
-handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){  
-markers = handler.addMarkers(<%=raw @hash.to_json %>);
-handler.bounds.extendWith(markers);
-handler.fitMapToBounds();
-handler.getMap().setZoom(3);
-});
-</script>
-<% end %>
 
 <script>
   // Gmaps.map.infobox = function(boxText) {
