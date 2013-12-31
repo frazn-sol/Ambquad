@@ -35,7 +35,6 @@ class AdminsController < ApplicationController
   # POST /clients.json
   def create_client
     @client = Client.new(params[:client])
-    binding.pry
     respond_to do |format|
       if @client.save
         flash[:notice] = "Client has been successfully added!"
@@ -83,9 +82,7 @@ class AdminsController < ApplicationController
   end
 
   def create_project
-    binding.pry
     @project = Project.new(params[:project])
-    binding.pry
     client   = @project.client
     respond_to do |format|
       if @project.save

@@ -12,10 +12,7 @@
   <%= render :partial => 'admins/new_project_form' %>
 </div>
 
-<div id="details" class="popup" style="display:none;">
-  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
-  <%= render :partial => 'details' %>
-</div>
+<%= render :partial => 'details' %>
 
 <div>
   <div id="map" style='width: 100%; height: 550px;'></div>
@@ -27,7 +24,6 @@ json = JSON.parse(json.replace(/&quot;/g,'"'));
 var image = "<%= @images.to_json %>";
 image = JSON.parse(image.replace(/&quot;/g,'"'));
 
-var demoCenter = new google.maps.LatLng(41,-87);
 var boxList =[];
 var markers = [];
 var bounds = new google.maps.LatLngBounds();
@@ -79,19 +75,18 @@ function addMarkers(){
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px;height:100px;";
-        boxText.innerHTML = "<img src="+image[i]+"></img> <b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window(2)'>Click Here</a>";
-        console.log(image[i]);
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px";
+        boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'width='110' /></div><div style='float:left;margin-left:10px;'><b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")'>Click Here</a></div><div style='clear:both;'></div>";
+        console.log(image);
 
         var myOptions = {
             content: boxText
             ,disableAutoPan: false
             ,maxWidth: 0
-            ,pixelOffset: new google.maps.Size(-40, 0)
+            ,pixelOffset: new google.maps.Size(-170, 0)
             ,zIndex: null
             ,boxStyle: {
-                width: "280px"
-                ,height: "100px"
+                width: "350px"
             }
             ,closeBoxMargin: "15px 10px 10px 10px"
             ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
@@ -117,8 +112,14 @@ function addMarkers(){
 } //end function
 window.onload = initialize;
 
-function open_window (val) {
-  alert(val);
+function open_window (project_id) {
+  $(".popup").each(function(){
+    $(this).fadeOut("fast");  
+  });
+  $("#project_details_"+project_id).fadeIn("fast");
+  for ( h = 0; h < boxList.length; h++ ) {
+      boxList[h].close();
+  }
 }
 </script>
 

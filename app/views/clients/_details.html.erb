@@ -1,43 +1,45 @@
-<%if  @client.projects.present? %>
-<div id="project_details">
-	<% project = @client.projects.last %>
-	<h3> <%= project.project_name %> </h3></br>
-	<div id="left">
-		<%= image_tag project.images.first.image.url, :width =>"260px", :height => "300px" %>
-	</div>
-	<div id="right">
-	<% project.images.each do |p| %>
-		<%= link_to image_tag(p.image.url, :width => "120px", :height => "120px", :class => "spacing"), p.image.url %>
+<%if @client.projects.present? %>
+	<% @client.projects.each do |project| %>
+		<div id="project_details_<%= project.id %>" class="popup" style="display:none;">
+		  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+			<div>
+				<h3> <%= project.project_name %> </h3></br>
+				<div class="infobox_left">
+					<%= image_tag project.images.first.image.url, :width =>"200", :height => "200" %>
+				</div>
+				<div class="infobox_right">
+				<% project.images.each do |p| %>
+					<%= link_to image_tag(p.image.url, :class => "project_thumbs"), p.image.url %>
+				<% end %>
+				</div>
+				<div class="clear"></div>
+				<b>Project Status: </b> <%= project.project_status %> </br>
+				<b>Start Date: </b> <%= project.start_date %> </br>
+				<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
+				<b>Project Value: </b> <%= project.project_value %> </br>
+				<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
+				<b>Client: </b> <%= project.client_name %> </br>
+				<b>Project Description: </b> <%= project.description %>
+			</div>
+		</div>
 	<% end %>
-	</div>
-	<div class="clear"></div>
-	<b>Project Status: </b> <%= project.project_status %> </br>
-	<b>Start Date: </b> <%= project.start_date %> </br>
-	<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
-	<b>Project Value: </b> <%= project.project_value %> </br>
-	<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
-	<b>Client: </b> <%= project.client_name %> </br>
-	<b>Project Description: </b> <%= project.description %>
-</div>
 <% end %>
 
 <style>
-	#project_details{
-		padding: 10px;
-		min-height:400px;
-		}
-	#left{
+	.infobox_left{
 		float:left;
 		width:49%;
-		height:180px;
+		height:210px;
 	}
-	#right{
+	.infobox_right{
 		float: right;
 		width:50%;
-		height:163px;
+		height:210px;
 		overflow:auto;
 	}
-	.spacing{
+	.project_thumbs{
+		width: 120px !important;
+		height: 120px !important;
 		margin-bottom: 3px;
 		margin-right: 1px;
 	}
@@ -47,8 +49,8 @@
 </style>
 
 <script type="text/javascript">
-      $(document).ready(function() {
-        $('#right').magnificPopup({
+    $(document).ready(function() {
+        $('.infobox_right').magnificPopup({
           delegate: 'a',
           type: 'image',
           tLoading: 'Loading image #%curr%...',
@@ -64,5 +66,5 @@
             }
           }
         });
-      });
+    });
     </script>

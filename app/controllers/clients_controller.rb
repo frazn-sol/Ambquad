@@ -18,8 +18,8 @@ class ClientsController < ApplicationController
     @project.client_id = @client.id
     @projects = @client.projects.all
     @images = {}
-    @projects.each do |project|
-      @images[project.id] = project.images.first.image.url if project.images.present? 
+    @projects.each_with_index do |project,i|
+      @images[i] = project.images.first.image.url.to_s if project.images.present? 
     end
     respond_to do |format|
       format.html {render :layout => "client"}# show.html.erb
