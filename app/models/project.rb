@@ -4,7 +4,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :images, :allow_destroy => true
   belongs_to :client
   validates  :client, :presence => true  
-
   validates_presence_of :client_name, :message => "Client can't be blank"
   validates_presence_of :project_name, :message => "Project Name can't be blank"
   validates_presence_of :project_status, :message => "Project Status can't be blank"

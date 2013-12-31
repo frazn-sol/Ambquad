@@ -45,26 +45,38 @@ markers = handler.addMarkers(<%=raw @hash.to_json %>);
 handler.bounds.extendWith(markers);
 handler.fitMapToBounds();
 handler.getMap().setZoom(3);
+function InfoboxHandler()
+         {
+            alert("Infobox title was clicked!");
+         }
 });
+
 </script>
 <% end %>
 
 <script>
 
   $(document).ready(function(){
+
+    // $("#projectsListBtn").click(function(){
+    //   $(".popup").each(function(){
+    //     $(this).fadeOut("fast");  
+    //   });
+    //   $("#projectsList").fadeIn("fast");
+    // });
+
     $("#projectsListBtn").click(function(){
-      $(".popup").each(function(){
-        $(this).fadeOut("fast");  
-      });
-      $("#projectsList").fadeIn("fast");
-    });
-      
-    $("#viewdetails").click(function(){
       $(".popup").each(function(){
         $(this).fadeOut("fast");  
       });
       $("#details").fadeIn("fast");
     });
+
+    // $(".yellow").delegate("a", "mouseenter", function() {
+
+    //   alert("hy");
+    //   console.log("mouse enter detected");
+    // });
 
     $("#newProjectBtn").click(function(){
       $(".popup").each(function(){
@@ -82,8 +94,13 @@ handler.getMap().setZoom(3);
     position:fixed;
     bottom: 0; 
 }
-
-.yellow{
+.yellow { 
+  border: 1px solid black;
+  margin-top: 8px; 
+  background: yellow; 
+  padding: 5px; 
+  border-radius: 15px; 
+  padding:10px;
 }
 
 #map img { 
