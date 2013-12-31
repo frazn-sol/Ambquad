@@ -132,7 +132,7 @@
     country: 'long_name'
   };
 
-  function initialize() {
+  function initializeAutoComplete() {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
     autocomplete = new google.maps.places.Autocomplete(
@@ -206,7 +206,6 @@
     if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
     oFReader.readAsDataURL(oFile);
   }
-  window.onload = initialize;
 </script>
 <script>
   var validator = new FormValidator('new_project', [{
