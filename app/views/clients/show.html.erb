@@ -12,6 +12,11 @@
   <%= render :partial => 'admins/new_project_form' %>
 </div>
 
+<div id="details" class="popup" style="display:none;">
+  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+  <%= render :partial => 'details' %>
+</div>
+
 <div>
   <div id="map" style='width: 100%; height: 550px;'></div>
 </div>
@@ -113,25 +118,7 @@ function open_window (val) {
 </script>
 
 <script>
-  // Gmaps.map.infobox = function(boxText) {
-  //   return {
-  //     content: boxText
-  //     ,disableAutoPan: false
-  //     ,maxWidth: 0
-  //     ,pixelOffset: new google.maps.Size(-140, 0)
-  //     ,zIndex: null
-  //     ,boxStyle: {
-  //       background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.5/examples/tipbox.gif') no-repeat"
-  //       ,opacity: 0.75
-  //       ,width: "280px"
-  //       }
-  //     ,closeBoxMargin: "10px 2px 2px 2px"
-  //     ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-  //     ,infoBoxClearance: new google.maps.Size(1, 1)
-  //     ,isHidden: false
-  //     ,pane: "floatPane"
-  //     ,enableEventPropagation: false
-  // }};
+
   $(document).ready(function(){
     $("#projectsListBtn").click(function(){
       $(".popup").each(function(){
@@ -139,6 +126,14 @@ function open_window (val) {
       });
       $("#projectsList").fadeIn("fast");
     });
+      
+    $("#viewdetails").click(function(){
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#details").fadeIn("fast");
+    });
+
     $("#newProjectBtn").click(function(){
       $(".popup").each(function(){
         $(this).fadeOut("fast");  
@@ -155,4 +150,14 @@ function open_window (val) {
     position:fixed;
     bottom: 0; 
 }
+
+.yellow{
+}
+
+#map img { 
+  max-width: none;
+}
+#map label { 
+  width: auto; display:inline; 
+} 
 </style>

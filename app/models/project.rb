@@ -1,9 +1,7 @@
 class Project < ActiveRecord::Base
   attr_accessible :city, :client_name, :completion_date, :country, :description, :project_name, :project_status, :project_value, :start_date, :state, :client_id, :images_attributes, :address1, :address2, :latitude, :longitude
-  
   has_many :images,   :as => :imageable, :dependent => :destroy
   accepts_nested_attributes_for :images, :allow_destroy => true
-
   belongs_to :client
   validates  :client, :presence => true  
 
@@ -18,7 +16,6 @@ class Project < ActiveRecord::Base
   validates_presence_of :country, :message => "Country can't be blank"   
   validates_presence_of :client_name, :message => "Client name can't be blank"   
   validate :check_lat_long
-  
   def check_lat_long
     if (self.latitude == nil && self.longitude == nil)
       errors.add(:base, "Please select a valid location from suggestions")
@@ -26,5 +23,19 @@ class Project < ActiveRecord::Base
       errors.add(:base, "Please select a valid location from suggestions")
     end  
   end
+
+    def gmaps4rails_address
+    #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
+    "#{self.address1}, #{self.city}, #{self.country}"
+  end
+
+  def gmaps4rails_title
+    "#{self.title}"
+  end
+
+  def gmaps4rails_infowindow
+    "#{self.title}"
+  end
+
 end
 

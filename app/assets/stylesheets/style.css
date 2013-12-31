@@ -296,6 +296,7 @@ label.required:after {
 .pac-container{
 	z-index: 99999 !important;
 }
+
 img 
 {
     max-width: none;
