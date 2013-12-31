@@ -4,10 +4,10 @@
 		  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
 			<div>
 				<h3> <%= project.project_name %> </h3></br>
-				<div class="infobox_left">
+				<div id="infobox_left_<%=project.id%>" class="infobox_left">
 					<%= image_tag project.images.first.image.url, :width =>"200", :height => "200" %>
 				</div>
-				<div class="infobox_right">
+				<div id="infobox_right_<%=project.id%>" class="infobox_right">
 				<% project.images.each do |p| %>
 					<%= link_to image_tag(p.image.url, :class => "project_thumbs"), p.image.url %>
 				<% end %>
@@ -47,24 +47,3 @@
 		background:transparent;
 	}
 </style>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.infobox_right').magnificPopup({
-          delegate: 'a',
-          type: 'image',
-          tLoading: 'Loading image #%curr%...',
-          mainClass: 'mfp-img-mobile',
-          gallery: {
-            enabled: true,
-            navigateByImgClick: true,
-            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-          },
-          image: {
-            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-            titleSrc: function(item) {
-            }
-          }
-        });
-    });
-    </script>
