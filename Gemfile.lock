@@ -171,7 +171,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  american_date
   better_errors
   carrierwave (>= 0.5.3)
   coffee-rails (~> 3.2.1)

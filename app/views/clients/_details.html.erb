@@ -1,12 +1,12 @@
 <div id="project_details">
-	<% project = @client.projects.first %>
+	<% project = @client.projects.last %>
 	<h3> <%= project.project_name %> </h3></br>
 	<div id="left">
-		<%= image_tag project.images.first.image.url, :width =>"250px", :height => "250px" %>
+		<%= image_tag project.images.first.image.url, :width =>"260px", :height => "300px" %>
 	</div>
 	<div id="right">
 	<% project.images.each do |p| %>
-		<%= image_tag p.image.url, :width =>"120px", :height => "120px" %>
+		<%= link_to image_tag(p.image.url, :width => "120px", :height => "120px", :class => "spacing"), p.image.url %>
 	<% end %>
 	</div>
 	<div class="clear"></div>
@@ -14,7 +14,7 @@
 	<b>Start Date: </b> <%= project.start_date %> </br>
 	<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
 	<b>Project Value: </b> <%= project.project_value %> </br>
-	<b>Location: </b> <%= project.project_status %> </br>
+	<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
 	<b>Client: </b> <%= project.client_name %> </br>
 	<b>Project Description: </b> <%= project.description %>
 </div>
@@ -23,15 +23,45 @@
 <style>
 	#project_details{
 		padding: 10px;
-		height:450px;
-		overflow:auto;
-	}
+		min-height:400px;
+		}
 	#left{
 		float:left;
 		width:49%;
+		height:180px;
 	}
 	#right{
 		float: right;
 		width:50%;
+		height:163px;
+		overflow:auto;
+	}
+	.spacing{
+		margin-bottom: 3px;
+		margin-right: 1px;
+	}
+	a:hover{
+		background:transparent;
 	}
 </style>
+
+<script type="text/javascript">
+      $(document).ready(function() {
+        $('#right').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            titleSrc: function(item) {
+            }
+          }
+        });
+      });
+    </script>
