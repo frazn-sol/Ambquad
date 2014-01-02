@@ -14,9 +14,12 @@ Ambquad::Application.routes.draw do
       put :update_project
       delete :delete_project
       get :view_project
+      put :reset_password
     end
 
     collection do 
+      get :forgot_password
+      post :validate_project
       get :welcome
       post :create_client
       get :new_project

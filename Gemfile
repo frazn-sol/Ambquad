@@ -16,7 +16,8 @@ gem "rmagick"
 gem 'nested_form'
 gem 'gmaps4rails'
 gem "geocoder"
-gem "american_date"
+gem 'remotipart', '~> 1.2'
+# gem "american_date"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

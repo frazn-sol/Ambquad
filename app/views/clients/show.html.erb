@@ -12,6 +12,8 @@
   <%= render :partial => 'admins/new_project_form' %>
 </div>
 
+<%= render :partial => 'admins/edit_project' %>
+
 <%= render :partial => 'details' %>
 
 <div>
@@ -77,7 +79,6 @@ function addMarkers(){
         boxText.id = i;
         boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px";
         boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'width='110' /></div><div style='float:left;margin-left:10px;'><b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")'>Click Here</a></div><div style='clear:both;'></div>";
-        console.log(image);
 
         var myOptions = {
             content: boxText
@@ -163,6 +164,7 @@ function open_window (project_id) {
     //   console.log("mouse enter detected");
     // });
 
+
     $("#newProjectBtn").click(function(){
       $(".popup").each(function(){
         $(this).fadeOut("fast");  
@@ -172,6 +174,15 @@ function open_window (project_id) {
     $(".popup_close").click(function(){
       $(".popup").fadeOut("fast");
     });
+  });
+
+  $(".edit").click(function(){
+    var temp = jQuery(this).attr("id");
+    console.log(temp);
+    $(".popup").each(function(){
+      $(this).fadeOut("fast");  
+    });
+    $("#"+temp+"_form").fadeIn("fast");
   });
 </script>
 <style>

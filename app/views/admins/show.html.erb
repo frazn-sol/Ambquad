@@ -1,35 +1,197 @@
-<%- model_class = Client -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+<!-- Modal -->
+<div id="projectsList" class="popup" style="display:none;">
+  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+  <%= render :partial => 'projects_list' %>
+</div>
+<!-- Modal -->
+<div id="newProject" class="popup" style="display:none;">
+  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+  <div class="page-header">
+    <h3 class="popup_title"><%= "#{@client.company_name} - New Project"%></h3>
+  </div>
+  <%= render :partial => 'admins/new_project_form' %>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:company_name) %>:</strong></dt>
-  <dd><%= @client.company_name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:contact_person) %>:</strong></dt>
-  <dd><%= @client.contact_person %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:email) %>:</strong></dt>
-  <dd><%= @client.email %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:website) %>:</strong></dt>
-  <dd><%= @client.website %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
-  <dd><%= @client.title %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:slogan) %>:</strong></dt>
-  <dd><%= @client.slogan %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:phone_number) %>:</strong></dt>
-  <dd><%= @client.phone_number %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @client.description %></dd>
-</dl>
+<%= render :partial => 'details' %>
 
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              admins_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_admin_path(@client), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              admin_path(@client),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+<div>
+  <div id="map" style='width: 100%; height: 550px;'></div>
 </div>
+<script type="text/javascript">
+var json = "<%= @projects.to_json %>";
+json = JSON.parse(json.replace(/&quot;/g,'"'));
+
+var image = "<%= @images.to_json %>";
+image = JSON.parse(image.replace(/&quot;/g,'"'));
+
+var boxList =[];
+var markers = [];
+var bounds = new google.maps.LatLngBounds();
+function initialize() {
+  if(json.length > 0){
+    map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+    });
+    addMarkers();
+    // This is needed to set the zoom after fitbounds, 
+    google.maps.event.addListener(map, 'zoom_changed', function() {
+        zoomChangeBoundsListener = 
+            google.maps.event.addListener(map, 'bounds_changed', function(event) {
+                if (this.getZoom() > 12 && this.initialZoom == true) {
+                    // Change max/min zoom here
+                    this.setZoom(12);
+                    this.initialZoom = false;
+                }
+            google.maps.event.removeListener(zoomChangeBoundsListener);
+        });
+    });
+    map.initialZoom = true;
+    map.fitBounds(bounds);
+
+    var markerCluster = new MarkerClusterer(map, markers);
+  }
+
+  else{
+    var latlng = new google.maps.LatLng(<%= @client.latitude%>, <%= @client.longitude%>);
+    var myOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+  }
+  initializeAutoComplete();
+}
+
+function addMarkers(){
+    for (var i = 0; i < json.length; i++)
+    {
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(json[i]['latitude'], json[i]['longitude']),
+            map: map,
+            id: i,
+            title: json[i]['project_name']
+        });           
+        markers.push(marker);
+        var boxText = document.createElement("div");
+        boxText.id = i;
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px";
+        boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'width='110' /></div><div style='float:left;margin-left:10px;'><b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")'>Click Here</a></div><div style='clear:both;'></div>";
+        console.log(image);
+
+        var myOptions = {
+            content: boxText
+            ,disableAutoPan: false
+            ,maxWidth: 0
+            ,pixelOffset: new google.maps.Size(-170, -180)
+            ,zIndex: null
+            ,boxStyle: {
+              width: "350px"
+            }
+            ,closeBoxMargin: "15px 10px 10px 10px"
+            ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+            ,infoBoxClearance: new google.maps.Size(1, 1)
+            ,isHidden: false
+            ,pane: "floatPane"
+            ,enableEventPropagation: false
+        };
+
+        var ib = new InfoBox(myOptions);
+        boxList.push(ib);
+
+        google.maps.event.addListener(marker,'click',(function(marker, i) {
+            return function() {
+                for ( h = 0; h < boxList.length; h++ ) {
+                    boxList[h].close();
+                }
+                boxList[i].open(map, this);
+            }
+        })(marker, i));
+        bounds.extend(marker.position);  
+    } //endfor  
+} //end function
+window.onload = initialize;
+
+function open_window (project_id) {
+  $(".popup").each(function(){
+    $(this).fadeOut("fast");  
+  });
+  $("#project_details_"+project_id).fadeIn("fast");
+  for ( h = 0; h < boxList.length; h++ ) {
+      boxList[h].close();
+  }
+  $('#infobox_right_'+project_id).magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+            titleSrc: function(item) {
+            }
+          }
+        });
+}
+</script>
+
+<script>
+
+  $(document).ready(function(){
+
+    // $("#projectsListBtn").click(function(){
+    //   $(".popup").each(function(){
+    //     $(this).fadeOut("fast");  
+    //   });
+    //   $("#projectsList").fadeIn("fast");
+    // });
+
+    $("#projectsListBtn").click(function(){
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#projectsList").fadeIn("fast");
+    });
+
+    // $(".yellow").delegate("a", "mouseenter", function() {
+
+    //   alert("hy");
+    //   console.log("mouse enter detected");
+    // });
+
+    $("#newProjectBtn").click(function(){
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#newProject").fadeIn("fast");
+    });
+    $(".popup_close").click(function(){
+      $(".popup").fadeOut("fast");
+    });
+  });
+</script>
+<style>
+#footer_container{
+    position:fixed;
+    bottom: 0; 
+}
+.yellow { 
+  border: 1px solid black;
+  margin-top: 8px; 
+  background: yellow; 
+  padding: 5px; 
+  border-radius: 15px; 
+  padding:10px;
+}
+
+#map img { 
+  max-width: none;
+}
+#map label { 
+  width: auto; display:inline; 
+} 
+</style>

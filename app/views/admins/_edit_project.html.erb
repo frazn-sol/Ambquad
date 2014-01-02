@@ -1,5 +1,11 @@
-<%= nested_form_for @project, :url => create_project_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
-  <% @project.errors.full_messages.each do |msg| %>
+<% @client.projects.each do |project|%>
+  <div id="edit_project_<%=project.id%>_form" class="popup" style="display:none;">
+    <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+    <div class="page-header">
+      <h3 class="popup_title"><%= "#{project.project_name} - Edit Project"%></h3>
+    </div>
+    <%= nested_form_for project, :url => update_project_admin_path(project), :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+  <% project.errors.full_messages.each do |msg| %>
     <p><%= msg %></p>
   <% end %>
   <%= f.hidden_field :client_id, :class => 'text_field' %>
@@ -91,7 +97,7 @@
       <%= f.text_area :description, :class => 'text_field' %>
     </div>
   </div>
-  <%= f.fields_for :images, @project.images do |image|%>
+  <%= f.fields_for :images, project.images do |image|%>
     <div class="upload-thumbs aleft">
       <div class="remove">
         <%= image.link_to_remove "x" %>
@@ -122,8 +128,8 @@
     <div style="text-align:center;margin-top:40px;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
-<% end %>
-
+	<% end %>
+  </div>
 <script>
   var placeSearch, autocomplete;
   var componentForm = {
@@ -208,7 +214,7 @@
   }
 </script>
 <script>
-  var validator = new FormValidator('new_project', [{
+  var validator = new FormValidator('edit_project_<%=project.id%>', [{
     name: 'project[project_name]',    
     rules: 'required'
   }, {
@@ -258,7 +264,7 @@
       dateFormat: 'mm/dd/yy'
     });
   });
-  var html = "";
+  // var html = "";
   // $('form').submit(function() {  
   //   if($(".field_error").length == 0){
   //     var valuesToSubmit = $(this).serialize();
@@ -285,46 +291,6 @@
   //   }
   //   return false; // prevents normal behaviour      
   // });
-  $('form').submit(function(){
-    if($(".field_error").length == 0){
-      var formId = $(this).attr("id");
-      var data  = $(this).serialize();
-      validate_form(data);
 
-        if(json['result'] == 'true')
-        {
-          return true;
-        }
-        else
-        {              
-          html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
-          $.each(json['errors'], function(key, value) { 
-            html += '<p class="error">- '+value+'</p>'; 
-          });
-          html += "</div>"
-          $("#form-errors").remove();
-          $("form").prepend(html);
-          $("#form-errors").attr("tabindex",-1).focus();
-          //act on result.
-        }
-
-    });
-
-  function validate_form(data){
-    $.ajax({
-      url:'/admins/validate_project',
-      type:"POST",
-      dataType:'json',
-      data: data,
-      processData:false,
-      success: function (json)
-      {
-      },
-      error: function (xhr, status)
-      {
-        alert("unsuccessful");
-      }
-    });
-    return false;
-    }
 </script>
+<% end %>
