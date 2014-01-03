@@ -45,12 +45,12 @@
     <div class="control-group">
     <label class="control-label">Address Autocomplete</label> 
     <div class="controls">
-       <input class="text_field" id="autocomplete" placeholder="Enter your address" type="text"></input>
+       <input class="text_field" id="autocomplete_<%=project.id%>" placeholder="Enter your address" type="text"></input>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :address1, :class => 'control-label required' %>
+    <%= f.label :address1, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :address1, :class => 'text_field' %>
     </div>
@@ -97,6 +97,7 @@
       <%= f.text_area :description, :class => 'text_field' %>
     </div>
   </div>
+  <%= f.link_to_add "Upload Project image", :images, :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
   <%= f.fields_for :images, project.images do |image|%>
     <div class="upload-thumbs aleft">
       <div class="remove">
@@ -115,16 +116,8 @@
     </div>  
   <% end %>     
   <div class="clear"></div> 
-  <%= f.link_to_add "Upload Project image", :images, :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
-  <div class="clear"></div> 
   <%= f.hidden_field :latitude, :class => 'text_field' %>
-    <%= f.hidden_field :longitude, :class => 'text_field' %>
-    <input type="hidden" class="text_field" id="locality" disabled="true"></input>
-    <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
-    <input type="hidden" class="text_field" id="country" disabled="true"></input>
-    <input type="hidden" class="text_field" id="route" disabled="true"></input>
-    <input type="hidden" class="text_field" id="street_number" disabled="true"></input>
-    
+    <%= f.hidden_field :longitude, :class => 'text_field' %>    
     <div style="text-align:center;margin-top:40px;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
@@ -140,30 +133,23 @@
     country: 'long_name'
   };
 
-  function initializeAutoComplete() {
+  // The START and END in square brackets define a snippet for our documentation:
+  // [START region_fillform]
+  function initializeAutoComplete<%=project.id%>() {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
-    autocomplete = new google.maps.places.Autocomplete(
-        /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+    autocomplete<%=project.id%> = new google.maps.places.Autocomplete(
+        /** @type {HTMLInputElement} */(document.getElementById('autocomplete_<%=project.id%>')),
         { types: ['geocode'] });
     // When the project selects an address from the dropdown,
     // populate the address fields in the form.
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-      fillInAddress();
+    google.maps.event.addListener(autocomplete<%=project.id%>, 'place_changed', function() {
+      fillInAddress<%=project.id%>();
     });
   }
-
-  // The START and END in square brackets define a snippet for our documentation:
-  // [START region_fillform]
-  function fillInAddress() {
+  function fillInAddress<%=project.id%>() {
     // Get the place details from the autocomplete object.
-    var place = autocomplete.getPlace();
-
-    for (var component in componentForm) {
-      document.getElementById(component).value = '';
-      document.getElementById(component).disabled = false;
-    }
-
+    var place = autocomplete<%=project.id%>.getPlace();
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
     var address = "";
@@ -173,22 +159,22 @@
         var val = place.address_components[i][componentForm[addressType]];
         console.log(addressType);
         if (addressType == 'locality')
-          $('#project_city').val(val);
+          $('#edit_project_<%=project.id%> #project_city').val(val);
         if (addressType == 'street_number')
           address += val;
         if (addressType == 'route')
           address += ' '+val;
         if (addressType == 'administrative_area_level_1')
-          $('#project_state').val(val);
+          $('#edit_project_<%=project.id%> #project_state').val(val);
         if (addressType == 'country')
-          $('#project_country').val(val);
+          $('#edit_project_<%=project.id%> #project_country').val(val);
       }
     }
-    $('#project_address1').val(address);
+    $('#edit_project_<%=project.id%> #project_address1').val(address);
     var latitude = place.geometry.location.lat();
     var longitude =  place.geometry.location.lng();
-    $('#project_latitude').val(latitude);
-    $('#project_longitude').val(longitude);
+    $('#edit_project_<%=project.id%> #project_latitude').val(latitude);
+    $('#edit_project_<%=project.id%> #project_longitude').val(longitude);
   }
 
   var image_element = "";
@@ -230,9 +216,6 @@
     name: 'project[client]',
     rules: 'required'
   }, {
-    name: 'project[address1]',
-    rules: 'required'
-  }, {
     name: 'project[city]',
     rules: 'required'
   }, {
@@ -245,7 +228,7 @@
     name: 'project[client_name]',
     rules: 'required'
   }], function(errors, event) {
-    $("input").each(function(){
+    $("#edit_project_<%=project.id%> input").each(function(){
         $(this).css("border","none");      
         $(this).removeClass("field_error");
     })
@@ -253,10 +236,10 @@
       var obj;
       for (var i=0; i<errors.length; i++){
         obj = errors[i].id;
-        $("#"+obj).addClass("field_error");
-        $("#"+obj).css("border","1px solid red");
+        $("#edit_project_<%=project.id%> #"+obj).addClass("field_error");
+        $("#edit_project_<%=project.id%> #"+obj).css("border","1px solid red");
       }
-      $("#"+errors[0].id).focus();
+      $("#edit_project_<%=project.id%> #"+errors[0].id).focus();
     }  
   });
   $(function() {
@@ -264,33 +247,52 @@
       dateFormat: 'mm/dd/yy'
     });
   });
-  // var html = "";
-  // $('form').submit(function() {  
-  //   if($(".field_error").length == 0){
-  //     var valuesToSubmit = $(this).serialize();
-  //     $.ajax({
-  //         type:"POST",
-  //         url: $(this).attr('action'), //sumbits it to the given url of the form
-  //         data: valuesToSubmit,
-  //         dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-  //       }).success(function(json){
-  //         location.href = window.location;
-  //         //act on result.
-  //       }).error(function(json){
-  //         html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
-  //         $.each(json.responseJSON, function(key, value) { 
-  //           html += '<p class="error">- '+value+'</p>'; 
-  //         });
-  //         html += "</div>"
-  //         $("#form-errors").remove();
-  //         $("form").prepend(html);
-  //         $("#form-errors").attr("tabindex",-1).focus();
-  //         //act on result.
-  //       });
-  //     return false; // prevents normal behaviour      
-  //   }
-  //   return false; // prevents normal behaviour      
-  // });
 
+  var html = "";
+  var form_validation_flag_<%=project.id%> = false;
+  $(function() {
+    $('form#edit_project_<%=project.id%>').submit(function(){
+      if($("#edit_project_<%=project.id%> .field_error").length == 0 && !(form_validation_flag_<%=project.id%>)){
+        var formId = $(this).attr("id");
+        var data  = $(this).serialize();
+        validate_form_<%=project.id%>(data,formId);
+        return false;
+      }    
+    });
+  });  
+  function validate_form_<%=project.id%>(data, formId){
+    $.ajax({
+      url:'/admins/validate_project',
+      type:"POST",
+      dataType:'json',
+      data: data,
+      processData:false,
+      success: function (json)
+      {
+        if(json['result'] == 'true')
+        {
+          form_validation_flag_<%=project.id%> = true;
+          $("#"+formId).submit();
+        }
+        else
+        {              
+          html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
+          $.each(json['errors'], function(key, value) { 
+            html += '<p class="error">- '+value+'</p>'; 
+          });
+          html += "</div>"
+          $("#"+formId+" #form-errors").remove();
+          $("#"+formId).prepend(html);
+          $("#"+formId+" #form-errors").attr("tabindex",-1).focus();
+          //act on result.
+          return false;
+        }
+      },
+      error: function (xhr, status)
+      {
+        return false;
+      }
+    });
+  }
 </script>
 <% end %>

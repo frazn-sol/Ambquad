@@ -19,6 +19,7 @@ Ambquad::Application.routes.draw do
 
     collection do 
       get :forgot_password
+      put :validate_project
       post :validate_project
       get :welcome
       post :create_client

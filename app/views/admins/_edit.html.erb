@@ -36,7 +36,7 @@
 
 
   <div class="control-group">
-    <%= f.label :address1, :class => 'control-label required' %>
+    <%= f.label :address1, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :address1, :class => 'text_field' %>
     </div>
@@ -240,9 +240,6 @@
     rules: 'required'
   }, {
     name: 'client[website]',
-    rules: 'required'
-  }, {
-    name: 'client[address1]',
     rules: 'required'
   }, {
     name: 'client[city]',

@@ -35,7 +35,6 @@ body {
 
 #header .tagline{
 	font-size: 14px;
-	text-align: right;
 }
 
  
@@ -94,12 +93,18 @@ h3{
 #footer { 
 	margin:0 auto; 
 	width:1080px; 
-	text-align:center; 
+	text-align:right; 
 	color: white;
 	padding: 10px 0 10px 0;
+	border: none;
 }
-
-
+#footer .text{ 
+	position: relative;
+	top: 5px;
+}
+.btn {
+	font-size: 12px;
+}
 .form{
 	border: 2px solid;
 	float:right;
@@ -263,12 +268,12 @@ span.upload
 }
 
 input[type=submit]{
-  height: 35px;
+  height: 31px;
   background-image: none !important;
   background-color: #428bDb !important;
   border: none;
   color: #ffffff !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   text-shadow: none !important;
   font-weight: normal !important;
 }
@@ -308,9 +313,10 @@ img
 	top: 20%;
 	width: 45%;
 	z-index: 99;
-	padding: 10px;
-	border-radius: 25px;
-	background-color: rgba(175,166,154,0.9);
+	padding: 15px;
+	border-radius: 5px;
+	background-color: rgba(159,247,241,0.9);
+	border: 3px solid #6B5D62;
 	min-height: 250px;
 	max-height: 450px;
 	overflow: auto;
@@ -332,7 +338,7 @@ img
 .popup_title
 {
 	text-align: center;
-	color: #E5E5E5;
+	color: #423E40;
 	margin-top: 10px;
 }
 .del,.remove_nested_fields
@@ -351,4 +357,13 @@ img
 {
 	margin-top: 20px;
 	margin-right: 10px;
+}
+.edit
+{
+	margin-right: 10px;
+	width: 12px;
+}
+.edit:hover
+{
+	cursor: pointer;
 }

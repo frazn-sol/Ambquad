@@ -1,108 +1,3 @@
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <script>
-// This example displays an address form, using the autocomplete feature
-// of the Google Places API to help users fill in the information.
-
-var placeSearch, autocomplete;
-var componentForm = {
-  street_number: 'short_name',
-  route: 'long_name',
-  locality: 'long_name',
-  administrative_area_level_1: 'short_name',
-  country: 'long_name'
-};
-
-function initialize() {
-  // Create the autocomplete object, restricting the search
-  // to geographical location types.
-  autocomplete = new google.maps.places.Autocomplete(
-      /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
-      { types: ['geocode'] });
-  // When the user selects an address from the dropdown,
-  // populate the address fields in the form.
-  google.maps.event.addListener(autocomplete, 'place_changed', function() {
-    fillInAddress();
-  });
-}
-
-// The START and END in square brackets define a snippet for our documentation:
-// [START region_fillform]
-function fillInAddress() {
-  // Get the place details from the autocomplete object.
-  var place = autocomplete.getPlace();
-
-  for (var component in componentForm) {
-    document.getElementById(component).value = '';
-    document.getElementById(component).disabled = false;
-  }
-
-  // Get each component of the address from the place details
-  // and fill the corresponding field on the form.
-  for (var i = 0; i < place.address_components.length; i++) {
-    var addressType = place.address_components[i].types[0];
-    if (componentForm[addressType]) {
-      var val = place.address_components[i][componentForm[addressType]];
-      console.log(addressType);
-      if (addressType == 'locality')
-        $('#project_city').val(val);
-      if (addressType == 'street_number')
-        $('#project_street_number').val(val);
-      if (addressType == 'route')
-        $('#project_address').val(val);
-      if (addressType == 'administrative_area_level_1')
-        $('#project_state').val(val);
-      if (addressType == 'country')
-        $('#project_country').val(val);
-    }
-  }
-  var latitude = place.geometry.location.lat();
-  var longitude =  place.geometry.location.lng();
-  $('#project_latitude').val(latitude);
-  $('#project_longitude').val(longitude);
-}
-
-$(document).ready(function() {  
-  $('#thumbs').on('click', '.change_img', function(e){
-       $(this).prev().click();
-    });
-  });
-var image_element = "";
-  oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
-
-  oFReader.onload = function (oFREvent) {
-        console.log(image_element);
-        console.log($(image_element).parent().parent());
-       $(image_element).parent().parent().prev().find('.thumb').attr("src",  oFREvent.target.result);
-  };
-
-  $(document).on('change','.project_image',(function(){
-      console.log($(this));
-      if (document.getElementById($(this).attr("id")).files.length === 0) { return; }
-      var oFile = document.getElementById($(this).attr("id")).files[0];
-      if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
-      oFReader.readAsDataURL(oFile);
-      image_element = "#"+$(this).attr("id");
-  }));
-
-  function loadImageFile() {
-    if (document.getElementById("project_images_attributes_0_image").files.length === 0) { return; }
-    var oFile = document.getElementById("project_images_attributes_0_image").files[0];
-    if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
-    oFReader.readAsDataURL(oFile);
-    image_element = "#show2 img";
-  }
-
-  function upFile(){
-    $("#project_images_attributes_0_image").click();
-  }
-
-
-    
-// [END region_fillform]
-
-  window.onload = initialize;
-    </script>
 <%= nested_form_for @project, :url => update_project_admin_path(@project), :html => {:class => 'form-horizontal' } do |f| %>
   <% @project.errors.full_messages.each do |msg| %>
     <p><%= msg %></p>
@@ -149,14 +44,14 @@ var image_element = "";
   <div class="control-group">
     <%= f.label :address1, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :street_number, :class => 'text_field' %>
+      <%= f.text_field :address1, :class => 'text_field' %>
     </div>
   </div>
 
   <div class="control-group">
     <%= f.label :address2, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :address, :class => 'text_field' %>
+      <%= f.text_field :address2, :class => 'text_field' %>
     </div>
   </div>
 
@@ -218,10 +113,6 @@ var image_element = "";
     <%= f.link_to_add "Upload New image", :images, :class => "btn-uploadnew typo-whitemed", :style => "font-size: 16px;" %>
     <%= f.hidden_field :latitude, :class => 'text_field' %>
     <%= f.hidden_field :longitude, :class => 'text_field' %>
-    <input type="hidden" class="text_field" id="locality" disabled="true"></input>
-    <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
-    <input type="hidden" class="text_field" id="country" disabled="true"></input>
-    <input type="hidden" class="text_field" id="route" disabled="true"></input>
     <input type="hidden" class="text_field" id="street_number" disabled="true"></input>    
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
