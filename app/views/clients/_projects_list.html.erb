@@ -14,7 +14,7 @@
     <% @projects.each do |project| %>
       <tr>
         <td><%= project.project_name %></td>
-        <td><%= "#{project.address1} , #{project.city}, #{project.state}, #{project.country}" %></td>
+        <td><%= "#{project.address1} #{project.city}, #{project.state}, #{project.country}" %></td>
         <td>
           <img src="/assets/edit.png" data="edit_project_<%= project.id %>" class="edit" />
           <%= link_to "x",
