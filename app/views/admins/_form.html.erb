@@ -63,7 +63,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :country, :class => 'control-label' %>
+    <%= f.label :country, :class => 'control-label required' %>
     <div class="controls">
       <%= f.text_field :country, :class => 'text_field' %>
     </div>
@@ -99,6 +99,18 @@
       <%= f.text_area :description, :class => 'text_field' %>
     </div>
   </div>
+
+  <div class="control-group">
+    <%= f.label :template, :class => 'control-label required' %>
+    <div class="controls">
+      <%= f.radio_button :template, 'template1' %> 
+      <%= label :template, 'Template1' %>
+      <%= f.radio_button :template, 'template2' %>
+      <%= label :template, 'Template2' %>
+
+    </div> 
+  </div>
+
 
   <div class="control-group">
     <%= f.label :corporate_logo, :class => 'control-label' %>
@@ -226,6 +238,9 @@
     rules: 'required'
   }, {
     name: 'client[state]',
+    rules: 'required'
+  }, {
+    name: 'client[country]',
     rules: 'required'
   }], function(errors, event) {
     if (errors.length > 0) {

@@ -1,5 +1,5 @@
 class Client < ActiveRecord::Base
-  attr_accessible :company_name, :contact_person, :description, :email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude
+  attr_accessible :company_name, :contact_person, :description, :email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude, :template
   mount_uploader :logo, LogoUploader
 
   has_many :projects, :foreign_key => 'client_id', :dependent => :destroy
@@ -12,8 +12,7 @@ class Client < ActiveRecord::Base
   validates_presence_of :phone_number, :message => "Phone Number can't be blank"
   validates_presence_of :title, :message => "Title can't be blank"   
   validates_presence_of :slogan, :message => "Slogan can't be blank"   
-  validates_presence_of :website, :message => "Website can't be blank"   
-  validates_presence_of :address1, :message => "Address can't be blank"   
+  validates_presence_of :website, :message => "Website can't be blank"    
   validates_presence_of :city, :message => "City can't be blank"   
   validates_presence_of :state, :message => "State can't be blank"   
   validate :check_lat_long

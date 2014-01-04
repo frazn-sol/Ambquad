@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :project_name, :message => "Project Name can't be blank"
   validates_presence_of :project_status, :message => "Project Status can't be blank"
   validates_presence_of :start_date, :message => "Start Date can't be blank"
-  validates_presence_of :completion_date, :message => "Completion Date can't be blank"
+  # validates_presence_of :completion_date, :message => "Completion Date can't be blank"
   validates_presence_of :city, :message => "City can't be blank"   
   validates_presence_of :state, :message => "State can't be blank"   
   validates_presence_of :country, :message => "Country can't be blank"   

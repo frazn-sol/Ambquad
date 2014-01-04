@@ -8,11 +8,11 @@
 				</div>	
 				<%if project.images.present? %>
 					<div id="infobox_left_<%=project.id%>" class="infobox_left">
-						<%= image_tag project.images.first.image.url%>
+						<%= image_tag project.images.first.image.url, :class => "project_medium"%>
 					</div>
 					<div id="infobox_right_<%=project.id%>" class="infobox_right">
 					<% project.images.each do |p| %>
-						<%= link_to image_tag(p.image.url, :class => "project_thumbs"), p.image.url %>
+						<%= link_to image_tag(p.image.url(:thumb), :class => "project_thumbs"), p.image.url %>
 					<% end %>
 					</div>
 				<%end%>	
@@ -44,8 +44,14 @@
 		overflow:auto;
 	}
 	.project_thumbs{
-		width: 100px;
-		height: 100px;
+		width: 110px;
+		height: 110px;
+		margin-bottom: 3px;
+		margin-right: 1px;
+	}
+	.project_medium{
+		width: 95%;
+		height: 100%;
 		margin-bottom: 3px;
 		margin-right: 1px;
 	}
