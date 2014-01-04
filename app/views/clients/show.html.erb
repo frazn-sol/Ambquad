@@ -225,13 +225,11 @@ function open_window (project_id) {
     // Set CSS for the control border
     var controlUI = document.createElement('div');
     controlUI.id = 'back_to_default';
-    controlUI.style.backgroundColor = 'white';
     controlUI.style.borderStyle = 'solid';
     controlUI.style.borderWidth = '1px';
     controlUI.style.cursor = 'pointer';
-    controlUI.style.textAlign = 'center';
     controlUI.style.position = 'relative';
-    // controlUI.style.left = '10px';
+    controlUI.style.left = '3px';
     controlUI.title = 'Click to set the map to default view';
     controlDiv.appendChild(controlUI);
 
