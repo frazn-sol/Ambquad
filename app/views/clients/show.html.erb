@@ -80,8 +80,15 @@ function initialize() {
     if(zoom == "")
       zoom = map.getZoom();
   });
-}
 
+  var backControlDiv = document.createElement('div');
+  var backControl = new BackControl(backControlDiv, map);
+
+  backControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.LEFT_CENTER].push(backControlDiv);
+}
+var lat;
+var lng;
 function addMarkers(){
     for (var i = 0; i < json.length; i++)
     {
@@ -96,7 +103,7 @@ function addMarkers(){
         var boxText = document.createElement("div");
         boxText.id = i;
         boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(159,247,241,0.9); padding: 10px;border-radius:3px";
-        boxText.innerHTML = "<div style='float:left;font-size:16px;'><img src='"+ image[i] +"'class='thumbs' /></div><div style='float:right;margin-left:10px;text-align:right;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br>Project Value - " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br><span style='color:#6B5D62;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#6B5D62;'>Here</a></div><div style='clear:both;'></div><style>a:hover{cursor:pointer;color:#ffffff!important;}</style>";
+        boxText.innerHTML = "<div style='float:left;font-size:16px;'><img src='"+ image[i] +"'class='thumbs' onclick='open_window("+json[i]['id']+")'/></div><div style='float:right;margin-left:10px;text-align:right;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br>Project Value - " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br><span style='color:#6B5D62;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#6B5D62;'>Here</a></div><div style='clear:both;'></div><style>img:hover, a:hover{cursor:pointer;color:#ffffff!important;}</style>";
 
         var myOptions = {
             content: boxText
@@ -125,7 +132,21 @@ function addMarkers(){
                 for ( h = 0; h < boxList.length; h++ ) {
                     boxList[h].close();
                 }
+                $(".popup").each(function(){
+                  $(this).fadeOut("fast");  
+                });
                 boxList[i].open(map, this);
+                setTimeout(function(){
+                  $(".infoBox:first-child img").first().click(function(){
+                    $(".popup").each(function(){
+                      $(this).fadeOut("fast");  
+                    });
+                  });
+                },100);
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
+                // map.setCenter(marker.getPosition());
+                // console.log(marker.getPosition().lat());
                 //marker.setIcon('/assets/green.png');
             }
         })(marker, i));
@@ -135,6 +156,7 @@ function addMarkers(){
 window.onload = initialize;
 
 function open_window (project_id) {
+  map.setCenter(new google.maps.LatLng(lat, lng+0.10));
   $(".popup").each(function(){
     $(this).fadeOut("fast");  
   });
@@ -187,16 +209,44 @@ function open_window (project_id) {
       $("#"+form_id+"_form").fadeIn("fast");
     });
 
-    $("#back_to_default").click(function(){
-      map.setZoom(zoom);
-      map.fitBounds(bounds);
-    });
-
     $("#upload_img").mouseup(function(){
       var obj = $(this).parents('#form_container');
       obj.scrollTop = obj.scrollHeight;
     });
+
+    $("#header_container").addClass('<%= @client.template%>');
+    $("#footer_container").addClass('<%= @client.template%>');
   });
+  
+  function BackControl(controlDiv, map) {
+
+    controlDiv.style.padding = '5px';
+
+    // Set CSS for the control border
+    var controlUI = document.createElement('div');
+    controlUI.id = 'back_to_default';
+    controlUI.style.backgroundColor = 'white';
+    controlUI.style.borderStyle = 'solid';
+    controlUI.style.borderWidth = '1px';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.textAlign = 'center';
+    controlUI.style.position = 'relative';
+    // controlUI.style.left = '10px';
+    controlUI.title = 'Click to set the map to default view';
+    controlDiv.appendChild(controlUI);
+
+    // Set CSS for the control interior
+    var controlText = document.createElement('img');
+    controlText.src = '/assets/back.png';
+    controlUI.appendChild(controlText);
+
+    // // Setup the click event listeners: simply set the map to
+    // // Chicago
+    google.maps.event.addDomListener(controlUI, 'click', function() {
+      map.setZoom(zoom);
+      map.fitBounds(bounds);
+    });
+  }
 
 </script>
 <style>
@@ -204,7 +254,8 @@ html, body, #map {
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding-top: 60px;
+  padding-bottom: 20px;
 }
 #header_container{
   position:absolute;
@@ -243,5 +294,6 @@ html, body, #map {
 }
 #map label { 
   width: auto; display:inline; 
-} 
+}
+
 </style>

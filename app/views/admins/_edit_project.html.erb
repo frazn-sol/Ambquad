@@ -107,7 +107,7 @@
         <% if image.object.image.url.nil? %>
           <%= image_tag "/assets/placeholder.jpeg", :class => "thumb" %>
         <% else %>
-           <%= image_tag image.object.image.url, :class => "thumb" %>
+           <%= image_tag image.object.image.url(:thumb), :class => "thumb" %>
         <% end %> 
         <span class="btn btn-info upload">Choose File
           <%= image.file_field :image, :class => "project_image" %>

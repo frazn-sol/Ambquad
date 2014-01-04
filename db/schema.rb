@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131221112522) do
+ActiveRecord::Schema.define(:version => 20140104135515) do
 
   create_table "admins", :force => true do |t|
     t.string   "first_name"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20131221112522) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "slug"
+    t.string   "template"
   end
 
   add_index "clients", ["slug"], :name => "index_clients_on_slug"
@@ -88,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20131221112522) do
     t.string   "state"
     t.string   "country"
     t.string   "client_name"
-    t.string   "description"
+    t.text     "description"
     t.integer  "client_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

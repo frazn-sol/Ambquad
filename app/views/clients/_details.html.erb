@@ -8,11 +8,11 @@
 				</div>	
 				<%if project.images.present? %>
 					<div id="infobox_left_<%=project.id%>" class="infobox_left">
-						<%= image_tag project.images.first.image.url, :class => "project_medium"%>
+						<%= image_tag project.images.first.image.url(:thumb), :class => "project_medium"%>
 					</div>
 					<div id="infobox_right_<%=project.id%>" class="infobox_right">
 					<% project.images.each do |p| %>
-						<%= link_to image_tag(p.image.url(:thumb), :class => "project_thumbs"), p.image.url %>
+						<%= link_to image_tag(p.image.url(:thumb), :class => "project_thumbs"), p.image.url(:large) %>
 					<% end %>
 					</div>
 				<%end%>	
