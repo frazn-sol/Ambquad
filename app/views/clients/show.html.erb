@@ -1,24 +1,23 @@
-<!-- Modal -->
-<div id="projectsList" class="popup" style="display:none;">
-  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
-  <%= render :partial => 'projects_list' %>
-</div>
-<!-- Modal -->
-<div id="newProject" class="popup" style="display:none;">
-  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
-  <div class="page-header">
-    <h3 class="popup_title"><%= "#{@client.company_name} - New Project"%></h3>
+<% if current_admin.present? %>
+  <!-- Modal -->
+  <div id="projectsList" class="popup" style="display:none;">
+    <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+    <%= render :partial => 'projects_list' %>
   </div>
-  <%= render :partial => 'admins/new_project_form' %>
-</div>
+  <!-- Modal -->
+  <div id="newProject" class="popup" style="display:none;">
+    <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+    <div class="page-header">
+      <h3 class="popup_title"><%= "#{@client.company_name} - New Project"%></h3>
+    </div>
+    <%= render :partial => 'admins/new_project_form' %>
+  </div>
 
-<%= render :partial => 'admins/edit_project' %>
-
+  <%= render :partial => 'admins/edit_project' %>
+<% end %>
 <%= render :partial => 'details' %>
 
-<div>
-  <div id="map" style='width: 100%; height: 550px;'></div>
-</div>
+<div id="map" style='position: relative;'></div>
 <script type="text/javascript">
 var json = "<%= @projects.to_json %>";
 json = JSON.parse(json.replace(/&quot;/g,'"'));
@@ -26,6 +25,7 @@ json = JSON.parse(json.replace(/&quot;/g,'"'));
 var image = "<%= @images.to_json %>";
 image = JSON.parse(image.replace(/&quot;/g,'"'));
 
+var zoom = "";
 var boxList =[];
 var markers = [];
 var bounds = new google.maps.LatLngBounds();
@@ -33,6 +33,10 @@ function initialize() {
   if(json.length > 0){
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
+        minZoom: 3,
+        zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_CENTER
+        }
     });
     addMarkers();
     // This is needed to set the zoom after fitbounds, 
@@ -58,11 +62,24 @@ function initialize() {
     var myOptions = {
         zoom: 8,
         center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        minZoom: 3,
+        zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_CENTER
+        }
     }
     map = new google.maps.Map(document.getElementById("map"), myOptions);
   }
-  initializeAutoComplete();
+  <% if current_admin.present? %>
+    initializeAutoComplete();
+    <% @client.projects.each do |project|%>
+      initializeAutoComplete<%=project.id%>();
+    <% end %>
+  <% end %>
+  google.maps.event.addListenerOnce(map,"zoom_changed", function() {
+    if(zoom == "")
+      zoom = map.getZoom();
+  });
 }
 
 function addMarkers(){
@@ -72,25 +89,27 @@ function addMarkers(){
             position: new google.maps.LatLng(json[i]['latitude'], json[i]['longitude']),
             map: map,
             id: i,
-            title: json[i]['project_name']
+            title: json[i]['project_name'],
+            icon: '/assets/pin.png'
         });           
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: rgba(175,166,154,0.9); padding: 10px;border-radius:10px";
-        boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'width='110' /></div><div style='float:left;margin-left:10px;'><b>" + json[i]['project_name']+ "</b> </br> <b> Project Value:</b> " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br> View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")'>Click Here</a></div><div style='clear:both;'></div>";
+        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(159,247,241,0.9); padding: 10px;border-radius:3px";
+        boxText.innerHTML = "<div style='float:left;font-size:16px;'><img src='"+ image[i] +"'width='110' /></div><div style='float:right;margin-left:10px;text-align:right;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br>Project Value - " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br><span style='color:#6B5D62;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#6B5D62;'>Here</a></div><div style='clear:both;'></div><style>a:hover{cursor:pointer;color:#ffffff!important;}</style>";
 
         var myOptions = {
             content: boxText
             ,disableAutoPan: false
             ,maxWidth: 0
-            ,pixelOffset: new google.maps.Size(-170, -180)
+            ,pixelOffset: new google.maps.Size(-170, -5)
             ,zIndex: null
             ,boxStyle: {
               width: "350px"
             }
             ,closeBoxMargin: "15px 10px 10px 10px"
-            ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+            ,closeBoxWidth: "20px"
+            ,closeBoxURL: "/assets/small-close.png"
             ,infoBoxClearance: new google.maps.Size(1, 1)
             ,isHidden: false
             ,pane: "floatPane"
@@ -106,6 +125,7 @@ function addMarkers(){
                     boxList[h].close();
                 }
                 boxList[i].open(map, this);
+                //marker.setIcon('/assets/green.png');
             }
         })(marker, i));
         bounds.extend(marker.position);  
@@ -118,9 +138,6 @@ function open_window (project_id) {
     $(this).fadeOut("fast");  
   });
   $("#project_details_"+project_id).fadeIn("fast");
-  for ( h = 0; h < boxList.length; h++ ) {
-      boxList[h].close();
-  }
   $('#infobox_right_'+project_id).magnificPopup({
           delegate: 'a',
           type: 'image',
@@ -144,26 +161,12 @@ function open_window (project_id) {
 
   $(document).ready(function(){
 
-    // $("#projectsListBtn").click(function(){
-    //   $(".popup").each(function(){
-    //     $(this).fadeOut("fast");  
-    //   });
-    //   $("#projectsList").fadeIn("fast");
-    // });
-
     $("#projectsListBtn").click(function(){
       $(".popup").each(function(){
         $(this).fadeOut("fast");  
       });
       $("#projectsList").fadeIn("fast");
     });
-
-    // $(".yellow").delegate("a", "mouseenter", function() {
-
-    //   alert("hy");
-    //   console.log("mouse enter detected");
-    // });
-
 
     $("#newProjectBtn").click(function(){
       $(".popup").each(function(){
@@ -174,21 +177,46 @@ function open_window (project_id) {
     $(".popup_close").click(function(){
       $(".popup").fadeOut("fast");
     });
+
+    $(".edit").click(function(){
+      var form_id = jQuery(this).attr("data");
+      $(".popup").each(function(){
+        $(this).fadeOut("fast");  
+      });
+      $("#"+form_id+"_form").fadeIn("fast");
+    });
+
+    $("#back_to_default").click(function(){
+      map.setZoom(zoom);
+      map.fitBounds(bounds);
+    });
+
+    $("#upload_img").mouseup(function(){
+      var obj = $(this).parents('#form_container');
+      obj.scrollTop = obj.scrollHeight;
+    });
   });
 
-  $(".edit").click(function(){
-    var temp = jQuery(this).attr("id");
-    console.log(temp);
-    $(".popup").each(function(){
-      $(this).fadeOut("fast");  
-    });
-    $("#"+temp+"_form").fadeIn("fast");
-  });
 </script>
 <style>
+html, body, #map {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#header_container{
+  position:absolute;
+  top: 0; 
+  z-index: 10;
+}
 #footer_container{
-    position:fixed;
+    position:absolute;
     bottom: 0; 
+}
+#content {
+  width: 100%;
+  height: 100%;
 }
 .yellow { 
   border: 1px solid black;

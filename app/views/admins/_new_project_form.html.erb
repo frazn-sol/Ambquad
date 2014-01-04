@@ -1,4 +1,5 @@
 <%= nested_form_for @project, :url => create_project_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+  <div id="form_container">
   <% @project.errors.full_messages.each do |msg| %>
     <p><%= msg %></p>
   <% end %>
@@ -44,7 +45,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :address1, :class => 'control-label required' %>
+    <%= f.label :address1, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :address1, :class => 'text_field' %>
     </div>
@@ -109,19 +110,14 @@
     </div>  
   <% end %>     
   <div class="clear"></div> 
-  <%= f.link_to_add "Upload Project image", :images, :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
+  <%= f.link_to_add "Upload Project image", :images, :id => "upload_img", :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
   <div class="clear"></div> 
   <%= f.hidden_field :latitude, :class => 'text_field' %>
     <%= f.hidden_field :longitude, :class => 'text_field' %>
-    <input type="hidden" class="text_field" id="locality" disabled="true"></input>
-    <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
-    <input type="hidden" class="text_field" id="country" disabled="true"></input>
-    <input type="hidden" class="text_field" id="route" disabled="true"></input>
-    <input type="hidden" class="text_field" id="street_number" disabled="true"></input>
-    
     <div style="text-align:center;margin-top:40px;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
+  </div>  
 <% end %>
 
 <script>
@@ -152,12 +148,6 @@
   function fillInAddress() {
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
-
-    for (var component in componentForm) {
-      document.getElementById(component).value = '';
-      document.getElementById(component).disabled = false;
-    }
-
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
     var address = "";
@@ -167,22 +157,22 @@
         var val = place.address_components[i][componentForm[addressType]];
         console.log(addressType);
         if (addressType == 'locality')
-          $('#project_city').val(val);
+          $('#new_project #project_city').val(val);
         if (addressType == 'street_number')
           address += val;
         if (addressType == 'route')
           address += ' '+val;
         if (addressType == 'administrative_area_level_1')
-          $('#project_state').val(val);
+          $('#new_project #project_state').val(val);
         if (addressType == 'country')
-          $('#project_country').val(val);
+          $('#new_project #project_country').val(val);
       }
     }
-    $('#project_address1').val(address);
+    $('#new_project #project_address1').val(address);
     var latitude = place.geometry.location.lat();
     var longitude =  place.geometry.location.lng();
-    $('#project_latitude').val(latitude);
-    $('#project_longitude').val(longitude);
+    $('#new_project #project_latitude').val(latitude);
+    $('#new_project #project_longitude').val(longitude);
   }
 
   var image_element = "";
@@ -259,41 +249,29 @@
     });
   });
   var html = "";
-  // $('form').submit(function() {  
-  //   if($(".field_error").length == 0){
-  //     var valuesToSubmit = $(this).serialize();
-  //     $.ajax({
-  //         type:"POST",
-  //         url: $(this).attr('action'), //sumbits it to the given url of the form
-  //         data: valuesToSubmit,
-  //         dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
-  //       }).success(function(json){
-  //         location.href = window.location;
-  //         //act on result.
-  //       }).error(function(json){
-  //         html = '<div id="form-errors"><p class="error-tagline">Following are missing fields in the form:</p>';
-  //         $.each(json.responseJSON, function(key, value) { 
-  //           html += '<p class="error">- '+value+'</p>'; 
-  //         });
-  //         html += "</div>"
-  //         $("#form-errors").remove();
-  //         $("form").prepend(html);
-  //         $("#form-errors").attr("tabindex",-1).focus();
-  //         //act on result.
-  //       });
-  //     return false; // prevents normal behaviour      
-  //   }
-  //   return false; // prevents normal behaviour      
-  // });
+  var form_validation_flag = false;
   $('form').submit(function(){
-    if($(".field_error").length == 0){
+    if($(".field_error").length == 0 && !(form_validation_flag)){
       var formId = $(this).attr("id");
       var data  = $(this).serialize();
-      validate_form(data);
+      validate_form(data,formId);
+      return false;
+    }    
+  });
 
+  function validate_form(data, formId){
+    return $.ajax({
+      url:'/admins/validate_project',
+      type:"POST",
+      dataType:'json',
+      data: data,
+      processData:false,
+      success: function (json)
+      {
         if(json['result'] == 'true')
         {
-          return true;
+          form_validation_flag = true;
+          $("#"+formId).submit();
         }
         else
         {              
@@ -303,28 +281,16 @@
           });
           html += "</div>"
           $("#form-errors").remove();
-          $("form").prepend(html);
+          $("#"+formId).prepend(html);
           $("#form-errors").attr("tabindex",-1).focus();
           //act on result.
+          return false;
         }
-
-    });
-
-  function validate_form(data){
-    $.ajax({
-      url:'/admins/validate_project',
-      type:"POST",
-      dataType:'json',
-      data: data,
-      processData:false,
-      success: function (json)
-      {
       },
       error: function (xhr, status)
       {
-        alert("unsuccessful");
+        return false;
       }
     });
-    return false;
-    }
+  }
 </script>

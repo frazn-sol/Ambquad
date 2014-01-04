@@ -89,21 +89,22 @@ class AdminsController < ApplicationController
   end
 
   def create_project
+    binding.pry
     @project = Project.new(params[:project])
     client   = @project.client
     respond_to do |format|
       if @project.save
         flash[:notice] = "Project has been successfully added!"
         redirect_to client_path(client) and return
-        format.json { render json: @project, status: :created, location: client_path(client) }
-      binding.pry
       else
-        format.json { render json: @project.errors }
+        flash[:notice] = "Project has not been successfully added!"
+        redirect_to client_path(client) and return
       end
     end
   end
 
   def validate_project
+    params[:project][:images_attributes] = {}
     @project = Project.new(params[:project])
     client   = @project.client
     @json = Hash.new

@@ -3,10 +3,12 @@
 		<div id="project_details_<%= project.id %>" class="popup" style="display:none;">
 		  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
 			<div>
-				<h3> <%= project.project_name %> </h3></br>
+				<div class="text_container">
+					<h3> <%= project.project_name %> </h3>
+				</div>	
 				<%if project.images.present? %>
 					<div id="infobox_left_<%=project.id%>" class="infobox_left">
-						<%= image_tag project.images.first.image.url, :width =>"200", :height => "200" %>
+						<%= image_tag project.images.first.image.url%>
 					</div>
 					<div id="infobox_right_<%=project.id%>" class="infobox_right">
 					<% project.images.each do |p| %>
@@ -15,13 +17,15 @@
 					</div>
 				<%end%>	
 				<div class="clear"></div>
-				<b>Project Status: </b> <%= project.project_status %> </br>
-				<b>Start Date: </b> <%= project.start_date %> </br>
-				<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
-				<b>Project Value: </b> <%= project.project_value %> </br>
-				<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
-				<b>Client: </b> <%= project.client_name %> </br>
-				<b>Project Description: </b> <%= project.description %>
+				<div class="text_container">
+					<b>Project Status: </b> <%= project.project_status %> </br>
+					<b>Start Date: </b> <%= project.start_date %> </br>
+					<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
+					<b>Project Value: </b> <%= project.project_value %> </br>
+					<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
+					<b>Client: </b> <%= project.client_name %> </br>
+					<b>Project Description: </b> <%= project.description %>
+				</div>	
 			</div>
 		</div>
 	<% end %>
@@ -40,12 +44,22 @@
 		overflow:auto;
 	}
 	.project_thumbs{
-		width: 120px !important;
-		height: 120px !important;
+		width: 100px;
+		height: 100px;
 		margin-bottom: 3px;
 		margin-right: 1px;
 	}
 	a:hover{
 		background:transparent;
+	}
+	.infobox_left img{
+		max-height: 200px;
+		max-width: 200px;		
+	}
+	h3{
+		margin-bottom: 5px;
+	}
+	div.text_container{
+		margin-top: 5px;
 	}
 </style>
