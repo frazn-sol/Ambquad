@@ -243,8 +243,10 @@ function open_window (project_id) {
     // // Setup the click event listeners: simply set the map to
     // // Chicago
     google.maps.event.addDomListener(controlUI, 'click', function() {
-      map.setZoom(zoom);
+      if(zoom > 12)
+        zoom = 12;
       map.fitBounds(bounds);
+      map.setZoom(zoom);
     });
   }
 
