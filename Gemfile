@@ -15,7 +15,7 @@ gem 'fog', '~> 1.0.0' # Need to specify version, as carrierwave references older
 gem 'nested_form'
 gem 'gmaps4rails'
 gem "geocoder"
-gem 'rmagick', '2.13.2', :git=>'http://github.com/rmagick/rmagick.git'
+gem "rmagick", :require => 'RMagick'
 # gem "american_date"
 # Gems used only for assets and not required
 # in production environments by default.
