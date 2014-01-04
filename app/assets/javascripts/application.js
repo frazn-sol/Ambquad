@@ -14,6 +14,4 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require underscore
-//= require gmaps/google
-//= require infobox.js
 //= require_tree .
