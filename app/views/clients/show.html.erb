@@ -156,6 +156,7 @@ function addMarkers(){
 window.onload = initialize;
 
 function open_window (project_id) {
+  map.setZoom(12);
   map.setCenter(new google.maps.LatLng(lat, lng+0.10));
   $(".popup").each(function(){
     $(this).fadeOut("fast");  
