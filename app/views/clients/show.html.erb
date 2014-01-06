@@ -78,10 +78,10 @@ function initialize() {
   <% end %>
   google.maps.event.addListenerOnce(map,"zoom_changed", function() {
     if(zoom == "")
-      zoom = 2;
+      zoom = map.getZoom();
       center = new google.maps.LatLng(0, 0),
       map.setCenter(center);
-      map.setZoom(2);
+      map.setZoom(zoom);
   });
 
   var backControlDiv = document.createElement('div');
