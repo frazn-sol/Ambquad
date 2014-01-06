@@ -79,8 +79,8 @@ function initialize() {
   google.maps.event.addListenerOnce(map,"zoom_changed", function() {
     if(zoom == "")
       zoom = map.getZoom();
-    center = new google.maps.LatLng(30.75601988285336, -55.95703125000001),
-    map.setCenter(center);
+      center = new google.maps.LatLng(0, 0),
+      map.setCenter(center);
   });
 
   var backControlDiv = document.createElement('div');
@@ -246,7 +246,7 @@ function open_window (project_id) {
     google.maps.event.addDomListener(controlUI, 'click', function() {
       if(zoom > 12)
         zoom = 12;
-      center = new google.maps.LatLng(30.75601988285336, -55.95703125000001),
+      center = new google.maps.LatLng(0, 0),
       map.setCenter(center);
       map.setZoom(zoom);
     });
@@ -267,8 +267,8 @@ html, body, #map {
   z-index: 10;
 }
 #footer_container{
-    position:absolute;
-    bottom: 0; 
+  position:absolute;
+  bottom: 0; 
 }
 #content {
   width: 100%;
