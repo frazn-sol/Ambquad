@@ -63,7 +63,7 @@ function initialize() {
         zoom: 8,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        minZoom: 3,
+        minZoom: 2,
         zoomControlOptions: {
                     position: google.maps.ControlPosition.LEFT_CENTER
         }
@@ -81,6 +81,7 @@ function initialize() {
       zoom = map.getZoom();
       center = new google.maps.LatLng(0, 0),
       map.setCenter(center);
+      map.setZoom(2);
   });
 
   var backControlDiv = document.createElement('div');
