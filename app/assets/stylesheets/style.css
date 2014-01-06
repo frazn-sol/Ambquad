@@ -345,6 +345,7 @@ img
 	text-align: center;
 	color: #423E40;
 	margin-top: 10px;
+	width: 95%;
 }
 .del,.remove_nested_fields
 {
