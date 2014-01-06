@@ -320,7 +320,7 @@ img
 	z-index: 99;
 	padding: 15px;
 	border-radius: 5px;
-	background-color: rgba(159,247,241,0.9);
+	background-color: rgba(176,170,164,0.9);
 	border: 3px solid #6B5D62;
 	min-height: 250px;
 	max-height: 450px;
@@ -397,4 +397,28 @@ img
 .template2 #header, .template2 #footer
 {
 	color: #000000 !important;
+}
+
+/* --- Magnific Popup --- */
+.mfp-arrow-right:after, .mfp-arrow-right .mfp-a {
+	border-left: 34px solid #FFF;
+	margin-left: 39px;
+}
+.mfp-arrow-left:after, .mfp-arrow-left .mfp-a {
+	border-right: 34px solid #FFF;
+	margin-left: 31px;
+}
+.mfp-arrow:after, .mfp-arrow .mfp-a {
+	border-top-width: 26px;
+	border-bottom-width: 26px;
+	top: 8px;
+}
+.mfp-close {
+	font-size: 42px;
+}
+.mfp-close:hover {
+	cursor: pointer !important;
+}
+.mfp-container{
+	cursor: auto;
 }

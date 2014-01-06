@@ -16,20 +16,20 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :project_status, :class => 'control-label required' %>
+    <%= f.label :project_status, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :project_status, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :start_date, :class => 'control-label required' %>
+    <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :start_date, :class => 'datepicker text_field' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :completion, :class => 'control-label required' %>
+    <%= f.label :completion, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :completion_date, :class => 'datepicker text_field' %>
     </div>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :state, :class => 'control-label required' %>
+    <%= f.label :state, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :state, :class => 'text_field' %>
     </div>
@@ -85,7 +85,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :client_name, :class => 'control-label required' %>
+    <%= f.label :client_name, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :client_name, :class => 'text_field' %>
     </div>
@@ -204,28 +204,10 @@
     name: 'project[project_name]',    
     rules: 'required'
   }, {
-    name: 'project[project_status]',
-    rules: 'required'
-  }, {
-    name: 'project[start_date]',
-    rules: 'required'
-  }, {
-    name: 'project[completion_date]',
-    rules: 'required'
-  }, {
-    name: 'project[client]',
-    rules: 'required'
-  }, {
     name: 'project[city]',
     rules: 'required'
   }, {
-    name: 'project[state]',
-    rules: 'required'
-  }, {
     name: 'project[country]',
-    rules: 'required'
-  }, {
-    name: 'project[client_name]',
     rules: 'required'
   }], function(errors, event) {
     $("#edit_project_<%=project.id%> input").each(function(){

@@ -7,14 +7,15 @@ class Client < ActiveRecord::Base
   extend FriendlyId
   friendly_id :company_name, use: [:slugged, :history]
   validates_presence_of :company_name, :message => "Company Name can't be blank"
-  validates_presence_of :contact_person, :message => "Contact Person can't be blank"
-  validates_presence_of :email, :message => "Email can't be blank"
-  validates_presence_of :phone_number, :message => "Phone Number can't be blank"
-  validates_presence_of :title, :message => "Title can't be blank"   
-  validates_presence_of :slogan, :message => "Slogan can't be blank"   
-  validates_presence_of :website, :message => "Website can't be blank"    
+  # validates_presence_of :contact_person, :message => "Contact Person can't be blank"
+  # validates_presence_of :email, :message => "Email can't be blank"
+  # validates_presence_of :phone_number, :message => "Phone Number can't be blank"
+  # validates_presence_of :title, :message => "Title can't be blank"   
+  # validates_presence_of :slogan, :message => "Slogan can't be blank"   
+  # validates_presence_of :website, :message => "Website can't be blank"    
   validates_presence_of :city, :message => "City can't be blank"   
-  validates_presence_of :state, :message => "State can't be blank"   
+  validates_presence_of :country, :message => "Country can't be blank"   
+  validates_presence_of :logo, :message => "Logo can't be blank"
   validate :check_lat_long
   validate :logo_size  
   

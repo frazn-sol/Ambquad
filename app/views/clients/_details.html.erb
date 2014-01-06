@@ -4,7 +4,7 @@
 		  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
 			<div>
 				<div class="text_container">
-					<h3> <%= project.project_name %> </h3>
+					<h2> <%= project.project_name %> </h2>
 				</div>	
 				<%if project.images.present? %>
 					<div id="infobox_left_<%=project.id%>" class="infobox_left">
@@ -18,13 +18,25 @@
 				<%end%>	
 				<div class="clear"></div>
 				<div class="text_container">
+				<% if(project.project_status.present?) %>	
 					<b>Project Status: </b> <%= project.project_status %> </br>
+				<% end %>	
+				<% if(project.start_date.present?) %>	
 					<b>Start Date: </b> <%= project.start_date %> </br>
+				<% end %>	
+				<% if(project.completion_date.present?) %>	
 					<b>Completion Date or Projected: </b> <%= project.completion_date %> </br>
+				<% end %>	
+				<% if(project.project_value.present?) %>	
 					<b>Project Value: </b> <%= project.project_value %> </br>
-					<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
+				<% end %>	
+				<b>Location: </b> <%= project.address1 %>, <%= project.city %>, <%= project.state %>, <%= project.country %></br>
+				<% if(project.client_name.present?) %>	
 					<b>Client: </b> <%= project.client_name %> </br>
+				<% end %>	
+				<% if(project.description.present?) %>	
 					<b>Project Description: </b> <%= project.description %>
+				<% end %>	
 				</div>	
 			</div>
 		</div>
@@ -66,6 +78,9 @@
 		margin-bottom: 5px;
 	}
 	div.text_container{
-		margin-top: 5px;
+		margin-top: 10px;
+	}
+	h2{
+		border: none;
 	}
 </style>

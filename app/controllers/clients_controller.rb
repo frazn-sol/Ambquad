@@ -15,6 +15,7 @@ class ClientsController < ApplicationController
   def show        
     @client = Client.find(params[:id])
     @project = Project.new
+    @project.images.build
     @project.client_id = @client.id
     @projects = @client.projects.all
     @images = {}

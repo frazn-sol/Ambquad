@@ -105,8 +105,8 @@ function addMarkers(){
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(159,247,241,0.9); padding: 10px;border-radius:3px";
-        boxText.innerHTML = "<div style='float:left;font-size:16px;'><img src='"+ image[i] +"'class='thumbs' onclick='open_window("+json[i]['id']+")'/></div><div style='float:right;margin-left:10px;text-align:right;width:200px;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br>Project Value - " + json[i]['project_value']+ "</br>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</br><span style='color:#6B5D62;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#6B5D62;'>Here</a></div><div style='clear:both;'></div><style>img:hover, a:hover{cursor:pointer;color:#ffffff!important;}</style>";
+        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(176,170,164,0.9); padding: 10px;border-radius:3px";
+        boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'class='thumbs' onclick='open_window("+json[i]['id']+")'/></div><div style='float:right;margin-left:10px;text-align:right;width:200px;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br><span style='font-size:14px;'>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</span></br><span style='font-size:14px;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#ffffff;font-size:14px;'>Here</a></div><div style='clear:both;'></div><style>img:hover, a:hover{cursor:pointer;}</style>";
 
         var myOptions = {
             content: boxText
@@ -170,6 +170,7 @@ function open_window (project_id) {
           type: 'image',
           tLoading: 'Loading image #%curr%...',
           mainClass: 'mfp-img-mobile',
+          closeOnBgClick: false,
           gallery: {
             enabled: true,
             navigateByImgClick: true,
@@ -260,7 +261,7 @@ html, body, #map {
   height: 100%;
   margin: 0;
   padding-top: 60px;
-  padding-bottom: 20px;
+  padding-bottom: 25px;
 }
 #header_container{
   position:absolute;

@@ -6,22 +6,30 @@ class Project < ActiveRecord::Base
 
   belongs_to :client
   validates  :client, :presence => true  
-  validates_presence_of :client_name, :message => "Client can't be blank"
+  # validates_presence_of :client_name, :message => "Client can't be blank"
   validates_presence_of :project_name, :message => "Project Name can't be blank"
-  validates_presence_of :project_status, :message => "Project Status can't be blank"
-  validates_presence_of :start_date, :message => "Start Date can't be blank"
+  # validates_presence_of :project_status, :message => "Project Status can't be blank"
+  # validates_presence_of :start_date, :message => "Start Date can't be blank"
   # validates_presence_of :completion_date, :message => "Completion Date can't be blank"
   validates_presence_of :city, :message => "City can't be blank"   
-  validates_presence_of :state, :message => "State can't be blank"   
+  # validates_presence_of :state, :message => "State can't be blank"   
   validates_presence_of :country, :message => "Country can't be blank"   
-  validates_presence_of :client_name, :message => "Client name can't be blank"   
+  # validates_presence_of :client_name, :message => "Client name can't be blank"   
   validate :check_lat_long
+  # validate :check_images
   
   def check_lat_long
     if (self.latitude == nil && self.longitude == nil)
       errors.add(:base, "Please select a valid location from suggestions")
     elsif (self.latitude == nil || self.longitude == nil)  
       errors.add(:base, "Please select a valid location from suggestions")
+    end  
+  end
+
+  def check_images
+    binding.pry
+    if (self.images.count == 0)
+      errors.add(:base, "Please select images")
     end  
   end
 end

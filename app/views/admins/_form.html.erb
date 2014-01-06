@@ -14,13 +14,13 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :contact_person, :class => 'control-label required' %>
+    <%= f.label :contact_person, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :contact_person, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :email, :class => 'control-label required' %>
+    <%= f.label :email, :class => 'control-label' %>
     <div class="controls">
       <%= f.email_field :email, :class => 'text_field' %>
     </div>
@@ -56,7 +56,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :state, :class => 'control-label required' %>
+    <%= f.label :state, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :state, :class => 'text_field' %>
     </div>
@@ -70,25 +70,25 @@
   </div>
 </div>
   <div class="control-group">
-    <%= f.label :website, :class => 'control-label required' %>
+    <%= f.label :website, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :website, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :title, :class => 'control-label required' %>
+    <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :title, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :slogan, :class => 'control-label required' %>
+    <%= f.label :slogan, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :slogan, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :phone_number, :class => 'control-label required' %>
+    <%= f.label :phone_number, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :phone_number, :class => 'text_field' %>
     </div>
@@ -101,7 +101,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :template, :class => 'control-label required' %>
+    <%= f.label :template, :class => 'control-label' %>
     <div class="controls">
       <%= f.radio_button :template, 'template1', :checked => true %> 
       <%= label :template, 'Black Background & White Text', :class => 'radio_label' %><br/>
@@ -113,7 +113,7 @@
 
 
   <div class="control-group">
-    <%= f.label :corporate_logo, :class => 'control-label' %>
+    <%= f.label :corporate_logo, :class => 'control-label required' %>
     <div class="controls">
       <img id="upload" src="/assets/placeholder.jpeg" alt="corportae logo" class="thumb"/>  
       <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
@@ -122,11 +122,6 @@
   </div>
     <%= f.hidden_field :latitude, :class => 'text_field' %>
     <%= f.hidden_field :longitude, :class => 'text_field' %> 
-   <input type="hidden" class="text_field" id="locality" disabled="true"></input>
-    <input type="hidden" class="text_field" id="administrative_area_level_1" disabled="true"></input>
-    <input type="hidden" class="text_field" id="country" disabled="true"></input>
-    <input type="hidden" class="text_field" id="route" disabled="true"></input>
-    <input type="hidden" class="text_field" id="street_number" disabled="true"></input>    
     <div style="text-align:center;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
@@ -159,12 +154,6 @@
   function fillInAddress() {
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
-
-    for (var component in componentForm) {
-      document.getElementById(component).value = '';
-      document.getElementById(component).disabled = false;
-    }
-
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
     var address = "";
@@ -216,31 +205,13 @@
     name: 'client[company_name]',    
     rules: 'required'
   }, {
-    name: 'client[contact_person]',
-    rules: 'required'
-  }, {
-    name: 'client[title]',
-    rules: 'required'
-  }, {
-    name: 'client[phone_number]',
-    rules: 'required'
-  }, {
-    name: 'client[email]',
-    rules: 'required'
-  }, {
-    name: 'client[slogan]',
-    rules: 'required'
-  }, {
-    name: 'client[website]',
-    rules: 'required'
-  }, {
     name: 'client[city]',
     rules: 'required'
   }, {
-    name: 'client[state]',
+    name: 'client[country]',
     rules: 'required'
   }, {
-    name: 'client[country]',
+    name: 'client[logo]',
     rules: 'required'
   }], function(errors, event) {
     if (errors.length > 0) {

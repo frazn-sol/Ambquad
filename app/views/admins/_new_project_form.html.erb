@@ -11,20 +11,20 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :project_status, :class => 'control-label required' %>
+    <%= f.label :project_status, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :project_status, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :start_date, :class => 'control-label required' %>
+    <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :start_date, :class => 'datepicker text_field' %>
     </div>
   </div>
 
   <div class="control-group">
-    <%= f.label :completion, :class => 'control-label required' %>
+    <%= f.label :completion, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :completion_date, :class => 'datepicker text_field' %>
     </div>
@@ -66,7 +66,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :state, :class => 'control-label required' %>
+    <%= f.label :state, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :state, :class => 'text_field' %>
     </div>
@@ -80,7 +80,7 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :client_name, :class => 'control-label required' %>
+    <%= f.label :client_name, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :client_name, :class => 'text_field' %>
     </div>
@@ -92,6 +92,7 @@
       <%= f.text_area :description, :class => 'text_field' %>
     </div>
   </div>
+  <%= f.link_to_add "Upload Project image", :images, :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
   <%= f.fields_for :images, @project.images do |image|%>
     <div class="upload-thumbs aleft">
       <div class="remove">
@@ -101,7 +102,7 @@
         <% if image.object.image.url.nil? %>
           <%= image_tag "/assets/placeholder.jpeg", :class => "thumb" %>
         <% else %>
-           <%= image_tag image.object.image.url, :class => "thumb" %>
+           <%= image_tag image.object.image.url(:thumb), :class => "thumb" %>
         <% end %> 
         <span class="btn btn-info upload">Choose File
           <%= image.file_field :image, :class => "project_image" %>
@@ -110,9 +111,7 @@
     </div>  
   <% end %>     
   <div class="clear"></div> 
-  <%= f.link_to_add "Upload Project image", :images, :id => "upload_img", :class => "btn btn-primary", :style => "position: absolute;margin-top: -15px;" %>
-  <div class="clear"></div> 
-  <%= f.hidden_field :latitude, :class => 'text_field' %>
+    <%= f.hidden_field :latitude, :class => 'text_field' %>
     <%= f.hidden_field :longitude, :class => 'text_field' %>
     <div style="text-align:center;margin-top:40px;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
@@ -202,28 +201,10 @@
     name: 'project[project_name]',    
     rules: 'required'
   }, {
-    name: 'project[project_status]',
-    rules: 'required'
-  }, {
-    name: 'project[start_date]',
-    rules: 'required'
-  }, {
-    name: 'project[completion_date]',
-    rules: 'required'
-  }, {
-    name: 'project[client]',
-    rules: 'required'
-  }, {
     name: 'project[city]',
     rules: 'required'
   }, {
-    name: 'project[state]',
-    rules: 'required'
-  }, {
     name: 'project[country]',
-    rules: 'required'
-  }, {
-    name: 'project[client_name]',
     rules: 'required'
   }], function(errors, event) {
     $("input").each(function(){
