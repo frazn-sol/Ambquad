@@ -1,6 +1,10 @@
 Ambquad::Application.routes.draw do
   
-  resources :clients
+  resources :clients do 
+    collection do
+      get :error
+    end
+  end
 
   devise_for :admins do 
     get "/sign_out"  => "devise/sessions#destroy", :as => :destroy_admin_session
@@ -13,15 +17,14 @@ Ambquad::Application.routes.draw do
       get :edit_project
       put :update_project
       delete :delete_project
-      get :view_project
       put :reset_password
     end
 
     collection do 
+      get :error
       get :forgot_password
       put :validate_project
       post :validate_project
-      get :welcome
       post :create_client
       get :new_project
       post :create_project

@@ -2,7 +2,7 @@
   <!-- Modal -->
   <div id="projectsList" class="popup" style="display:none;">
     <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
-    <%= render :partial => 'projects_list' %>
+    <%= render :partial => 'admins/projects_list' %>
   </div>
   <!-- Modal -->
   <div id="newProject" class="popup" style="display:none;">
@@ -15,7 +15,7 @@
 
   <%= render :partial => 'admins/edit_project' %>
 <% end %>
-<%= render :partial => 'details' %>
+<%= render :partial => 'admins/details' %>
 
 <div id="map" style='position: relative;'></div>
 <script type="text/javascript">

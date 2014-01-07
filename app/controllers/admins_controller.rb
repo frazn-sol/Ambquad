@@ -1,8 +1,9 @@
 class AdminsController < ApplicationController
 	before_filter :authenticate_admin!, :except => [:forgot_password, :reset_password]
 	
-	def index
-		@clients = Client.all
+  # Shows the landing/main page for admin
+  def index
+    @clients = Client.all
     @client = Client.new
     respond_to do |format|
   		format.html # index.html.erb
@@ -10,21 +11,12 @@ class AdminsController < ApplicationController
   	end
   end
 
+
   def show
-    @client = Client.find(params[:id])
-    @project = Project.new
-    @project.client_id = @client.id
-    @projects = @client.projects.all
-    @images = {}
-    @projects.each_with_index do |project,i|
-      @images[i] = project.images.first.image.url.to_s if project.images.present? 
-    end
-    respond_to do |format|
-      format.html {render :layout => "client"}# show.html.erb
-      format.json { render json: @hash }
-    end
+    redirect_to error_admins_path
   end
 
+  # Render new clients view
   def new
     @clients = Client.all
     @client = Client.new
@@ -34,12 +26,14 @@ class AdminsController < ApplicationController
     end
   end
 
+  # Renders the esit client view
   def edit
     @client = Client.find(params[:id])
   end
 
   # POST /clients
   # POST /clients.json
+  # Create Client
   def create_client
     @client = Client.new(params[:client])
     respond_to do |format|
@@ -56,6 +50,7 @@ class AdminsController < ApplicationController
 
   # PUT /clients/1
   # PUT /clients/1.json
+  # Update Client
   def update_client
     @client = Client.find(params[:id])
     respond_to do |format|
@@ -71,6 +66,7 @@ class AdminsController < ApplicationController
 
   # DELETE /clients/1
   # DELETE /clients/1.json
+  # Delete client 
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
@@ -80,6 +76,7 @@ class AdminsController < ApplicationController
     end
   end
 
+  # Render create new project view
   def new_project
     @project = Project.new
     respond_to do |format|
@@ -88,6 +85,7 @@ class AdminsController < ApplicationController
     end
   end
 
+  # Creates new projects
   def create_project
     @project = Project.new(params[:project])
     client   = @project.client
@@ -102,6 +100,7 @@ class AdminsController < ApplicationController
     end
   end
 
+  #Checks for the server validations on project form
   def validate_project
     params[:project][:images_attributes] = {}
     @project = Project.new(params[:project])
@@ -119,10 +118,12 @@ class AdminsController < ApplicationController
     end
   end
 
+  #Renders edit project view
   def edit_project
     @project = Project.find(params[:id])
   end
 
+  #Updates the project
   def update_project  
     @project = Project.find(params[:id])
     client   = @project.client
@@ -137,14 +138,8 @@ class AdminsController < ApplicationController
     end
   end
 
-  def view_project
-    @project = Project.find(params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
-    end
-  end
 
+  # Delete the project
   def delete_project
     @project = Project.find(params[:id])
     client = @project.client
@@ -155,10 +150,12 @@ class AdminsController < ApplicationController
     end
   end
 
+  # Render view for reseting the password
   def forgot_password
     @admin = Admin.find(1)
   end
 
+  # Resets the password for the admin
   def reset_password
     @admin = Admin.find_by_email(params[:admin][:email])
     if @admin
@@ -190,4 +187,7 @@ class AdminsController < ApplicationController
     end
   end
 
+  def error
+    render :layout => false
+  end
 end
