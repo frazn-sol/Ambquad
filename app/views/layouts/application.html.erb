@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ambquad</title>
     <link href="http://dimsemenov.com/plugins/magnific-popup/site-assets/all.min.css?v=0.9.9" rel="stylesheet">
-  <!--[if lt IE 9]
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  ![endif]-->
   <%= stylesheet_link_tag "application" %>
+  <!--[if lt IE 9]>
+      <link href="//netdna.bootstrapcdn.com/respond-proxy.html" id="respond-proxy" rel="respond-proxy" />
+      <link href="img/ie/respond.proxy.gif" id="respond-redirect" rel="respond-redirect" />
+      <script src="js/ie/html5shiv.js"></script>
+      <script src="js/ie/respond.min.js"></script>
+      <script src="js/ie/respond.proxy.js"></script>
+  <![endif]-->
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
