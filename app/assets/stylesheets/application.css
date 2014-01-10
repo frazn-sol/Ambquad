@@ -10,5 +10,5 @@
  *
  *= require bootstrap_and_overrides.css
  *= require_self
- *= require style.css
+ *= require_tree .
 */
