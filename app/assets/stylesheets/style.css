@@ -382,7 +382,7 @@ img
 	top: 3px;
 }
 
-/* --- Templates Styles --- */
+/* Templates Styles */
 .template1
 {
 	background:#333333 !important; 
@@ -400,7 +400,7 @@ img
 	color: #000000 !important;
 }
 
-/* --- Magnific Popup --- */
+/* Magnific Popup */
 .mfp-arrow-right:after, .mfp-arrow-right .mfp-a {
 	border-left: 34px solid #FFF;
 	margin-left: 39px;
