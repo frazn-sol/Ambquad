@@ -3,8 +3,7 @@
 <head>
   <title>Ambquad</title>
   <script type="text/javascript">
-    if(document.defaultView.getComputedStyle(div, null) === null)
-     return null;
+    jQuery.support.reliableMarginRight = document.defaultView.getComputedStyle(div, null) ? ( parseInt(document.defaultView.getComputedStyle(div, null).marginRight, 10) || 0 ) === 0 : false;
   </script>  
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   <link href="http://dimsemenov.com/plugins/magnific-popup/site-assets/all.min.css?v=0.9.9" rel="stylesheet">
