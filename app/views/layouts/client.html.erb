@@ -2,6 +2,10 @@
 <html>
 <head>
   <title>Ambquad</title>
+  <script type="text/javascript">
+    if(document.defaultView.getComputedStyle(div, null) === null)
+     return null;
+  </script>  
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   <link href="http://dimsemenov.com/plugins/magnific-popup/site-assets/all.min.css?v=0.9.9" rel="stylesheet">
   <%= csrf_meta_tags %>
@@ -60,9 +64,5 @@
         <div class="clear"></div>
       </div>
   </div>
-<script type="text/javascript">
-  if(document.defaultView.getComputedStyle(div, null) === null)
-   return null;
-</script>  
 </body>
 </html>
