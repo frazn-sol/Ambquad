@@ -3,8 +3,15 @@
 <head>
   <title>Ambquad</title>
   <script type="text/javascript">
-    jQuery.support.reliableMarginRight = document.defaultView.getComputedStyle(div, null) ? ( parseInt(document.defaultView.getComputedStyle(div, null).marginRight, 10) || 0 ) === 0 : false;
-  </script>  
+    function getStyle(el, cssprop){
+     if (el.currentStyle) //IE
+      return el.currentStyle[cssprop]
+     else if (document.defaultView && document.defaultView.getComputedStyle) //Firefox
+      return document.defaultView.getComputedStyle(el, "")[cssprop]
+     else //try and get inline style
+      return el.style[cssprop]
+    }
+  </script>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   <link href="http://dimsemenov.com/plugins/magnific-popup/site-assets/all.min.css?v=0.9.9" rel="stylesheet">
   <%= csrf_meta_tags %>
