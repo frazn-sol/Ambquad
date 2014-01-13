@@ -1,9 +1,12 @@
+/* Reset body padding and margins */
 body { 
 	margin:0; 
 	padding:0; 
 	font-size: 12px;
 	background-color: #FCFCFC;
 }
+ 
+/* Make Header Sticky */
 #header_container {
 	background:#333333; 
 	width:100%; 
@@ -40,6 +43,8 @@ body {
 	font-size: 14px;
 }
 
+ 
+/* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
 #container {  
 	overflow:auto; 
 	padding:20px 20px; 
