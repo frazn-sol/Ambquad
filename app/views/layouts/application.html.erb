@@ -48,9 +48,8 @@
       </div>
   </div>
 <script type="text/javascript">
-  if (elem.nodeType === elem.ELEMENT_NODE) {
-    document.defaultView.getComputedStyle(elem, null);
-  }
+  if(document.defaultView.getComputedStyle(div, null) === null)
+   return null;
 </script>  
 </body>
 </html>
