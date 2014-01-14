@@ -31,7 +31,7 @@ var markers = [];
 var bounds = new google.maps.LatLngBounds();
 function initialize() {
   if(json.length > 0){
-    map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         minZoom: 2,
         zoomControlOptions: {
@@ -68,7 +68,7 @@ function initialize() {
                     position: google.maps.ControlPosition.LEFT_CENTER
         }
     }
-    map = new google.maps.Map(document.getElementById("map"), myOptions);
+    var map = new google.maps.Map(document.getElementById("map"), myOptions);
   }
   <% if current_admin.present? %>
     initializeAutoComplete();
