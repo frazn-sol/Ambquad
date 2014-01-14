@@ -96,7 +96,7 @@ var marker_no;
 function addMarkers(){
     for (var i = 0; i < json.length; i++)
     {
-        marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
             position: new google.maps.LatLng(json[i]['latitude'], json[i]['longitude']),
             map: map,
             id: i,
