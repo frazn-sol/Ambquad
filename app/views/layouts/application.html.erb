@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ambquad</title>
   <%= javascript_include_tag "application" %>
-  <script type="text/javascript">
-    jQuery.support.reliableMarginRight = document.defaultView.getComputedStyle(div, null) ? ( parseInt(document.defaultView.getComputedStyle(div, null).marginRight, 10) || 0 ) === 0 : false;
-  </script>  
   <%= csrf_meta_tags %>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
