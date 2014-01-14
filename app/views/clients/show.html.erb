@@ -26,12 +26,13 @@ var image = "<%= @images.to_json %>";
 image = JSON.parse(image.replace(/&quot;/g,'"'));
 
 var zoom = "";
+var map;
 var boxList =[];
 var markers = [];
 var bounds = new google.maps.LatLngBounds();
 function initialize() {
   if(json.length > 0){
-    var map = new google.maps.Map(document.getElementById('gmap'), {
+    map = new google.maps.Map(document.getElementById('gmap'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         minZoom: 2,
         zoomControlOptions: {
@@ -68,7 +69,7 @@ function initialize() {
                     position: google.maps.ControlPosition.LEFT_CENTER
         }
     }
-    var map = new google.maps.Map(document.getElementById("gmap"), myOptions);
+    map = new google.maps.Map(document.getElementById("gmap"), myOptions);
   }
   <% if current_admin.present? %>
     initializeAutoComplete();
@@ -257,7 +258,7 @@ function open_window (project_id) {
 
 </script>
 <style>
-html, body, #map {
+html, body, #gmap {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -296,10 +297,10 @@ html, body, #map {
   height: 700px!important;
 }  */
 
-#map img { 
+#gmap img { 
   max-width: none;
 }
-#map label { 
+#gmap label { 
   width: auto; display:inline; 
 }
 
