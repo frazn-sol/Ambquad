@@ -2,11 +2,12 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <title>Ambquad</title>
-  <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"> 
+  <%= stylesheet_link_tag "application" %>
 </head>
 <body>
   <div id="header_container">
