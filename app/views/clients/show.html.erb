@@ -252,10 +252,10 @@ function open_window (project_id) {
     google.maps.event.addDomListener(controlUI, 'click', function() {
       if(zoom > 12)
         zoom = 12;
-      // center = new google.maps.LatLng(0, 0),
-      // map.setCenter(center);
-      // map.setZoom(zoom);
-      map.fitbounds(bounds);
+      center = new google.maps.LatLng(0, 0),
+      map.setCenter(center);
+      map.setZoom(zoom);
+      // map.fitbounds(bounds);
     });
   }
 
