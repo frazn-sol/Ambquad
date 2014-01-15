@@ -81,7 +81,7 @@ function initialize() {
   <% end %>
   google.maps.event.addListenerOnce(map,"zoom_changed", function() {
     if(zoom == "")
-      zoom = 2;//map.getZoom();
+      zoom = map.getZoom();
       // center = new google.maps.LatLng(0, 0),
       // map.setCenter(center);
       // map.setZoom(zoom);

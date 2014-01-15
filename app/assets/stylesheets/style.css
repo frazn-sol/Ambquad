@@ -438,6 +438,10 @@ img
 }
 .mfp-container button:hover{
 	background: none !important;
+	border: none !important;
+}
+button.mfp-close, button.mfp-arrow, .mfp-arrow:focus{
+    outline: none!important;
 }
 #button
 {
