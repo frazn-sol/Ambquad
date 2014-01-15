@@ -67,7 +67,6 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         minZoom: 2,
         zoomControlOptions: {
-                    style: google.maps.ZoomControlStyle.SMALL,
                     position: google.maps.ControlPosition.LEFT_TOP
         }
     }
@@ -81,7 +80,7 @@ function initialize() {
   <% end %>
   google.maps.event.addListenerOnce(map,"zoom_changed", function() {
     if(zoom == "")
-      zoom = 2;//map.getZoom();
+      zoom = map.getZoom();
       // center = new google.maps.LatLng(0, 0),
       // map.setCenter(center);
       // map.setZoom(zoom);
@@ -252,8 +251,8 @@ function open_window (project_id) {
     google.maps.event.addDomListener(controlUI, 'click', function() {
       if(zoom > 12)
         zoom = 12;
-      center = new google.maps.LatLng(0, 0),
-      map.setCenter(center);
+      // center = new google.maps.LatLng(0, 0),
+      // map.setCenter(center);
       map.setZoom(zoom);
       // map.fitbounds(bounds);
     });
