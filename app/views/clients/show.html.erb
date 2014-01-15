@@ -258,12 +258,10 @@ function open_window (project_id) {
 
 </script>
 <style>
-html, body, #gmap {
-  width: 100%;
-  height: 100%;
+html, body, #container, #content, #gmap {
   margin: 0;
-  padding-top: 60px;
-  padding-bottom: 25px;
+  padding: 0;
+  height: 100%;
 }
 #header_container{
   position:absolute;
@@ -275,8 +273,8 @@ html, body, #gmap {
   bottom: 0; 
 }
 #content {
-  width: 100%;
-  height: 100%;
+  padding-top: 120px;
+  padding-bottom: 100px;
 }
 .yellow { 
   border: 1px solid black;

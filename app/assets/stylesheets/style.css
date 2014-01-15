@@ -13,7 +13,7 @@ body {
 }
 #header{ 
 	margin:0 auto; 
-	width:100%; 
+	width: 90%;
 	padding: 10px 7%;
 	color: #ffffff;
 }
@@ -46,14 +46,12 @@ body {
  
 /* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
 #container {  
-	overflow:auto; 
-	padding:20px 20px; 
 	width:100%; 
-	height: 100%;
 	background-color: #FCFCFC;
 }
 
 #content{
+	padding: 20px 20px;
 }
  
 .leftpanel{
@@ -69,7 +67,7 @@ h3{
 }
 
 .tagbar{
-	padding: 8px 15px;
+	padding: 0 15px;
 	background-color: #333333;
 	border-radius: 4px;
 	color: #ffffff;
@@ -97,9 +95,9 @@ h3{
 
 #footer { 
 	margin:0 auto; 
-	width:100%; 
 	text-align:right; 
 	color: white;
+	width: 90%;
 	padding: 10px 7%;
 	border: none;
 }
@@ -164,7 +162,6 @@ h3{
 }
 .table .btn
 {
-	height: 30px;
 	padding: 5px 12px;
 	font-size: 12px;
 }
@@ -244,7 +241,6 @@ span.upload
 }
 .alert{
 	text-align: center;
-	height: 50px;
 	margin-bottom: 0 !important;
 }
 
@@ -422,4 +418,8 @@ img
 }
 .mfp-container{
 	cursor: auto;
+}
+#button
+{
+	margin-top: 7px;
 }
