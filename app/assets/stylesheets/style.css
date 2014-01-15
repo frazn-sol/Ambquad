@@ -327,7 +327,7 @@ img
 	z-index: 99;
 	padding: 15px;
 	border-radius: 5px;
-	background-color: rgba(176,170,164);
+	background-color: rgb(176,170,164);
 	background-color: rgba(176,170,164,0.9);
 	border: 3px solid #6B5D62;
 	min-height: 250px;
