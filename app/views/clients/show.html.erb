@@ -107,7 +107,7 @@ function addMarkers(){
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(176,170,164,0.9); padding: 10px;border-radius:3px";
+        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(176,170,164);background: rgba(176,170,164,0.9); padding: 10px;border-radius:3px";
         boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'class='thumbs' onclick='open_window("+json[i]['id']+")'/></div><div style='float:left;margin-left:10px;text-align:left;width:200px;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br><span style='font-size:14px;'>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</span></br><span style='font-size:14px;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#ffffff;font-size:14px;'>Here</a></div><div style='clear:both;'></div><style>img:hover, a:hover{cursor:pointer;}</style>";
 
         var myOptions = {
@@ -258,10 +258,14 @@ function open_window (project_id) {
 
 </script>
 <style>
-html, body, #container, #content, #gmap {
+html, body, #container {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+#content, #gmap {
+  padding: 0;
+  height: 95%;
 }
 #header_container{
   position:absolute;
@@ -274,7 +278,6 @@ html, body, #container, #content, #gmap {
 }
 #content {
   padding-top: 120px;
-  padding-bottom: 100px;
 }
 .yellow { 
   border: 1px solid black;

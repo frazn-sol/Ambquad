@@ -98,7 +98,7 @@ h3{
 	text-align:right; 
 	color: white;
 	width: 90%;
-	padding: 10px 7%;
+	padding: 10px 0;
 	border: none;
 }
 #footer .text{ 
@@ -268,8 +268,7 @@ span.upload
 	clear: both;
 }
 
-input[type=submit]{
-  height: 31px;
+input[type=submit],.btn-primary{
   background-image: none !important;
   background-color: #428bDb !important;
   border: none;
@@ -278,12 +277,24 @@ input[type=submit]{
   text-shadow: none !important;
   font-weight: normal !important;
 }
-input[type=submit]:hover{
+.btn-primary
+{
+	padding: 5px 10px;
+}
+input[type=submit]
+{
+	height: 30px;
+}
+input[type=submit]:hover,.btn-primary:hover{
   background-color: #428bca !important;
   background-position: 0 45px; 
   border: none;
 }
-
+input[type=radio]
+{
+	float: left;
+	margin-right: 10px;
+}
 label.required:after {
     content: " *";
     color: red;
@@ -316,6 +327,7 @@ img
 	z-index: 99;
 	padding: 15px;
 	border-radius: 5px;
+	background-color: rgba(176,170,164);
 	background-color: rgba(176,170,164,0.9);
 	border: 3px solid #6B5D62;
 	min-height: 250px;
