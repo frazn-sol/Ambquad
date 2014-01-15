@@ -344,6 +344,11 @@ img
 	right: 10px;
 	top: 10px;
 }
+.popup_close img
+{
+	height: 32px !important;
+	width: 32px !important;
+}
 .popup_close:hover
 {
 	cursor: pointer;
