@@ -35,8 +35,8 @@
   <% if notice || alert %>
     <%= render partial: "admins/flash_messages", flash: flash %> 
   <% end %>
-  <div id="container" style="padding:0;">
-    <div id="content">
+  <div id="container">
+    <div id="content" style="padding:0;">
   		<%= yield %>
     </div>      
   </div>			

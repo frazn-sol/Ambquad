@@ -36,7 +36,7 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         minZoom: 2,
         zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_CENTER
+                    position: google.maps.ControlPosition.LEFT_TOP
         }
     });
     addMarkers();
@@ -66,7 +66,7 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         minZoom: 2,
         zoomControlOptions: {
-                    position: google.maps.ControlPosition.LEFT_CENTER
+                    position: google.maps.ControlPosition.LEFT_TOP
         }
     }
     map = new google.maps.Map(document.getElementById("gmap"), myOptions);
@@ -89,7 +89,7 @@ function initialize() {
   var backControl = new BackControl(backControlDiv, map);
 
   backControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.LEFT_CENTER].push(backControlDiv);
+  map.controls[google.maps.ControlPosition.LEFT_TOP].push(backControlDiv);
 }
 var lat;
 var lng;
@@ -107,7 +107,7 @@ function addMarkers(){
         markers.push(marker);
         var boxText = document.createElement("div");
         boxText.id = i;
-        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgba(176,170,164);background: rgba(176,170,164,0.9); padding: 10px;border-radius:3px";
+        boxText.style.cssText = "border: 2px solid #6B5D62; margin-top: 8px; background: rgb(176,170,164);background: rgba(176,170,164,0.9); padding: 10px;border-radius:3px";
         boxText.innerHTML = "<div style='float:left;'><img src='"+ image[i] +"'class='thumbs' onclick='open_window("+json[i]['id']+")'/></div><div style='float:left;margin-left:10px;text-align:left;width:200px;'><span style='font-size:16px;font-weight:bold;'>" + json[i]['project_name']+ "</span></br><span style='font-size:14px;'>"+ json[i]['city']+", "+ json[i]['state']+", "+ json[i]['country']+"</span></br><span style='font-size:14px;'>View Details <a id='mybtn' onclick='open_window("+json[i]['id']+")' style='font-weight:bold;text-decoration:underline;color:#ffffff;font-size:14px;'>Here</a></div><div style='clear:both;'></div><style>img:hover, a:hover{cursor:pointer;}</style>";
 
         var myOptions = {
@@ -258,14 +258,19 @@ function open_window (project_id) {
 
 </script>
 <style>
-html, body, #container {
-  margin: 0;
-  padding: 0;
+#container, #content
+{
+  width: 100%;
   height: 100%;
-}
-#content, #gmap {
   padding: 0;
+}
+html, body, #gmap {
+  width: 100%;
   height: 95%;
+  margin: 0;
+  padding-top: 60px;
+  padding-bottom: 25px;
+  overflow: hidden;
 }
 #header_container{
   position:absolute;
@@ -275,9 +280,6 @@ html, body, #container {
 #footer_container{
   position:absolute;
   bottom: 0; 
-}
-#content {
-  padding-top: 120px;
 }
 .yellow { 
   border: 1px solid black;

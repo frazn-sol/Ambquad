@@ -1,7 +1,7 @@
 <%if @client.projects.present? %>
 	<% @client.projects.each do |project| %>
 		<div id="project_details_<%= project.id %>" class="popup" style="display:none;">
-		  <div class="popup_close"><img src="/assets/close.png"/ width="32"></div>
+		  <div class="popup_close"><img src="/assets/close.png" width="32" height="32"/></div>
 			<div>
 				<div class="text_container">
 					<h2> <%= project.project_name %> </h2>
