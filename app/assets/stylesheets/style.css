@@ -440,8 +440,8 @@ img
 	background: none !important;
 	border: none !important;
 }
-button.mfp-close, button.mfp-arrow, .mfp-arrow:focus{
-    outline: none!important;
+.mfp-container button:focus{
+    outline: 0;
 }
 #button
 {
