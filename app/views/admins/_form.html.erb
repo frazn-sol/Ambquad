@@ -101,6 +101,13 @@
   </div>
 
   <div class="control-group">
+    <%= f.label :permalink, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :permalink, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :template, :class => 'control-label' %>
     <div class="controls">
       <%= f.radio_button :template, 'template1', :checked => true %> 

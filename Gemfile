@@ -6,6 +6,7 @@ gem 'rails', '3.2.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'mysql2'
 gem 'therubyracer'
 gem 'devise'
 gem "less-rails"
@@ -15,6 +16,7 @@ gem 'fog', '~> 1.0.0' # Need to specify version, as carrierwave references older
 gem 'nested_form'
 gem "rmagick", :require => 'RMagick'
 gem 'rails_12factor'
+gem "aws-sdk", "~> 1.33.0" 
 # gem "american_date"
 # Gems used only for assets and not required
 # in production environments by default.

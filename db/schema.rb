@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140104135515) do
+ActiveRecord::Schema.define(:version => 20140613150713) do
 
   create_table "admins", :force => true do |t|
     t.string   "first_name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20140104135515) do
     t.float    "longitude"
     t.string   "slug"
     t.string   "template"
+    t.string   "permalink"
   end
 
   add_index "clients", ["slug"], :name => "index_clients_on_slug"
