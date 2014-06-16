@@ -1,6 +1,16 @@
 class Client < ActiveRecord::Base
+  belongs_to :invite_code
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
 
-  attr_accessible :company_name, :contact_person, :description, :email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude, :template, :permalink
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :code
+  attr_accessible :company_name, :contact_person, :description, :contact_email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude, :template, :permalink
   mount_uploader :logo, LogoUploader
 
   has_many :projects, :foreign_key => 'client_id', :dependent => :destroy
@@ -20,7 +30,7 @@ class Client < ActiveRecord::Base
   validates_presence_of :country, :message => "Country can't be blank"   
   validates_presence_of :logo, :message => "Logo can't be blank"
   validate :check_lat_long
-  validate :logo_size  
+  # validate :logo_size  
   
   def check_lat_long
     if (self.latitude == nil && self.longitude == nil)
@@ -30,11 +40,11 @@ class Client < ActiveRecord::Base
     end  
   end
 
-  def logo_size
-    if logo.file.size.to_f/(1000*1000) > 2.0
-      errors.add(:file, "You cannot upload a file greater than 2 MB")
-    end
-  end
+  # def logo_size
+  #   if logo.file.size.to_f/(1000*1000) > 2.0
+  #     errors.add(:file, "You cannot upload a file greater than 2 MB")
+  #   end
+  # end
 
   def custom_link
     if self.permalink.blank?

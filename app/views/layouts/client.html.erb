@@ -26,7 +26,12 @@
           <p class="tagline"><%= @client.slogan %></p>
           <% if current_admin.present? %>
           <div id="button" style="text-align:right;">
-            <%= link_to t('.new', :default => t("helpers.links.Logout")), '/sign_out', :class => 'btn btn-danger' %>
+            <%= link_to t('.new', :default => t("helpers.links.Logout")), destroy_admin_session_path, :method => :delete, :class => 'btn btn-danger' %>
+          </div>
+          <% end %>
+          <% if current_client.present? %>
+          <div id="button" style="text-align:right;">
+            <%= link_to t('.new', :default => t("helpers.links.Logout")), destroy_client_session_path, :method => :delete, :class => 'btn btn-danger' %>
           </div>
           <% end %>
         </div>
@@ -56,7 +61,13 @@
               <%= link_to t('.new', :default => t("helpers.links.Admin Panel")), '/admins', :class => 'btn btn-primary' %>
             </div>
             <span class="text">Powered by Google Maps and Ambquad Solutions</span>
-          <% else %>  
+          <% elsif current_client.present?%>
+            <div id="button" style="text-align:right;">
+              <a href="javascript:void(0)" class="btn btn-primary" id="projectsListBtn">View projects list</a>
+              <a href="javascript:void(0)" class="btn btn-primary" id="newProjectBtn">Enter a new project</a>
+            </div>  
+            <span class="text">Powered by Google Maps and Ambquad Solutions</span>
+          <%else%>
             <span class="text">Powered by Google Maps and Ambquad Solutions</span>
           <% end %>
         </div>

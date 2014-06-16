@@ -36,6 +36,47 @@
       </tbody>
     </table>
   </div>
+
+  <div class="clear"></div> 
+
+  <div class="tagbar down">
+    <h3 class="aleft">Show Existing codes</h3>
+    <div id="button1" class="aright">
+      <%= link_to t('.new', :default => t("helpers.links.Add invitation code")), code_admins_path, :class => 'btn btn-primary' %>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="codes-list">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= model_class.human_attribute_name(:code) %></th>
+          <th><%= model_class.human_attribute_name(:status) %></th>
+          <th><%=t '.actions', :default => t("helpers.actions") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% InviteCode.all.each do |code| %>
+          <tr>
+            <td><%= code.code %></td>
+            <%if code.consumed == false %>
+              <td> Valid </td>
+            <%else%>
+              <td> Invalid </td>
+            <%end%>    
+            <td>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          delete_code_admin_path(code),
+                          :method => :delete,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :class => 'btn btn-mini btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
   <div id="system-info">
     <div class="page-header tagbar">
       <h3>Dashboard</h3>
@@ -80,3 +121,20 @@
       </table>
     </div>  
   </div>
+<style>
+#codes-list{
+  min-height: 300px;
+  max-height: 500px;
+  overflow: auto;
+  border: 1px solid black;
+}
+
+.down{
+  margin-top: 15px;
+}
+
+#button1
+{
+  margin-top: 7px;
+}
+</style>

@@ -17,8 +17,12 @@ class ClientsController < ApplicationController
   end
 
   # Shows all the client related projects and info
-  def show        
-    @client = Client.find(params[:id])
+  def show    
+    if current_client.present?
+      @client = current_client
+    else 
+      @client = Client.friendly.find(params[:id])
+    end
     @project = Project.new
     @project.images.build
     @project.client_id = @client.id

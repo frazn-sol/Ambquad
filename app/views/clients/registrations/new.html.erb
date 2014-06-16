@@ -1,0 +1,155 @@
+<div class="container">
+	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-signin"}) do |f| %>
+	<h2 class="form-signin-heading">Client SignUp</h2>
+  		<%= devise_error_messages! %>  
+  	<%= f.email_field :email, :class => "form-control space", :placeholder => "Email address", :required => "", :autofocus =>"true"%>
+	 <%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => ""%>
+	<%= f.password_field :password_confirmation, :class => "form-control", :placeholder => "Confirm Password", :required => ""%>
+  <%= f.text_field :description, :class => "form-control ", :placeholder => "Registration Code", :required => "", :autofocus =>"true"%>
+
+  <%= f.text_field :company_name, :class => "form-control", :placeholder => "Company Name", :required => ""%>
+
+       <input class="form-control" id="autocomplete" placeholder="Enter your address" type="text"></input>
+
+  <%= f.text_field :address1, :class => "form-control", :placeholder => "Address 1" %>
+  
+  <%= f.text_field :address2, :class => "form-control", :placeholder => "Address 2" %>
+ 
+  <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
+  
+  <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
+  
+  
+  <%= f.text_field :country, :class => "form-control", :placeholder => "Country" %>
+  
+
+<div class="control-group">
+    <%= f.label :corporate_logo, :class => 'control-label required' %>
+    <div class="controls">
+      <img id="upload" src="/assets/placeholder.jpeg" alt="corportae logo" class="thumb"/>  
+      <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
+      <br/>Logo size limit 2mb
+    </div>
+  </div>
+    <%= f.hidden_field :latitude, :class => 'text_field' %>
+    <%= f.hidden_field :longitude, :class => 'text_field' %> 
+	
+  	<%= f.submit "Sign up", :class => "btn btn-lg btn-primary btn-block" %></div>
+<% end %>
+
+</div>
+
+<script>
+  var placeSearch, autocomplete;
+  var componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name'
+  };
+
+  function initialize() {
+    // Create the autocomplete object, restricting the search
+    // to geographical location types.
+    autocomplete = new google.maps.places.Autocomplete(
+        /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+        { types: ['geocode'] });
+    // When the client selects an address from the dropdown,
+    // populate the address fields in the form.
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      fillInAddress();
+    });
+  }
+
+  // The START and END in square brackets define a snippet for our documentation:
+  // [START region_fillform]
+  function fillInAddress() {
+    // Get the place details from the autocomplete object.
+    var place = autocomplete.getPlace();
+    // Get each component of the address from the place details
+    // and fill the corresponding field on the form.
+    var address = "";
+    for (var i = 0; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
+      if (componentForm[addressType]) {
+        var val = place.address_components[i][componentForm[addressType]];
+        if (addressType == 'locality')
+          $('#client_city').val(val);
+        if (addressType == 'street_number')
+          address += val;
+        if (addressType == 'route')
+          address += ' '+val;
+        if (addressType == 'administrative_area_level_1')
+          $('#client_state').val(val);
+        if (addressType == 'country')
+           $('#client_country').val(val);
+      }
+    }
+    $('#client_address1').val(address);
+    var latitude = place.geometry.location.lat();
+    var longitude =  place.geometry.location.lng();
+    $('#client_latitude').val(latitude);
+    $('#client_longitude').val(longitude);
+  }
+  $( document ).ready(function() {
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#upload').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#client_logo").change(function(){
+        if(this.files[0].size/(1000*1000) > 2.0)
+          alert("File size can't be greater than 2mb.");
+        else
+          readURL(this);
+    });
+  });
+  // [END region_fillform]
+  window.onload = initialize;
+</script>
+<style>
+a:hover, a:focus {
+  color: #333333;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a{
+  color: #333333 !important;
+}
+
+.link{
+  font-size: 12px;
+  position: relative;
+  margin-top: -20px;
+  right: -154px;
+}
+#footer_container{
+    position:fixed;
+    bottom: 0; 
+}
+
+#client_password_confirmation{
+   margin-top: -12px;
+}
+
+#client_code{
+   margin-top: -12px;
+}
+input[type="text"]{
+margin-bottom: 10px;
+border-bottom-left-radius: 4px;
+border-bottom-right-radius: 4px;
+border-top-left-radius: 0;
+border-top-right-radius: 0;
+width: 330px;
+margin-top: -12px;
+}
+  
+</style>

@@ -1,7 +1,9 @@
 Ambquad::Application.routes.draw do
   
+  devise_for :clients, controllers: { registrations: "clients/registrations" }
   resources :clients do 
     collection do
+      get "clients/sign_out"  => "devise/sessions#destroy", :as => :destroy_client_session
       get :error
     end
   end
@@ -10,7 +12,6 @@ Ambquad::Application.routes.draw do
     get "/sign_out"  => "devise/sessions#destroy", :as => :destroy_admin_session
   end
 
-
   resources :admins do
     member do
       put :update_client
@@ -18,6 +19,7 @@ Ambquad::Application.routes.draw do
       put :update_project
       delete :delete_project
       put :reset_password
+      delete :delete_code
     end
 
     collection do 
@@ -28,6 +30,8 @@ Ambquad::Application.routes.draw do
       post :create_client
       get :new_project
       post :create_project
+      get :code
+      post :save_code
     end
   end
 

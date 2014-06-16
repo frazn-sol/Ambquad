@@ -1,5 +1,7 @@
 class AdminsController < ApplicationController
-	before_filter :authenticate_admin!, :except => [:forgot_password, :reset_password]
+  before_filter :authenticate_client!, :only => [:delete_project, :new_project, :create_project, :edit_project, :update_project]
+	before_filter :authenticate_admin!, :except => [:forgot_password, :reset_password, :validate_project]
+ 
 	
   # Shows the landing/main page for admin
   def index
@@ -28,7 +30,7 @@ class AdminsController < ApplicationController
 
   # Renders the esit client view
   def edit
-    @client = Client.find(params[:id])
+    @client = Client.friendly.find(params[:id])
   end
 
   # POST /clients
@@ -52,7 +54,7 @@ class AdminsController < ApplicationController
   # PUT /clients/1.json
   # Update Client
   def update_client
-    @client = Client.find(params[:id])
+    @client = Client.friendly.find(params[:id])
     respond_to do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to admins_path, notice: 'Client was successfully updated.' }
@@ -68,7 +70,7 @@ class AdminsController < ApplicationController
   # DELETE /clients/1.json
   # Delete client 
   def destroy
-    @client = Client.find(params[:id])
+    @client = Client.friendly.find(params[:id])
     @client.destroy
     respond_to do |format|
       format.html { redirect_to admins_url }
@@ -186,6 +188,33 @@ class AdminsController < ApplicationController
       redirect_to forgot_password_admins_path and return
     end
   end
+
+  def code
+    @code = InviteCode.new
+  end
+
+  def save_code
+    @code = InviteCode.new(params[:invite_code])
+    respond_to do |format|
+      if @code.save
+        format.html { redirect_to root_url, notice: 'Code successfully created' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "code" }
+        format.json { render json: @code.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def delete_code
+    @code = InviteCode.find(params[:id])
+    @code.destroy
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.json { head :no_content }
+    end
+  end
+
 
   def error
     render :layout => false

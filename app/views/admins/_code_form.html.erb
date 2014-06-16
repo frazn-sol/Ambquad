@@ -1,0 +1,34 @@
+<%= form_for @code, :url => save_code_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+  <% if @code.errors.present? %>
+    <div id="form-errors">
+      <p class="error-tagline">Following are missing fields in the form:</p>
+      <% @code.errors.full_messages.each do |msg| %>
+        <p class="error">- <%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="control-group">
+    <%= f.label :code, :class => 'control-label required' %>
+    <div class="controls">
+      <%= f.text_field :code, :class => 'text_field' %>
+    </div>
+  </div>
+    <div style="text-align:center;">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+    </div>
+<% end %>
+<script>
+  var validator = new FormValidator('new_code', [{
+    name: 'code[code]',    
+    rules: 'required'
+  }], function(errors, event) {
+    if (errors.length > 0) {
+      var obj;
+      for (var i=0; i<errors.length; i++){
+        obj = errors[i].id;
+        $("#"+obj).css("border","1px solid red");
+      }
+      $("#"+errors[0].id).focus();
+    }  
+  });
+</script>

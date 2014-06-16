@@ -3,7 +3,7 @@ class CreateClients < ActiveRecord::Migration
     create_table :clients do |t|
       t.string :company_name
       t.string :contact_person
-      t.string :email
+      t.string :contact_email
       t.string :address1
       t.string :address2
       t.string :city
@@ -17,6 +17,7 @@ class CreateClients < ActiveRecord::Migration
       t.string :phone_number
       t.string :description
       t.float  :logo
+      t.belongs_to :invite_code
 
       t.timestamps
     end
