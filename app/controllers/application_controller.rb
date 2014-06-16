@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
    	 def after_sign_in_path_for(resource)
    	 	if params[:client].present?
    	 		client_path(resource) 
+      elsif params[:admin].present? 
+        root_path
    	 	end
    	 end
 

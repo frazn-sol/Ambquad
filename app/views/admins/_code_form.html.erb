@@ -13,6 +13,20 @@
       <%= f.text_field :code, :class => 'text_field' %>
     </div>
   </div>
+
+  <div class="control-group">
+    <%= f.label :start_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :start_date, :class => 'datepicker text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :end_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :end_date, :class => 'datepicker text_field' %>
+    </div>
+  </div>
     <div style="text-align:center;">
       <%= f.submit nil, :class => 'btn btn-primary' %>
     </div>
@@ -30,5 +44,10 @@
       }
       $("#"+errors[0].id).focus();
     }  
+  });
+  $(function() {
+    $(".datepicker").datepicker({
+      dateFormat: 'mm/dd/yy'
+    });
   });
 </script>

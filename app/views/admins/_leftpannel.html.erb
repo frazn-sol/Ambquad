@@ -51,7 +51,8 @@
       <thead>
         <tr>
           <th><%= model_class.human_attribute_name(:code) %></th>
-          <th><%= model_class.human_attribute_name(:status) %></th>
+          <th><%= model_class.human_attribute_name(:start_date) %></th>\
+          <th><%= model_class.human_attribute_name(:end_date) %></th>
           <th><%=t '.actions', :default => t("helpers.actions") %></th>
         </tr>
       </thead>
@@ -59,11 +60,8 @@
         <% InviteCode.all.each do |code| %>
           <tr>
             <td><%= code.code %></td>
-            <%if code.consumed == false %>
-              <td> Valid </td>
-            <%else%>
-              <td> Invalid </td>
-            <%end%>    
+            <td><%= code.start_date %></td>
+            <td><%= code.end_date %></td>
             <td>
               <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                           delete_code_admin_path(code),
