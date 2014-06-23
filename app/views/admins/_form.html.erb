@@ -22,10 +22,21 @@
   <div class="control-group">
     <%= f.label :email, :class => 'control-label' %>
     <div class="controls">
-      <%= f.email_field :contact_email, :class => 'text_field' %>
+      <%= f.email_field :email, :class => 'text_field' %>
     </div>
   </div>
-
+  <div class="control-group">
+    <%= f.label :password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password_confirmation, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation, :class => 'text_field' %>
+    </div>
+  </div>
   <div id="address">
   <div class="control-group">
     <label class="control-label">Address Autocomplete</label> 
@@ -101,13 +112,6 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :permalink, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :permalink, :class => 'text_field' %>
-    </div>
-  </div>
-
-  <div class="control-group">
     <%= f.label :template, :class => 'control-label' %>
     <div class="controls">
       <%= f.radio_button :template, 'template1', :checked => true %> 
@@ -118,6 +122,19 @@
     </div> 
   </div>
 
+  <div class="control-group">
+    <%= f.label :api_type_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.radio_button :api_type_id, '1', :checked => true %> 
+      <%= label :template, 'Google Maps', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '2', :checked => false %> 
+      <%= label :template, 'Bing Maps', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '3', :checked => false %> 
+      <%= label :template, 'Map Quest', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '4', :checked => false %> 
+      <%= label :template, 'Open Street Maps', :class => 'radio_label' %>
+    </div> 
+  </div>
 
   <div class="control-group">
     <%= f.label :corporate_logo, :class => 'control-label required' %>

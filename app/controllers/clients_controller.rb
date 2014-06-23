@@ -17,7 +17,7 @@ class ClientsController < ApplicationController
   end
 
   # Shows all the client related projects and info
-  def show    
+  def show
     if current_client.present?
       @client = current_client
     else 
@@ -31,6 +31,13 @@ class ClientsController < ApplicationController
     @projects.each_with_index do |project,i|
       @images[i] = project.images.first.image.url(:thumb).to_s if project.images.present? 
     end
+    #Entry in visit
+    user_agent = UserAgent.parse(request.user_agent)
+    browser    = user_agent.browser
+    api_type   = @client.api_type_id
+    client_id  = @client.id
+    Visit.create(:browser => browser, :api_type_id => api_type, :client_id => client_id)
+
     respond_to do |format|
       format.html {render :layout => "client"}# show.html.erb
       format.json { render json: @hash }

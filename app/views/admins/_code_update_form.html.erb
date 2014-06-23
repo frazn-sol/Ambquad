@@ -1,4 +1,4 @@
-<%= form_for @code, :url => save_code_admins_path, :html => {:class => 'form-horizontal', :multipart => true } do |f| %>
+<%= form_for @code, :url => update_code_admin_path, :method => "PUT", :html => {:class => 'form-horizontal' } do |f| %>
   <% if @code.errors.present? %>
     <div id="form-errors">
       <p class="error-tagline">Following are missing fields in the form:</p>

@@ -1,42 +1,32 @@
-<div class="container">
+<div class="form_container">
 	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-signin"}) do |f| %>
-	<h2 class="form-signin-heading">Client SignUp</h2>
+    <p class="form-heading">Welcome to Ambquad Solutions</p>
+    <div class="form">
   		<%= devise_error_messages! %>  
-  	<%= f.email_field :email, :class => "form-control space", :placeholder => "Email address", :required => "", :autofocus =>"true"%>
-	 <%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => ""%>
-	<%= f.password_field :password_confirmation, :class => "form-control", :placeholder => "Confirm Password", :required => ""%>
-  <%= f.text_field :description, :class => "form-control ", :placeholder => "Registration Code", :required => "", :autofocus =>"true"%>
-
-  <%= f.text_field :company_name, :class => "form-control", :placeholder => "Company Name", :required => ""%>
-
-       <input class="form-control" id="autocomplete" placeholder="Enter your address" type="text"></input>
-
-  <%= f.text_field :address1, :class => "form-control", :placeholder => "Address 1" %>
-  
-  <%= f.text_field :address2, :class => "form-control", :placeholder => "Address 2" %>
- 
-  <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
-  
-  <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
-  
-  
-  <%= f.text_field :country, :class => "form-control", :placeholder => "Country" %>
-  
-
-<div class="control-group">
-    <%= f.label :corporate_logo, :class => 'control-label required' %>
-    <div class="controls">
-      <img id="upload" src="/assets/placeholder.jpeg" alt="corportae logo" class="thumb"/>  
-      <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
-      <br/>Logo size limit 2mb
-    </div>
-  </div>
-    <%= f.hidden_field :latitude, :class => 'text_field' %>
-    <%= f.hidden_field :longitude, :class => 'text_field' %> 
-	
-  	<%= f.submit "Sign up", :class => "btn btn-lg btn-primary btn-block" %></div>
-<% end %>
-
+  	  <%= f.email_field :email, :class => "form-control space", :placeholder => "Email address", :required => "", :autofocus =>"true"%>
+	    <%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => ""%>
+	    <%= f.password_field :password_confirmation, :class => "form-control", :placeholder => "Confirm Password", :required => ""%>
+      <%= f.text_field :description, :class => "form-control ", :placeholder => "Registration Code", :required => "", :autofocus =>"true"%>
+      <%= f.text_field :company_name, :class => "form-control", :placeholder => "Company Name", :required => ""%>
+      <input class="form-control" id="autocomplete" placeholder="Enter your address" type="text"></input>
+      <%= f.text_field :address1, :class => "form-control", :placeholder => "Address 1" %>      
+      <%= f.text_field :address2, :class => "form-control", :placeholder => "Address 2" %>     
+      <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
+      <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
+      <%= f.text_field :country, :class => "form-control", :placeholder => "Country" %>
+      <div class="control-group">
+        <%= f.label :corporate_logo, :class => 'control-label required' %>
+        <div class="controls">
+          <img id="upload" src="/assets/placeholder.jpeg" alt="corportae logo" class="thumb"/>  
+          <span class="btn btn-info upload">Choose File<%= f.file_field :logo, :class => '', :title => '' %></span>
+          <br/>Logo size limit 2mb
+        </div>
+      </div>
+      <%= f.hidden_field :latitude, :class => 'text_field' %>
+      <%= f.hidden_field :longitude, :class => 'text_field' %> 	
+    	<%= f.submit "Sign up", :class => "btn btn-lg btn-primary btn-block" %></div>
+    </div>  
+  <% end %>
 </div>
 
 <script>

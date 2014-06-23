@@ -1,12 +1,15 @@
 Ambquad::Application.routes.draw do
   
-  devise_for :clients, controllers: { registrations: "clients/registrations" }
+  devise_for :clients, controllers: { registrations: "clients/registrations" }, :path => '', :path_names => {:sign_in => 'sign_in', :sign_up => 'sign_up'}
+
   resources :clients do 
     collection do
       get "clients/sign_out"  => "devise/sessions#destroy", :as => :destroy_client_session
       get :error
     end
   end
+
+  get "/:id" => "clients#show", :as => :show_path
 
   devise_for :admins do 
     get "/sign_out"  => "devise/sessions#destroy", :as => :destroy_admin_session
@@ -18,8 +21,10 @@ Ambquad::Application.routes.draw do
       get :edit_project
       put :update_project
       delete :delete_project
-      put :reset_password
+      get :edit_code
+      put :update_code
       delete :delete_code
+      put :reset_password
     end
 
     collection do 

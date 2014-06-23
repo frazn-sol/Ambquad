@@ -18,6 +18,7 @@ gem "rmagick", :require => 'RMagick'
 gem 'rails_12factor'
 gem "aws-sdk", "~> 1.33.0" 
 gem 'protected_attributes'
+gem 'useragent'
 # gem "american_date"
 # Gems used only for assets and not required
 # in production environments by default.

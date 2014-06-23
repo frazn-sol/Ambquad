@@ -392,8 +392,7 @@ img
 {
 	font-size: 12px;
 	font-weight: bold;
-	position: relative;
-	top: 3px;
+	margin-top: 3px;
 }
 
 /* Templates Styles */

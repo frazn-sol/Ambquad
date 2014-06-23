@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616113356) do
+ActiveRecord::Schema.define(version: 20140623104258) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20140616113356) do
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+
+  create_table "api_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clients", force: true do |t|
     t.string   "company_name"
@@ -66,6 +72,8 @@ ActiveRecord::Schema.define(version: 20140616113356) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.integer  "api_type_id"
+    t.boolean  "disable_flag"
   end
 
   add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
@@ -95,7 +103,7 @@ ActiveRecord::Schema.define(version: 20140616113356) do
 
   create_table "invite_codes", force: true do |t|
     t.string   "code"
-    t.boolean  "consumed",   default: false
+    t.integer  "usage",      default: 0
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at"
@@ -117,6 +125,14 @@ ActiveRecord::Schema.define(version: 20140616113356) do
     t.float    "latitude"
     t.string   "client_name"
     t.text     "description"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "visits", force: true do |t|
+    t.string   "browser"
+    t.integer  "api_type_id"
     t.integer  "client_id"
     t.datetime "created_at"
     t.datetime "updated_at"
