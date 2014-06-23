@@ -2,7 +2,7 @@ class Client < ActiveRecord::Base
   belongs_to :invite_code
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
