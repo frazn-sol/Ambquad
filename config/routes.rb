@@ -1,6 +1,6 @@
 Ambquad::Application.routes.draw do
   
-  devise_for :clients, controllers: { registrations: "clients/registrations" }, :path => '', :path_names => {:sign_in => 'sign_in', :sign_up => 'sign_up'}
+  devise_for :clients, controllers: { registrations: "clients/registrations", confirmations: 'clients/confirmations' }, :path => '', :path_names => {:sign_in => 'sign_in', :sign_up => 'sign_up'}
 
   resources :clients do 
     collection do
@@ -37,6 +37,8 @@ Ambquad::Application.routes.draw do
       post :create_project
       get :code
       post :save_code
+      get :clients
+      get :client
     end
   end
 

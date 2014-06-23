@@ -14,6 +14,11 @@
       <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
       <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
       <%= f.text_field :country, :class => "form-control", :placeholder => "Country" %>
+      <%=f.label :business, :class => "business" %>
+      <%= f.radio_button :account_type, "Business" %>
+      <%=f.label :personal, :class => "personal" %>
+      <%= f.radio_button :account_type, "Personal" %>
+      <div class="clear"></div>
       <div class="control-group">
         <%= f.label :corporate_logo, :class => 'control-label required' %>
         <div class="controls">
@@ -140,6 +145,24 @@ border-top-left-radius: 0;
 border-top-right-radius: 0;
 width: 330px;
 margin-top: -12px;
+}
+
+input[type="radio"]{
+  float: left;
+  margin-left: 10px;
+}
+
+.clear{
+  clear:both;
+}
+
+.personal{
+  margin-left: 30px;
+  float: left;
+}
+
+.business{
+  float: left;
 }
   
 </style>

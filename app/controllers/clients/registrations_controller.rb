@@ -9,8 +9,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
       		elsif @found.end_date.to_s >= Date.today.to_s
       			@client = Client.new(params[:client])
       			if @client.save
-      				sign_in(:client, @client)
-      				redirect_to client_path(@client) 
+      				redirect_to new_client_registration_path, :notice => "Email has been sent to you for confirmation"
 				end
 			end
 		else

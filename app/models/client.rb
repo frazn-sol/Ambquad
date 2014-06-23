@@ -10,7 +10,7 @@ class Client < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :code, :slug, :api_type_id, :disable_flag
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :code, :slug, :api_type_id, :disable_flag, :account_type
   attr_accessible :company_name, :contact_person, :description, :contact_email, :phone_number, :slogan, :title, :website, :city, :state, :country, :address1, :address2, :logo, :latitude, :longitude, :template, :permalink
   mount_uploader :logo, LogoUploader
 

@@ -43,6 +43,9 @@
 </head>
 <body>
     <img src="/assets/background.jpg" id="bg" alt="">
+      <% if notice || alert %>
+        <%= render partial: "admins/flash_messages", flash: flash %> 
+      <% end %>
     <div class="container1">
     <%= yield %>
         <div id="footer" class="aright">

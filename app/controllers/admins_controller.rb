@@ -306,6 +306,22 @@ class AdminsController < ApplicationController
     end  
   end
 
+  def clients
+    if current_admin.present?
+      return true
+    else
+      redirect_to new_admin_session_path and return
+    end  
+  end
+
+  def client
+    if current_admin.present?
+      return true  
+    else
+      redirect_to new_admin_session_path and return
+    end  
+  end
+
 
   def error
     render :layout => false

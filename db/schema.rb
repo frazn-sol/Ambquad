@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140623104258) do
+ActiveRecord::Schema.define(version: 20140623150402) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -72,8 +72,13 @@ ActiveRecord::Schema.define(version: 20140623104258) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
     t.integer  "api_type_id"
     t.boolean  "disable_flag"
+    t.string   "account_type"
   end
 
   add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
