@@ -16,10 +16,10 @@ development:
   adapter: mysql2
   encoding: utf8
   database: Ambquad_development
-  host: localhost
+  host: 127.0.0.1
   pool: 5
   username: root
-  password: root
+  password: 
   socket: /var/run/mysqld/mysqld.sock
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -44,10 +44,10 @@ test:
   adapter: mysql2
   encoding: utf8
   database: Ambquad_test
-  host: localhost
+  host: 127.0.0.1
   pool: 5
   username: root
-  password: root
+  password: 
 
 production:
   adapter: postgresql

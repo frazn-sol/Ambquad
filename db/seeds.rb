@@ -8,3 +8,4 @@
 
 admin = Admin.create(email: 'admin@admin.com', password: '12345678')
 
+api_types = ApiType.create([{ name: 'Google' }, { name: 'Bing' }, { name: 'MapQuest' }, { name: 'OpenStreetMap' }])

@@ -1,12 +1,16 @@
 class AdminsController < ApplicationController
   # before_filter :authenticate_admin!, :except => [:forgot_password, :reset_password]
- 
+  layout "admin" 
 	
   # Shows the landing/main page for admin
   def index
     if current_admin.present?
       @clients = Client.all
-      @client = Client.new
+      @client  = Client.new
+
+      #Total Visits
+      @visits  = Visit.all
+      @temp  = @visits.group_by { |t| t.created_at.beginning_of_month } 
       respond_to do |format|
     		format.html # index.html.erb
     		format.json { render json: @clients }
@@ -53,7 +57,7 @@ class AdminsController < ApplicationController
       respond_to do |format|
         if @client.save
           flash[:notice] = "Client has been successfully added!"
-          format.html { redirect_to admins_path }
+          format.html { redirect_to root_url }
           format.json { render json: @client, status: :created, location: @client }
         else
           format.html { render action: "new" }
@@ -72,8 +76,11 @@ class AdminsController < ApplicationController
     if current_admin.present?
       @client = Client.friendly.find(params[:id])
       respond_to do |format|
+        if params[:client][:permalink].present?
+          @client.update_attributes(:slug => params[:client][:permalink])
+        end
         if @client.update_attributes(params[:client])
-          format.html { redirect_to admins_path, notice: 'Client was successfully updated.' }
+          format.html { redirect_to edit_admin_path(@client), notice: 'Client was successfully updated.' }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -257,6 +264,33 @@ class AdminsController < ApplicationController
         format.json { render json: @code.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  #Renders edit code view
+  def edit_code
+    if current_admin.present?
+      @code = InviteCode.find(params[:id])
+    else
+      redirect_to new_admin_session_path and return
+    end  
+  end
+
+  #Updates the code
+  def update_code  
+    if current_admin.present?
+      @code = InviteCode.find(params[:id])
+      respond_to do |format|
+        if @code.update_attributes(params[:invite_code])
+          format.html { redirect_to edit_code_admin_path(@code), notice: 'Invitation code is successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit_code" }
+          format.json { render json: @code.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      redirect_to new_admin_session_path and return
+    end  
   end
 
   def delete_code

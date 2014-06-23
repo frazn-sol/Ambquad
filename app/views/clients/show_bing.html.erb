@@ -1,0 +1,99 @@
+<script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+<script type="text/javascript">
+   var map = null;
+  var key = 'AtreVwj2EkgbIL-Ktj7W0xQzPZpsrYedNVcnOWYlQ40fk1sfgqudOm-ESfOGZV3_'; 
+         
+   function getMap()
+   {
+        map = new Microsoft.Maps.Map(document.getElementById('myMap'), {credentials: key});
+        
+        var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null); 
+        pushpin.Title = 1; 
+        var pushpinClick= Microsoft.Maps.Events.addHandler(pushpin, 'click', displayEventInfo);  
+        map.entities.push(pushpin); 
+
+        var infoboxOptions = {width :200, height :100, showCloseButton: true, zIndex: 0, offset:new Microsoft.Maps.Point(10,0), showPointer: true}; 
+        var defaultInfobox = new Microsoft.Maps.Infobox(map.getCenter(), infoboxOptions );    
+        map.entities.push(defaultInfobox);
+        defaultInfobox.setHtmlContent('<div id="infoboxText" style="background-color:White; border-style:solid;border-width:medium; border-color:DarkOrange; min-height:100px;width:240px;"><b id="infoboxTitle" style="position:absolute; top:10px; left:10px; width:220px;">myTitle</b><a id="infoboxDescription" style="position:absolute; top:30px; left:10px; width:220px;">Description</a></div>'); 
+        var content= defaultInfobox.getHtmlContent(); 
+        //alert('Custom Infobox added'); 
+
+
+   }
+   
+   function addPushpins()
+   {
+       var limit = 50; 
+       var bounds=map.getBounds(); 
+       latlon = bounds.getNorthwest(); 
+       var lat = latlon.latitude - bounds.height/4; 
+       var lon = latlon.longitude + bounds.width/4; 
+       var latDiff =  bounds.height/2  ; 
+       var lonDiff =  bounds.width/2; 
+       for (var i = 0; i < limit; i++) {  
+         var pushpin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(lat - (latDiff * Math.random()), lon + (lonDiff * Math.random())), null); 
+         map.entities.push(pushpin); 
+       }
+   }
+
+  
+        displayEventInfo = function (e) {
+          var obj = e.target;
+          var info = "Events info - " + e.eventName + "\n";
+          info += "Target  : " + obj.toString();
+          console.log(e);
+          alert(info);
+        }
+
+//  window.onload = getMap;
+
+  $(document).ready(function () {
+
+  var map = null;
+  var pinInfobox = null;
+  var infoboxLayer = new Microsoft.Maps.EntityCollection();
+
+  function LoadMap() {
+      map = new Microsoft.Maps.Map(document.getElementById('myMap'), {credentials: key} );
+
+      var infoboxOptions = { visible: false, title: "title", description: "description" };
+      pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), infoboxOptions);
+      infoboxLayer.push(pinInfobox);
+      map.entities.push(infoboxLayer);
+
+      var locations = [[31.9628799200,71.1602873000],[33.3123440600,71.8272627500],[33.2904067800,72.5770371600],[33.2904067800,72.5770371600]];
+
+      for(i=0; i< locations.length; i++)
+      {
+          var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { text: '' });
+          pushpin.setLocation(new Microsoft.Maps.Location(locations[i][0], locations[i][1]));
+
+          pushpin.Title = locations[i][0] + ' to ' + locations[i][1];
+          pushpin.Description = 'Hello world';
+          Microsoft.Maps.Events.addHandler(pushpin, 'click', displayInfobox);
+          map.entities.push(pushpin);                                    
+      }
+      map.setView({ zoom: 7, center: new Microsoft.Maps.Location(31.9628799200,71.1602873000)});
+    }
+
+    function displayInfobox(e) {
+        console.log(e);
+        pinInfobox.setOptions({ title: e.target.Title, description: e.target.Description, visible: true, offset: new Microsoft.Maps.Point(0, 25) });
+        pinInfobox.setLocation(e.target.getLocation());
+    }
+
+    LoadMap();
+  });
+</script>
+<style>
+.MapPushpinBase:hover
+{
+  cursor: pointer !important;
+}
+</style>
+
+<div id='myMap' style="position:relative; width:100%; height:400px;"></div>
+<div>
+   <input type="button" value="AddPushpins" onclick="addPushpins();" />
+</div>

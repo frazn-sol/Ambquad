@@ -1,4 +1,4 @@
-<%= form_for @client, :url => update_client_admin_path, :html => {:class => 'form-horizontal' } do |f| %>
+<%= form_for @client, :url => update_client_admin_path, :method => "PUT", :html => {:class => 'form-horizontal' } do |f| %>
   <% if @client.errors.present? %>
     <div id="form-errors">
       <p class="error-tagline">Following are missing fields in the form:</p>
@@ -104,6 +104,14 @@
   </div>
 
   <div class="control-group">
+    <% @client.permalink = "" %>
+    <%= f.label :permalink, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :permalink, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :template, :class => 'control-label required' %>
     <div class="controls">
       <%= f.radio_button :template, 'template1' %> 
@@ -113,6 +121,29 @@
     </div> 
   </div>
 
+  <div class="control-group">
+    <%= f.label :api_type_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.radio_button :api_type_id, '1' %> 
+      <%= label :template, 'Google Maps', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '2' %> 
+      <%= label :template, 'Bing Maps', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '3' %> 
+      <%= label :template, 'Map Quest', :class => 'radio_label' %>
+      <%= f.radio_button :api_type_id, '4' %> 
+      <%= label :template, 'Open Street Maps', :class => 'radio_label' %>
+    </div> 
+  </div>
+
+  <div class="control-group">
+    <%= f.label :disable_flag, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.radio_button :disable_flag, '1' %> 
+      <%= label :disable_flag, 'Yes', :class => 'radio_label' %>
+      <%= f.radio_button :disable_flag, '0' %> 
+      <%= label :disable_flag, 'No', :class => 'radio_label' %>
+    </div> 
+  </div>
 
   <div class="control-group">
     <%= f.label :corporate_logo, :class => 'control-label required' %>
@@ -130,7 +161,15 @@
   <div class="control-group">
     <%= f.label :unique_url, :class => 'control-label' %>
     <div class="controls">
-      <input type="text" readonly class="text_field" value="<%= root_url + "clients/#{@client.slug}" %>"/>
+      <% 
+        unique_url = root_url
+        if(@client.permalink.present?)
+          unique_url += "#{@client.permalink}"
+        else
+          unique_url += "#{@client.slug}"
+        end
+      %>    
+      <input type="text" readonly class="text_field" value="<%= unique_url %>"/>
     </div>
   </div>
 
